@@ -6,8 +6,8 @@
         <nav aria-label="Breadcrumb">
           <ol>
             <li><router-link to="/">Beranda</router-link></li>
-            <li><router-link to="/#products">Produk</router-link></li>
-            <li class="current">PHC Manunggal Lestari</li>
+            <li><a href="#products" @click.prevent="scrollToProducts">Produk</a></li>
+            <li class="current">{{ product.title }}</li>
           </ol>
         </nav>
       </div>
@@ -21,15 +21,13 @@
           <div class="product-images">
             <div class="main-image-container">
               <img 
-                id="mainProductImage" 
                 :src="currentImage" 
                 :alt="product.title" 
                 class="main-image" 
                 @click="openImageModal"
-                loading="eager"
               >
             </div>
-            <div class="thumbnail-gallery" id="thumbnailGallery">
+            <div class="thumbnail-gallery">
               <div 
                 v-for="(image, index) in product.images" 
                 :key="index"
@@ -40,6 +38,7 @@
               </div>
             </div>
             
+            <!-- Product Stats -->
             <div class="product-stats-detail">
               <div class="product-stat-item">
                 <i class="fas fa-certificate"></i>
@@ -62,53 +61,44 @@
           <!-- Product Info -->
           <div class="product-info">
             <div class="product-header">
-              <h1 id="productTitle">{{ product.title }}</h1>
-              <div id="productBadge" class="product-badge badge-approved">{{ product.badge }}</div>
+              <h1>{{ product.title }}</h1>
+              <div class="product-badge badge-approved">{{ product.badge }}</div>
               <div class="certificate-badge">
                 <i class="fas fa-certificate"></i>
                 <span>Izin Edar No: {{ product.certificate }}</span>
               </div>
             </div>
             
-            <p class="product-description" id="productDescription">{{ product.description }}</p>
+            <p class="product-description">{{ product.description }}</p>
             
             <div class="product-specs">
               <h3><i class="fas fa-clipboard-list"></i> Spesifikasi Produk</h3>
-              <ul id="productSpecs">
-                <li v-for="(spec, index) in product.specs" :key="`spec-${index}`">
-                  <span class="list-icon">✓</span> {{ spec }}
-                </li>
+              <ul>
+                <li v-for="(spec, index) in product.specs" :key="`spec-${index}`">{{ spec }}</li>
               </ul>
             </div>
             
             <div class="product-features">
               <h3><i class="fas fa-star"></i> Keunggulan</h3>
-              <ul id="productFeatures">
-                <li v-for="(feature, index) in product.features" :key="`feature-${index}`">
-                  <span class="list-icon">✓</span> {{ feature }}
-                </li>
+              <ul>
+                <li v-for="(feature, index) in product.features" :key="`feature-${index}`">{{ feature }}</li>
               </ul>
             </div>
             
             <div class="product-benefits">
               <h3><i class="fas fa-check-circle"></i> Manfaat</h3>
-              <ul id="productBenefits">
-                <li v-for="(benefit, index) in product.benefits" :key="`benefit-${index}`">
-                  <span class="list-icon">✓</span> {{ benefit }}
-                </li>
+              <ul>
+                <li v-for="(benefit, index) in product.benefits" :key="`benefit-${index}`">{{ benefit }}</li>
               </ul>
             </div>
             
             <div class="product-actions">
               <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">
-                <i class="fas fa-whatsapp"></i> Pesan Sekarang
+                <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
               <router-link to="/#products" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Lihat Produk Lain
               </router-link>
-              <button class="btn btn-secondary" @click="printPage">
-                <i class="fas fa-print"></i> Cetak Halaman
-              </button>
             </div>
           </div>
         </div>
@@ -122,7 +112,7 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik" loading="lazy">
+                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik">
               </div>
               <div class="related-product-info">
                 <h4>PHP Tribionik</h4>
@@ -134,7 +124,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
+                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -146,7 +136,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
+                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA">
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -174,6 +164,8 @@
 </template>
 
 <script>
+import { getProductById } from '@/data/product.js'
+
 export default {
   name: 'ManunggalLestari',
   data() {
@@ -181,44 +173,7 @@ export default {
       currentImageIndex: 0,
       showModal: false,
       modalImage: '',
-      product: {
-        title: 'PHC Manunggal Lestari',
-        description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman. Formula khusus yang dikembangkan untuk memberikan nutrisi optimal bagi tanaman.',
-        specs: [
-          'Kemasan: 1L, 5L',
-          'Kandungan: Mikroorganisme bermanfaat > 10^9 CFU/ml',
-          'pH: 6.5 - 7.5',
-          'Warna: Coklat kehitaman',
-          'Bau: Khas fermentasi',
-          'Manfaat: Meningkatkan kesuburan tanah, pertumbuhan tanaman, dan hasil panen',
-          'Aplikasi: Semprot atau siram pada tanah dengan dosis 5-10 ml per liter air',
-          'Izin Edar: No. 03.03.2025.89',
-          'Tanggal Izin: 17 Februari 2025'
-        ],
-        features: [
-          'Mengandung mikroorganisme menguntungkan (PGPR)',
-          'Meningkatkan ketersediaan unsur hara',
-          'Memperbaiki struktur tanah',
-          'Meningkatkan daya tahan tanaman terhadap penyakit',
-          'Ramah lingkungan dan mudah terurai'
-        ],
-        benefits: [
-          'Meningkatkan hasil panen hingga 30%',
-          'Mengurangi penggunaan pupuk kimia',
-          'Memperbaiki kualitas tanah secara berkelanjutan',
-          'Meningkatkan daya tahan tanaman terhadap stres lingkungan',
-          'Cocok untuk sistem pertanian organik'
-        ],
-        images: [
-          '/assets/img/manunggal-lestari/manunggal-lestari.webp',
-          '/assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
-          '/assets/img/manunggal-lestari/dekomposer-5l.webp',
-          '/assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
-          '/assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
-        ],
-        badge: 'Berizin',
-        certificate: '03.03.2025.89'
-      }
+      product: getProductById('phc-manunggal-lestari') || {}
     }
   },
   computed: {
@@ -227,8 +182,13 @@ export default {
     }
   },
   mounted() {
+    // Set page title
     document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
+    
+    // Initialize year in footer
     this.updateYear()
+    
+    // Initialize back to top button
     this.initBackToTop()
   },
   methods: {
@@ -244,20 +204,30 @@ export default {
       this.showModal = false
       document.body.style.overflow = ''
     },
-    scrollToContact() {
+    scrollToProducts() {
       if (this.$route.path === '/') {
-        this.scrollToSection('contact')
+        const element = document.getElementById('products')
+        if (element) {
+          const headerHeight = 80
+          const elementPosition = element.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+        }
       } else {
-        this.$router.push('/#contact')
+        this.$router.push('/#products')
       }
     },
-    scrollToSection(sectionId) {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const headerHeight = 80
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+    scrollToContact() {
+      if (this.$route.path === '/') {
+        const element = document.getElementById('contact')
+        if (element) {
+          const headerHeight = 80
+          const elementPosition = element.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+        }
+      } else {
+        this.$router.push('/#contact')
       }
     },
     printPage() {

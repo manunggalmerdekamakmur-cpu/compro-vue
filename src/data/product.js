@@ -23,9 +23,11 @@ export const productData = {
       'Memperbaiki kualitas tanah secara berkelanjutan'
     ],
     images: [
-      '/assets/img/manunggal-lestari/manunggal-lestari.webp',
-      '/assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
-      '/assets/img/manunggal-lestari/dekomposer-5l.webp'
+      'assets/img/manunggal-lestari/manunggal-lestari.webp',
+      'assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
+      'assets/img/manunggal-lestari/dekomposer-5l.webp',
+      'assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
+      'assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
     ],
     badge: 'Berizin',
     certificate: 'Izin Edar No: 03.03.2025.89',
@@ -54,9 +56,16 @@ export const productData = {
       'Memperbaiki kualitas tanah jangka panjang'
     ],
     images: [
-      '/assets/img/triobionik/triobionik.webp',
-      '/assets/img/triobionik/triobionik-100gr.webp',
-      '/assets/img/triobionik/triobionik-25gr.webp'
+      'assets/img/triobionik/triobionik.webp',
+      'assets/img/triobionik/triobionik-100gr.webp',
+      'assets/img/triobionik/triobionik-25gr.webp',
+      'assets/img/triobionik/triobionik-merah.webp',
+      'assets/img/triobionik/triobionik-hijau.webp',
+      'assets/img/triobionik/unggas.webp',
+      'assets/img/triobionik/ternak.webp',
+      'assets/img/triobionik/ikan.webp',
+      'assets/img/triobionik/dekomposer-septic-tank.webp',
+      'assets/img/triobionik/dekomposer.webp'
     ],
     badge: 'Berizin',
     certificate: 'Merek Terdaftar: IDM001289921',
@@ -86,7 +95,9 @@ export const productData = {
     images: [
       '/assets/img/manunggal-makmur/manunggal-makmur.webp',
       '/assets/img/manunggal-makmur/por-5.webp',
-      '/assets/img/manunggal-makmur/por-25.webp'
+      '/assets/img/manunggal-makmur/por-25.webp',
+      'assets/img/manunggal-makmur/por-40.webp',
+      'assets/img/manunggal-makmur/por-50.webp'
     ],
     badge: 'Segera Hadir',
     status: 'coming-soon'
