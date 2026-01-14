@@ -1,192 +1,154 @@
-// app.js - Optimized for Vue
+// app.js - Optimized for Performance
 (function() {
     'use strict';
     
-    console.log('Manunggal App Loaded - Vue Version');
+    // DOM Cache dengan lazy loading
+    const getElement = (id) => document.getElementById(id);
     
-    // DOM Cache
-    const DOM_CACHE = new Map();
-    const getElement = (id) => {
-        if (!DOM_CACHE.has(id)) {
-            DOM_CACHE.set(id, document.getElementById(id));
+    // Cache untuk elements yang sering digunakan
+    let cachedElements = {};
+    
+    const getCachedElement = (id) => {
+        if (!cachedElements[id]) {
+            cachedElements[id] = getElement(id);
         }
-        return DOM_CACHE.get(id);
+        return cachedElements[id];
     };
     
-    const DOM = {
-        get backToTop() { return getElement('backToTop'); },
-        get contactForm() { return getElement('contactForm'); },
-        get year() { return getElement('year'); }
-    };
-    
-    // Initialize when DOM is ready
+    // Initialize dengan debounce untuk scroll events
     function init() {
         // Set current year in footer
-        if (DOM.year) {
-            DOM.year.textContent = new Date().getFullYear();
+        const yearElement = getCachedElement('year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
         }
         
-        // Initialize back to top button
         initBackToTop();
-        
-        // Initialize form validation
-        initContactForm();
-        
-        // Initialize product filter functionality
         initProductFilter();
-        
-        // Initialize product modal if exists
         initProductModal();
         
-        console.log('Manunggal App Initialized Successfully');
+        // Lazy load contact form jika ada
+        if (getCachedElement('contactForm')) {
+            initContactForm();
+        }
     }
     
-    // Back to Top functionality
+    // Back to Top dengan throttle
     function initBackToTop() {
-        const backToTopBtn = DOM.backToTop;
+        const backToTopBtn = getCachedElement('backToTop');
         if (!backToTopBtn) return;
         
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
+        let scrollTimeout;
+        const handleScroll = () => {
+            if (scrollTimeout) return;
+            
+            scrollTimeout = setTimeout(() => {
+                backToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+                scrollTimeout = null;
+            }, 100);
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
         
         backToTopBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
     
-    // Product Filter functionality
+    // Product Filter dengan event delegation
     function initProductFilter() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const productCards = document.querySelectorAll('.product-card');
+        const productGrid = document.querySelector('.products-grid');
+        if (!productGrid) return;
         
-        if (filterButtons.length === 0 || productCards.length === 0) return;
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                const filterValue = this.dataset.filter || 'all';
-                
-                // Filter products
-                productCards.forEach(card => {
-                    if (filterValue === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        if (card.classList.contains(filterValue)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.filter-btn')) return;
+            
+            const button = e.target.closest('.filter-btn');
+            const filterValue = button.dataset.filter || 'all';
+            const productCards = productGrid.querySelectorAll('.product-card');
+            
+            // Remove active class dari semua buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => 
+                btn.classList.remove('active'));
+            
+            // Add active class ke clicked button
+            button.classList.add('active');
+            
+            // Filter products
+            productCards.forEach(card => {
+                if (filterValue === 'all' || card.classList.contains(filterValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
     }
     
-    // Contact Form functionality
+    // Contact Form dengan validasi sederhana
     function initContactForm() {
-        const contactForm = DOM.contactForm;
+        const contactForm = getCachedElement('contactForm');
         if (!contactForm) return;
         
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             if (validateForm(this)) {
-                // Show loading state
                 const submitBtn = this.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
+                
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
                 submitBtn.disabled = true;
                 
-                // Simulate form submission
+                // Simulasi pengiriman
                 setTimeout(() => {
-                    // Reset form
                     this.reset();
                     
-                    // Show success message
-                    const successMsg = document.getElementById('formSuccess');
+                    const successMsg = getCachedElement('formSuccess');
                     if (successMsg) {
                         successMsg.textContent = 'Pesan Anda telah berhasil dikirim!';
                         successMsg.style.display = 'block';
                         
-                        // Hide message after 5 seconds
                         setTimeout(() => {
                             successMsg.style.display = 'none';
                         }, 5000);
                     }
                     
-                    // Reset button
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
-                }, 2000);
+                }, 1500);
             }
-        });
-        
-        // Real-time validation
-        const inputs = contactForm.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.addEventListener('blur', () => {
-                validateField(input);
-            });
-            
-            input.addEventListener('input', () => {
-                clearError(input);
-            });
         });
     }
     
-    // Form validation helpers
     function validateForm(form) {
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
         
         requiredFields.forEach(field => {
-            if (!validateField(field)) {
+            if (!field.value.trim()) {
+                showError(field, 'Field ini wajib diisi');
                 isValid = false;
+            } else if (field.type === 'email' && !isValidEmail(field.value)) {
+                showError(field, 'Format email tidak valid');
+                isValid = false;
+            } else {
+                clearError(field);
             }
         });
         
         return isValid;
     }
     
-    function validateField(field) {
-        clearError(field);
-        
-        const value = field.value.trim();
-        const errorId = field.id + 'Error';
-        const errorElement = document.getElementById(errorId);
-        
-        if (field.hasAttribute('required') && !value) {
-            showError(field, errorElement, 'Field ini wajib diisi');
-            return false;
-        }
-        
-        if (field.type === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                showError(field, errorElement, 'Format email tidak valid');
-                return false;
-            }
-        }
-        
-        return true;
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
     
-    function showError(field, errorElement, message) {
+    function showError(field, message) {
         field.classList.add('error');
+        const errorId = field.id + 'Error';
+        const errorElement = getCachedElement(errorId);
         if (errorElement) {
             errorElement.textContent = message;
             errorElement.style.display = 'block';
@@ -196,34 +158,28 @@
     function clearError(field) {
         field.classList.remove('error');
         const errorId = field.id + 'Error';
-        const errorElement = document.getElementById(errorId);
+        const errorElement = getCachedElement(errorId);
         if (errorElement) {
             errorElement.textContent = '';
             errorElement.style.display = 'none';
         }
     }
     
-    // Product Modal functionality
+    // Product Modal
     function initProductModal() {
-        const modal = document.getElementById('productModal');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalClose = document.getElementById('modalClose');
+        const modal = getCachedElement('productModal');
+        if (!modal) return;
         
-        if (!modal || !modalOverlay || !modalClose) return;
-        
-        // Close modal on overlay click
-        modalOverlay.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
+        // Close modal dengan event delegation
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.modal-close') || 
+                e.target.closest('.modal-overlay')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
         
-        // Close modal on close button click
-        modalClose.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        // Close modal on ESC key
+        // Close dengan ESC key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) {
                 modal.classList.remove('active');
@@ -232,59 +188,28 @@
         });
     }
     
-    // Open product modal (can be called from product detail pages)
-    window.openProductModal = function(productData) {
-        const modal = document.getElementById('productModal');
-        if (!modal) return;
+    // Smooth scroll untuk anchor links
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link || link.getAttribute('href') === '#') return;
         
-        // Populate modal with product data
-        const modalTitle = modal.querySelector('.modal-title');
-        const modalDescription = modal.querySelector('.modal-description');
-        const modalImage = modal.querySelector('.modal-main-image img');
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
         
-        if (modalTitle && productData.title) {
-            modalTitle.textContent = productData.title;
-        }
-        
-        if (modalDescription && productData.description) {
-            modalDescription.textContent = productData.description;
-        }
-        
-        if (modalImage && productData.image) {
-            modalImage.src = productData.image;
-            modalImage.alt = productData.title || 'Product Image';
-        }
-        
-        // Show modal
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // Smooth scroll for anchor links (for Vue router compatibility)
-    document.addEventListener('click', function(e) {
-        // Only handle links that start with #
-        if (e.target.matches('a[href^="#"]')) {
-            e.preventDefault();
-            const href = e.target.getAttribute('href');
+        if (targetElement) {
+            const headerHeight = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
             
-            // Skip if it's just #
-            if (href === '#') return;
-            
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-                const headerHeight = 80;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     });
     
-    // Initialize when DOM is fully loaded
+    // Initialize
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

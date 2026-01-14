@@ -5,8 +5,8 @@
         <nav aria-label="Breadcrumb">
           <ol>
             <li><router-link to="/">Beranda</router-link></li>
-            <li v-if="product.productId === 'php-triobionik'">
-              <router-link to="/triobionik">Tribionik</router-link>
+            <li v-if="isTriobionik">
+              <router-link to="/triobionik">Triobionik</router-link>
             </li>
             <li v-else>
               <a href="#products" @click.prevent="scrollToProducts">Produk</a>
@@ -22,25 +22,23 @@
         <div class="product-detail-container">
           <div class="product-images">
             <div class="main-image-container" @click="openImageModal">
-              <img :src="currentImage" :alt="product.title" class="main-image">
+              <img :src="currentImage" :alt="product.title" class="main-image" loading="lazy">
             </div>
             <div class="thumbnail-gallery">
               <div 
                 v-for="(image, index) in product.images" 
                 :key="index"
                 :class="['thumbnail-item', { active: currentImageIndex === index }]"
-                @click="changeImage(index)"
+                @click="currentImageIndex = index"
               >
                 <img :src="image" :alt="`${product.title} ${index + 1}`" loading="lazy">
               </div>
             </div>
             
             <div class="product-brochure" v-if="product.brochure">
-              <embed 
-                  :src="product.brochure"
-                  type="application/pdf"
-                  style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
-                />
+              <a :href="product.brochure" target="_blank" class="btn btn-secondary">
+                <i class="fas fa-file-pdf"></i> Unduh Brosur
+              </a>
             </div>
 
             <div class="product-stats-detail">
@@ -56,9 +54,7 @@
               </div>
               <div class="product-stat-item">
                 <i class="fas fa-leaf"></i>
-                <h4 v-if="isTriobionik">Hayati</h4>
-                <h4 v-else-if="isManunggalLestari">Hayati</h4>
-                <h4 v-else>Organik</h4>
+                <h4>Organik</h4>
                 <p>100% Ramah Lingkungan</p>
               </div>
             </div>
@@ -78,25 +74,22 @@
             
             <p class="product-description">{{ product.description }}</p>
             
-            <!-- Judul Dinamis Berdasarkan Produk -->
             <div class="product-specs">
-              <h3><i class="fas fa-clipboard-list"></i> {{ specsTitle }}</h3>
+              <h3><i class="fas fa-clipboard-list"></i> Spesifikasi Produk</h3>
               <ul>
                 <li v-for="(spec, index) in product.specs" :key="`spec-${index}`">{{ spec }}</li>
               </ul>
             </div>
 
-            <!-- Hanya tampilkan benefits jika ada data -->
-            <div class="product-benefits" v-if="product.benefits && product.benefits.length > 0">
-              <h3><i class="fas fa-check-circle"></i> {{ benefitsTitle }}</h3>
+            <div class="product-benefits" v-if="product.benefits?.length">
+              <h3><i class="fas fa-check-circle"></i> Manfaat</h3>
               <ul>
                 <li v-for="(benefit, index) in product.benefits" :key="`benefit-${index}`">{{ benefit }}</li>
               </ul>
             </div>
             
-            <!-- Hanya tampilkan features jika ada data -->
-            <div class="product-features" v-if="product.features && product.features.length > 0">
-              <h3><i class="fas fa-star"></i> {{ featuresTitle }}</h3>
+            <div class="product-features" v-if="product.features?.length">
+              <h3><i class="fas fa-star"></i> Fitur</h3>
               <ul>
                 <li v-for="(feature, index) in product.features" :key="`feature-${index}`">{{ feature }}</li>
               </ul>
@@ -122,54 +115,14 @@
             <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
           </div>
           <div class="related-products-grid">
-            <!-- Tampilkan produk terkait berdasarkan jenis produk -->
-            <div class="related-product-card" v-if="!isTriobionik">
+            <div class="related-product-card" v-for="related in relatedProducts" :key="related.id">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik-25gr.webp" alt="PHP Triobionik" loading="lazy">
+                <img :src="related.image" :alt="related.title" loading="lazy">
               </div>
               <div class="related-product-info">
-                <h4>PHP Triobionik</h4>
-                <p>Pupuk Hayati Padat dengan tiga manfaat utama untuk berbagai jenis tanaman.</p>
-                <router-link to="/triobionik" class="related-product-link">
-                  Lihat Varian <i class="fas fa-arrow-right"></i>
-                </router-link>
-              </div>
-            </div>
-            
-            <div class="related-product-card" v-if="!isManunggalLestari">
-              <div class="related-product-img">
-                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari" loading="lazy">
-              </div>
-              <div class="related-product-info">
-                <h4>Manunggal Lestari</h4>
-                <p>Pupuk hayati cair untuk tanaman pangan, hortikultura, dan perkebunan.</p>
-                <router-link to="/manunggal-lestari" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
-              </div>
-            </div>
-            
-            <div class="related-product-card">
-              <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
-              </div>
-              <div class="related-product-info">
-                <h4>Manunggal Makmur</h4>
-                <p>Pupuk organik remah untuk pertanian berkelanjutan.</p>
-                <router-link to="/manunggal-makmur" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
-              </div>
-            </div>
-            
-            <div class="related-product-card">
-              <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
-              </div>
-              <div class="related-product-info">
-                <h4>PTORCA</h4>
-                <p>Pupuk organik cair untuk tanaman pangan dan hortikultura.</p>
-                <router-link to="/ptorca" class="related-product-link">
+                <h4>{{ related.title }}</h4>
+                <p>{{ related.description }}</p>
+                <router-link :to="related.link" class="related-product-link">
                   Lihat Detail <i class="fas fa-arrow-right"></i>
                 </router-link>
               </div>
@@ -196,71 +149,54 @@ export default {
   props: {
     product: {
       type: Object,
-      required: true,
-      default: () => ({})
+      required: true
     }
   },
   data() {
     return {
       currentImageIndex: 0,
       showModal: false,
-      modalImage: ''
+      modalImage: '',
+      relatedProducts: [
+        {
+          id: 'triobionik',
+          title: 'PHP Triobionik',
+          description: 'Pupuk Hayati Padat dengan tiga manfaat utama untuk berbagai jenis tanaman.',
+          image: '/assets/img/triobionik/triobionik-25gr.webp',
+          link: '/triobionik'
+        },
+        {
+          id: 'manunggal-lestari',
+          title: 'Manunggal Lestari',
+          description: 'Pupuk hayati cair untuk tanaman pangan, hortikultura, dan perkebunan.',
+          image: '/assets/img/manunggal-lestari/manunggal-lestari.webp',
+          link: '/manunggal-lestari'
+        },
+        {
+          id: 'manunggal-makmur',
+          title: 'Manunggal Makmur',
+          description: 'Pupuk organik remah untuk pertanian berkelanjutan.',
+          image: '/assets/img/manunggal-makmur/manunggal-makmur.webp',
+          link: '/manunggal-makmur'
+        }
+      ]
     }
   },
   computed: {
     currentImage() {
-      return this.product.images ? this.product.images[this.currentImageIndex] : ''
+      return this.product.images?.[this.currentImageIndex] || ''
     },
-    // Cek tipe produk
     isTriobionik() {
-      return this.product.id.includes('triobionik') || this.product.productId === 'php-triobionik'
-    },
-    isManunggalLestari() {
-      return this.product.id === 'phc-manunggal-lestari'
-    },
-    // Judul dinamis berdasarkan produk
-    specsTitle() {
-      if (this.isManunggalLestari) {
-        return 'Deskripsi PHC Manunggal Lestari'
-      } else if (this.isTriobionik) {
-        return 'Deskripsi PHP TRIOBIONIK'
-      } else if (this.product.id === 'manunggal-makmur') {
-        return 'Deskripsi Pupuk Organik Remah Manunggal Makmur'
-      } else if (this.product.id === 'ptorca') {
-        return 'Deskripsi PTORCA'
-      }
-      return 'Spesifikasi Produk'
-    },
-    featuresTitle() {
-      if (this.isManunggalLestari) {
-        return 'Spesifikasi PHC Manunggal Lestari'
-      } else if (this.isTriobionik) {
-        return 'Spesifikasi PHP TRIOBIONIK'
-      }
-      return 'Spesifikasi'
-    },
-    benefitsTitle() {
-      if (this.isManunggalLestari) {
-        return 'Manfaat PHC Manunggal Lestari'
-      } else if (this.isTriobionik) {
-        return 'Manfaat PHP TRIOBIONIK'
-      }
-      return 'Manfaat Produk'
+      return this.product.id?.includes('triobionik') || this.product.productId === 'php-triobionik'
     }
   },
   mounted() {
-    this.updateYear()
-    this.initBackToTop()
-    
-    // Set judul halaman
     if (this.product.title) {
       document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
     }
+    this.initBackToTop()
   },
   methods: {
-    changeImage(index) {
-      this.currentImageIndex = index
-    },
     openImageModal() {
       this.modalImage = this.currentImage
       this.showModal = true
@@ -272,45 +208,32 @@ export default {
     },
     scrollToProducts() {
       if (this.$route.path === '/') {
-        const element = document.getElementById('products')
-        if (element) {
-          const headerHeight = 80
-          const elementPosition = element.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-        }
+        this.scrollToElement('products')
       } else {
         this.$router.push('/#products')
       }
     },
     scrollToContact() {
       if (this.$route.path === '/') {
-        const element = document.getElementById('contact')
-        if (element) {
-          const headerHeight = 80
-          const elementPosition = element.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-        }
+        this.scrollToElement('contact')
       } else {
         this.$router.push('/#contact')
       }
     },
-    updateYear() {
-      const yearElement = document.querySelector('#year')
-      if (yearElement) {
-        yearElement.textContent = new Date().getFullYear()
+    scrollToElement(id) {
+      const element = document.getElementById(id)
+      if (element) {
+        const headerHeight = 80
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
       }
     },
     initBackToTop() {
       const backToTop = document.getElementById('backToTop')
       if (backToTop) {
         window.addEventListener('scroll', () => {
-          if (window.pageYOffset > 300) {
-            backToTop.classList.add('visible')
-          } else {
-            backToTop.classList.remove('visible')
-          }
+          backToTop.classList.toggle('visible', window.pageYOffset > 300)
         })
         
         backToTop.addEventListener('click', () => {
