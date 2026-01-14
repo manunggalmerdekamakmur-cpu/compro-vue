@@ -1,9 +1,18 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    visualizer({
+      filename: 'dist/stats.html',
+      open: true,
+      gzipSize: true,
+      brotliSize: true
+    })
+  ],
   
   resolve: {
     alias: {
@@ -14,7 +23,10 @@ export default defineConfig({
   
   server: {
     port: 3000,
-    host: true
+    host: true,
+    hmr: {
+      overlay: false // Disable error overlay untuk performa
+    }
   },
   
   build: {
@@ -27,49 +39,112 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug']
+        pure_funcs: ['console.log', 'console.info'],
+        passes: 2,
+        keep_fargs: false,
+        unsafe: true,
+        unsafe_math: true,
+        unsafe_methods: true
+      },
+      mangle: {
+        safari10: true
       },
       format: {
-        comments: false
+        comments: false,
+        ecma: 2020
       }
     },
     
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['vue', 'vue-router']
+        manualChunks: (id) => {
+          // Group vendor libraries
+          if (id.includes('node_modules')) {
+            if (id.includes('vue')) return 'vue'
+            if (id.includes('vue-router')) return 'vue-router'
+            return 'vendor'
+          }
+          
+          // Group pages untuk optimal chunking
+          if (id.includes('/pages/')) {
+            const pageName = id.split('/pages/')[1].split('.')[0]
+            const smallPages = ['Home', 'triobionik-list', 'manunggal-lestari']
+            if (smallPages.includes(pageName)) return 'core-pages'
+            return `page-${pageName}`
+          }
+          
+          // Group components
+          if (id.includes('/components/')) {
+            const compName = id.split('/components/')[1].split('/')[0]
+            if (compName.includes('Product')) return 'product-components'
+            if (compName.includes('Layout')) return 'layout-components'
+            return 'shared-components'
+          }
         },
+        
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
+        
         assetFileNames: (assetInfo) => {
           const ext = assetInfo.name.split('.').pop()
-          const dirs = {
-            css: 'css',
-            js: 'js',
-            png: 'img',
-            jpg: 'img',
-            jpeg: 'img',
-            webp: 'img',
-            svg: 'img',
-            gif: 'img',
-            woff: 'fonts',
-            woff2: 'fonts',
-            ttf: 'fonts',
-            eot: 'fonts'
+          if (ext === 'css') return 'assets/css/[name]-[hash].css'
+          if (['png', 'jpg', 'jpeg', 'webp', 'svg'].includes(ext)) {
+            return 'assets/img/[name]-[hash].[ext]'
           }
-          return `assets/${dirs[ext] || 'misc'}/[name]-[hash].[ext]`
-        }
-      }
+          return 'assets/[ext]/[name]-[hash].[ext]'
+        },
+        
+        // Optimasi untuk mobile
+        compact: true,
+        minifyInternalExports: true,
+        hoistTransitiveImports: false
+      },
+      
+      // Externalize jika ada library besar
+      external: []
     },
     
-    target: 'es2015',
+    target: ['es2020', 'edge79', 'firefox67', 'chrome63', 'safari11.1'],
     reportCompressedSize: true,
-    chunkSizeWarningLimit: 500,
+    chunkSizeWarningLimit: 800,
     cssCodeSplit: true,
-    cssMinify: true
+    cssMinify: true,
+    
+    // Build optimasi
+    modulePreload: {
+      polyfill: false
+    },
+    
+    // Asset optimasi
+    assetsInlineLimit: 4096
   },
   
   css: {
-    devSourcemap: false
+    devSourcemap: false,
+    postcss: {
+      plugins: [
+        require('autoprefixer')({
+          overrideBrowserslist: [
+            '> 1%',
+            'last 2 versions',
+            'not dead'
+          ]
+        }),
+        require('cssnano')({
+          preset: ['default', {
+            discardComments: {
+              removeAll: true
+            },
+            normalizeWhitespace: false
+          }]
+        })
+      ]
+    }
+  },
+  
+  // Optimasi dev server
+  optimizeDeps: {
+    include: ['vue', 'vue-router'],
+    exclude: []
   }
 })

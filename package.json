@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && vercel --prod"
+    "prebuild": "rm -rf dist && npm run analyze",
+    "analyze": "vite-bundle-analyzer",
+    "build:prod": "NODE_ENV=production vite build",
+    "build:mobile": "vite build --mode mobile",
+    "deploy": "npm run build:prod && vercel --prod"
   },
   "dependencies": {
     "vue": "^3.3.4",
@@ -15,11 +19,19 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.1",
+    "rollup-plugin-visualizer": "^5.12.0",
     "terser": "^5.26.0",
     "vite": "^4.5.14"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
-  }
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

@@ -28,13 +28,28 @@
         })
     }
     
+    const initPerformance = () => {
+        // Log performance metrics
+        if (window.performance && performance.getEntriesByType) {
+            setTimeout(() => {
+                const navTiming = performance.getEntriesByType('navigation')[0]
+                if (navTiming) {
+                    console.log('Page Load Time:', navTiming.loadEventEnd - navTiming.startTime)
+                    console.log('DOM Ready:', navTiming.domContentLoadedEventEnd - navTiming.startTime)
+                }
+            }, 1000)
+        }
+    }
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             init()
             initSmoothScroll()
+            initPerformance()
         })
     } else {
         init()
         initSmoothScroll()
+        initPerformance()
     }
 })()
