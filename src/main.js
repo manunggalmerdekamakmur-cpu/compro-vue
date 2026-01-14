@@ -4,10 +4,19 @@ import App from './App.vue'
 
 import Home from './pages/Home.vue'
 import ManunggalLestari from './pages/manunggal-lestari.vue'
-import Triobionik from './pages/triobionik.vue'
 import TriobionikList from './pages/triobionik-list.vue'
 import Ptorca from './pages/ptorca.vue'
 import ManunggalMakmur from './pages/manunggal-makmur.vue'
+import ProductDetail from './components/sections/ProductDetail.vue'
+
+import { getTriobionikVariants } from '@/data/product.js'
+
+const triobionikVariantRoutes = getTriobionikVariants().map(variant => ({
+  path: `/triobionik/${variant.id}`,
+  component: ProductDetail,
+  meta: { title: variant.title || variant.name },
+  props: () => ({ product: variant })
+}))
 
 const routes = [
   {
@@ -23,13 +32,9 @@ const routes = [
   {
     path: '/triobionik',
     component: TriobionikList,
-    meta: { title: 'Tribionik' }
+    meta: { title: 'Varian Triobionik' }
   },
-  {
-    path: '/triobionik/:productId/:variantIndex?',
-    component: Triobionik,
-    meta: { title: 'Tribionik' }
-  },
+  ...triobionikVariantRoutes, 
   {
     path: '/ptorca',
     component: Ptorca,
@@ -54,9 +59,8 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title
-    ? `${to.meta.title} - PT. Manunggal Merdeka Makmur`
-    : 'PT. Manunggal Merdeka Makmur'
+  const baseTitle = 'PT. Manunggal Merdeka Makmur'
+  document.title = to.meta.title ? `${to.meta.title} - ${baseTitle}` : baseTitle
 
   setTimeout(() => {
     const logoTextH1 = document.querySelector('.logo-text h1')

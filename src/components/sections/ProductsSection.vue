@@ -19,82 +19,29 @@
       </div>
 
       <div class="products-grid">
-        <div v-show="shouldShow('approved')" class="product-card approved" data-product="phc-manunggal-lestari">
+        <div v-for="product in filteredProducts" 
+             :key="product.id" 
+             class="product-card"
+             :class="product.status">
           <div class="product-img">
-            <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Pupuk Hayati Cair Manunggal Lestari" loading="lazy" />
-            <span class="product-badge badge-approved"><i class="fas fa-check-circle"></i> Berizin</span>
+            <img :src="product.images[0]" :alt="product.title" loading="lazy" />
+            <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
+              <i :class="product.status === 'approved' ? 'fas fa-check-circle' : 'fas fa-clock'"></i>
+              {{ product.badge }}
+            </span>
             <div class="product-overlay">
-              <router-link to="/manunggal-lestari" class="btn-view-details">
-                <i class="fas fa-eye"></i> Detail Produk
+              <router-link :to="getProductLink(product)" class="btn-view-details">
+                <i class="fas fa-eye"></i> {{ getButtonText(product) }}
               </router-link>
             </div>
           </div>
           <div class="product-info">
-            <h3>Pupuk Hayati Cair Manunggal Lestari</h3>
-            <p>Pupuk Hayati Cair untuk tanaman pangan dan hortikultura.</p>
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description.substring(0, 100) }}...</p>
             <div class="product-tags">
-              <span class="tag"><i class="fas fa-tint"></i> Cair</span>
-              <span class="tag"><i class="fas fa-leaf"></i> Hayati</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-show="shouldShow('approved')" class="product-card approved" data-product="php-triobionik">
-          <div class="product-img">
-            <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Triobionik" loading="lazy" />
-            <span class="product-badge badge-approved"><i class="fas fa-check-circle"></i> Berizin</span>
-            <div class="product-overlay">
-              <router-link to="/triobionik" class="btn-view-details">
-                <i class="fas fa-eye"></i> Lihat Varian
-              </router-link>
-            </div>
-          </div>
-          <div class="product-info">
-            <h3>Pupuk Hayati Padat Tribionik</h3>
-            <p>Pupuk Hayati Padat unggulan dengan tiga manfaat utama.</p>
-            <div class="product-tags">
-              <span class="tag"><i class="fas fa-cube"></i> Padat</span>
-              <span class="tag"><i class="fas fa-star"></i> Unggulan</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-show="shouldShow('coming-soon')" class="product-card coming-soon" data-product="manunggal-makmur">
-          <div class="product-img">
-            <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy" />
-            <span class="product-badge badge-coming"><i class="fas fa-clock"></i> Segera Hadir</span>
-            <div class="product-overlay">
-              <router-link to="/manunggal-makmur" class="btn-view-details">
-                <i class="fas fa-eye"></i> Detail Produk
-              </router-link>
-            </div>
-          </div>
-          <div class="product-info">
-            <h3>Pupuk Organik Remah Manunggal Makmur</h3>
-            <p>Pupuk organik remah – dalam proses perizinan.</p>
-            <div class="product-tags">
-              <span class="tag"><i class="fas fa-seedling"></i> Organik</span>
-              <span class="tag"><i class="fas fa-hourglass-half"></i> Proses</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-show="shouldShow('coming-soon')" class="product-card coming-soon" data-product="ptorca">
-          <div class="product-img">
-            <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy" />
-            <span class="product-badge badge-coming"><i class="fas fa-clock"></i> Segera Hadir</span>
-            <div class="product-overlay">
-              <router-link to="/ptorca" class="btn-view-details">
-                <i class="fas fa-eye"></i> Detail Produk
-              </router-link>
-            </div>
-          </div>
-          <div class="product-info">
-            <h3>Pupuk Organik Cair PTORCA</h3>
-            <p>Pupuk organik cair – proses izin edar.</p>
-            <div class="product-tags">
-              <span class="tag"><i class="fas fa-tint"></i> Cair</span>
-              <span class="tag"><i class="fas fa-seedling"></i> Organik</span>
+              <span class="tag" v-for="tag in getProductTags(product)" :key="tag">
+                <i :class="getTagIcon(tag)"></i> {{ tag }}
+              </span>
             </div>
           </div>
         </div>
@@ -104,17 +51,56 @@
 </template>
 
 <script>
+import { getAllProducts } from '@/data/product.js'
+
 export default {
   name: 'ProductsSection',
   data() {
     return {
+      products: [],
       activeFilter: 'all'
     }
   },
+  computed: {
+    filteredProducts() {
+      if (this.activeFilter === 'all') return this.products
+      return this.products.filter(p => p.status === this.activeFilter)
+    }
+  },
+  created() {
+    this.products = getAllProducts()
+  },
   methods: {
-    shouldShow(productType) {
-      if (this.activeFilter === 'all') return true
-      return this.activeFilter === productType
+    getProductLink(product) {
+      const routes = {
+        'phc-manunggal-lestari': '/manunggal-lestari',
+        'php-triobionik': '/triobionik',
+        'manunggal-makmur': '/manunggal-makmur',
+        'ptorca': '/ptorca'
+      }
+      return routes[product.id] || '/'
+    },
+    getButtonText(product) {
+      return product.id === 'php-triobionik' ? 'Lihat Varian' : 'Detail Produk'
+    },
+    getProductTags(product) {
+      const tags = []
+      if (product.id.includes('cair')) tags.push('Cair')
+      if (product.id.includes('padat') || product.id.includes('remah')) tags.push('Padat')
+      if (product.status === 'approved') tags.push('Berizin')
+      if (product.status === 'coming-soon') tags.push('Proses')
+      return tags.slice(0, 2)
+    },
+    getTagIcon(tag) {
+      const icons = {
+        'Cair': 'fas fa-tint',
+        'Padat': 'fas fa-cube',
+        'Berizin': 'fas fa-certificate',
+        'Proses': 'fas fa-hourglass-half',
+        'Hayati': 'fas fa-leaf',
+        'Organik': 'fas fa-seedling'
+      }
+      return icons[tag] || 'fas fa-info-circle'
     }
   }
 }
