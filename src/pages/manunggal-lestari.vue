@@ -77,7 +77,7 @@
             </div>
             
             <div class="product-features">
-              <h3><i class="fas fa-star"></i> Keunggulan</h3>
+              <h3><i class="fas fa-star"></i> Spesifikasi PHC Manunggal Lestari</h3>
               <ul>
                 <li v-for="(feature, index) in product.features" :key="`feature-${index}`">{{ feature }}</li>
               </ul>

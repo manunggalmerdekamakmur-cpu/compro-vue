@@ -216,6 +216,19 @@
   line-height: 1.2;
 }
 
+.product-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.product-badge,
+.certificate-badge {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .product-badge {
   display: inline-block;
   padding: 0.4rem 1rem;

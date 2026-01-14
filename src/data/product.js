@@ -7,22 +7,11 @@ export const productData = {
       'Nomor Pendaftaran : 03.02.2024.619', 
       'Bentuk Formula : Cair (Liquid)', 
       'Warna : Bening Kecoklatan', 
-      'Ukuran Kemasan : 1 Liter',
+      'Ukuran Kemasan : 1 Liter, 2 Liter, dan 5 Liter',
       'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
       'Berdasarkan standar SNI 6729:2016',
-      'Nilai TKDN : 87,38%' 
-      // 'Kemasan: 1L, 5L',
-      // 'Kandungan: Mikroorganisme bermanfaat > 10^9 CFU/ml',
-      // // 'Manfaat: Meningkatkan kesuburan tanah, pertumbuhan tanaman, dan hasil panen',
-      // 'Aplikasi: Semprot atau siram pada tanah',
-      // 'Izin: No. 03.03.2025.89'
-    ],
-    features: [
-      'Memperbaiki struktur tanah sehingga lebih subur',
-      'Membantu penyerapan unsur hara secara optimal',
-      'Merangsang pertumbuhan tanaman melalui hormon alami',
-      'Melindungi tanaman dari penyakit dan virus',
-      'Meningkatkan kualitas dan hasil produksi'
+      'Nilai TKDN : 87,38%',
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan' 
     ],
     benefits: [
       'Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.', 
@@ -31,16 +20,25 @@ export const productData = {
       'Merangsang sistem penyerapan unsur hara pada tanaman.', 
       'Melindungi tanaman dari serangan berbagai virus dan penyakit pada tanaman.'
     ],
+    features: [
+      '• Bacillus Subtillis : 5,7 x 10⁷ cfu/ml',
+      '• Rhizobium sp. : 5,4 x 10⁷ cfu/ml',
+      '• Azotobacter sp. : 1,9 x 10⁷ cfu/ml',
+      '• Azospirillum sp. : 3,3 x 10⁷ cfu/ml',
+      '• Pseudomonas Fluorescens : 4,1 x 10⁷ cfu/ml',
+      '• Streptomyces sp. : 5,5 x 10⁶ cfu/ml',
+      '• Trichoderma sp. : 1,3 x 10⁵ cfu/ml'
+    ],
     images: [
       // 'assets/img/manunggal-lestari/manunggal-lestari.webp',
-      'assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
-      'assets/img/manunggal-lestari/dekomposer-5l.webp',
+      // 'assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
+      // 'assets/img/manunggal-lestari/dekomposer-5l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
     ],
     brochure: 'assets/brochures/manunggal-lestari.pdf',
     badge: 'Berizin',
-    certificate: 'Izin Edar No: 03.03.2025.89',
+    certificate: '03.03.2025.89',
     status: 'approved'
   },
   'php-tribionik': {

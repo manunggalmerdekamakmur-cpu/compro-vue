@@ -1039,25 +1039,24 @@ header.scrolled .nav-link {
 }
 
 .product-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--white);
-    z-index: 1;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--white);
+  z-index: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
 }
 
 .badge-coming {
-    background: var(--warning);
-    color: var(--dark);
-}
-
-.badge-coming {
-    background: var(--warning);
-    color: var(--dark);
+  background: var(--warning);
+  color: var(--dark);
 }
 
 .product-info {
@@ -1085,15 +1084,18 @@ header.scrolled .nav-link {
 }
 
 .tag {
-    padding: 0.25rem 0.75rem;
-    background: rgba(26, 125, 62, 0.1);
-    border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    color: var(--primary);
-    border: 1px solid rgba(26, 125, 62, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(26, 125, 62, 0.1);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: var(--primary);
+  border: 1px solid rgba(26, 125, 62, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ============================================
@@ -1707,8 +1709,8 @@ footer {
 }
 
 .badge-approved {
-    background: var(--success);
-    color: var(--white);
+  background: var(--success);
+  color: var(--white);
 }
 
 .badge-coming {
@@ -1941,6 +1943,18 @@ footer {
     
     .hamburger {
         display: block;
+    }
+
+    .product-badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+    
+    .tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
     }
     
     .nav-menu {
@@ -2451,6 +2465,18 @@ footer {
     .hero-logo img {
         width: 60px;
         height: 60px;
+    }
+
+    .product-badge {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    .tag {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.5rem;
     }
     
     .section-title {
