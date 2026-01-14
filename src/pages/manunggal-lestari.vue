@@ -1,6 +1,5 @@
 <template>
   <div class="product-detail-page">
-    <!-- Breadcrumb -->
     <section class="breadcrumb">
       <div class="container">
         <nav aria-label="Breadcrumb">
@@ -13,19 +12,12 @@
       </div>
     </section>
 
-    <!-- Product Detail -->
     <section class="product-detail-page">
       <div class="container">
         <div class="product-detail-container">
-          <!-- Product Images -->
           <div class="product-images">
-            <div class="main-image-container">
-              <img 
-                :src="currentImage" 
-                :alt="product.title" 
-                class="main-image" 
-                @click="openImageModal"
-              >
+            <div class="main-image-container" @click="openImageModal">
+              <img :src="currentImage" :alt="product.title" class="main-image">
             </div>
             <div class="thumbnail-gallery">
               <div 
@@ -38,7 +30,14 @@
               </div>
             </div>
             
-            <!-- Product Stats -->
+            <div class="product-brochure" v-if="product.brochure">
+              <embed 
+                  :src="product.brochure"
+                  type="application/pdf"
+                  style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
+                />
+            </div>
+
             <div class="product-stats-detail">
               <div class="product-stat-item">
                 <i class="fas fa-certificate"></i>
@@ -58,7 +57,6 @@
             </div>
           </div>
 
-          <!-- Product Info -->
           <div class="product-info">
             <div class="product-header">
               <h1>{{ product.title }}</h1>
@@ -103,7 +101,6 @@
           </div>
         </div>
 
-        <!-- Related Products -->
         <section class="related-products">
           <div class="section-title">
             <h2>Produk Lainnya</h2>
@@ -112,7 +109,7 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik">
+                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PHP Tribionik</h4>
@@ -124,7 +121,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur">
+                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -136,7 +133,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA">
+                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -151,7 +148,6 @@
       </div>
     </section>
 
-    <!-- Image Modal -->
     <div :class="['modal', { active: showModal }]" @click="closeModal">
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal">&times;</button>
@@ -182,13 +178,8 @@ export default {
     }
   },
   mounted() {
-    // Set page title
     document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
-    
-    // Initialize year in footer
     this.updateYear()
-    
-    // Initialize back to top button
     this.initBackToTop()
   },
   methods: {
@@ -229,9 +220,6 @@ export default {
       } else {
         this.$router.push('/#contact')
       }
-    },
-    printPage() {
-      window.print()
     },
     updateYear() {
       const yearElement = document.querySelector('#year')

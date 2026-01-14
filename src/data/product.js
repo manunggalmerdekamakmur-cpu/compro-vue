@@ -29,13 +29,14 @@ export const productData = {
       'assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
     ],
+    brochure: 'assets/brochures/manunggal-lestari.pdf',
     badge: 'Berizin',
     certificate: 'Izin Edar No: 03.03.2025.89',
     status: 'approved'
   },
   'php-tribionik': {
     id: 'php-tribionik',
-    title: 'Pupuk Hayati Padat Tribionik',
+    title: 'PHP Tribionik',
     description: 'Pupuk Hayati Padat unggulan dengan tiga manfaat utama untuk berbagai jenis tanaman.',
     specs: [
       'Kemasan: 25gr, 100gr',
@@ -67,6 +68,7 @@ export const productData = {
       'assets/img/triobionik/dekomposer-septic-tank.webp',
       'assets/img/triobionik/dekomposer.webp'
     ],
+    brochure: 'assets/brochures/tribionik.pdf',
     badge: 'Berizin',
     certificate: 'Merek Terdaftar: IDM001289921',
     status: 'approved'
@@ -74,12 +76,13 @@ export const productData = {
   'manunggal-makmur': {
     id: 'manunggal-makmur',
     title: 'Pupuk Organik Remah Manunggal Makmur',
-    description: 'Pupuk organik remah untuk pertanian berkelanjutan - dalam proses perizinan.',
+    description: 'Pupuk organik remah untuk pertanian berkelanjutan.',
     specs: [
       'Kemasan: 5kg, 25kg, 40kg, 50kg',
       'Bentuk: Remah/granul',
       'Bahan: Organik 100%',
-      'Status: Dalam proses perizinan'
+      'pH: 6.5 - 7.5',
+      'Kandungan bahan organik: ≥ 40%'
     ],
     features: [
       'Menyuburkan tanah secara alami',
@@ -93,24 +96,26 @@ export const productData = {
       'Meningkatkan kapasitas tukar kation tanah'
     ],
     images: [
-      '/assets/img/manunggal-makmur/manunggal-makmur.webp',
-      '/assets/img/manunggal-makmur/por-5.webp',
-      '/assets/img/manunggal-makmur/por-25.webp',
+      'assets/img/manunggal-makmur/manunggal-makmur.webp',
+      'assets/img/manunggal-makmur/por-5.webp',
+      'assets/img/manunggal-makmur/por-25.webp',
       'assets/img/manunggal-makmur/por-40.webp',
       'assets/img/manunggal-makmur/por-50.webp'
     ],
-    badge: 'Segera Hadir',
-    status: 'coming-soon'
+    brochure: 'assets/brochures/manunggal-makmur.pdf',
+    badge: 'Disetujui Kementan',
+    certificate: '03.03.2025.90',
+    status: 'approved'
   },
   'ptorca': {
     id: 'ptorca',
-    title: 'Pupuk Organik Cair PTORCA',
-    description: 'Pupuk organik cair untuk tanaman pangan dan hortikultura - proses izin edar.',
+    title: 'PTORCA',
+    description: 'Pupuk organik cair untuk tanaman pangan dan hortikultura.',
     specs: [
       'Kemasan: 500ml, 1L, 5L',
       'Kandungan: Nutrisi organik lengkap',
-      'Status: Dalam proses perizinan',
-      'Target: Tanaman pangan dan hortikultura'
+      'pH: 5.5 - 7.0',
+      'Kandungan bahan organik: ≥ 15%'
     ],
     features: [
       'Mudah diserap oleh tanaman',
@@ -124,12 +129,14 @@ export const productData = {
       'Memperbaiki kualitas hasil panen'
     ],
     images: [
-      '/assets/img/ptorca/ptorca.webp',
-      '/assets/img/ptorca/ptorca-5l.webp',
-      '/assets/img/ptorca/ptorca-1l.webp'
+      'assets/img/ptorca/ptorca.webp',
+      'assets/img/ptorca/ptorca-5l.webp',
+      'assets/img/ptorca/ptorca-1l.webp'
     ],
-    badge: 'Segera Hadir',
-    status: 'coming-soon'
+    brochure: 'assets/brochures/ptorca.pdf',
+    badge: 'Disetujui Kementan',
+    certificate: '03.03.2025.91',
+    status: 'approved'
   }
 }
 
