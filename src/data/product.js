@@ -41,9 +41,9 @@ export const productData = {
     certificate: '03.03.2025.89',
     status: 'approved'
   },
-  'php-tribionik': {
-    id: 'php-tribionik',
-    title: 'PHP Tribionik',
+  'php-triobionik': {
+    id: 'php-triobionik',
+    title: 'PHP Triobionik',
     description: 'Pupuk Hayati Padat unggulan dengan tiga manfaat utama untuk berbagai jenis tanaman.',
     specs: [
       'Kemasan: 25gr, 100gr',
@@ -75,7 +75,7 @@ export const productData = {
       'assets/img/triobionik/dekomposer-septic-tank.webp',
       'assets/img/triobionik/dekomposer.webp'
     ],
-    brochure: 'assets/brochures/tribionik.pdf',
+    brochure: 'assets/brochures/triobionik.pdf',
     badge: 'Berizin',
     certificate: 'Merek Terdaftar: IDM001289921',
     status: 'approved'

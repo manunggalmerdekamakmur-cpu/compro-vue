@@ -163,13 +163,13 @@
 import { getProductById } from '@/data/product.js'
 
 export default {
-  name: 'Tribionik',
+  name: 'Triobionik',
   data() {
     return {
       currentImageIndex: 0,
       showModal: false,
       modalImage: '',
-      product: getProductById('php-tribionik') || {}
+      product: getProductById('php-triobionik') || {}
     }
   },
   computed: {

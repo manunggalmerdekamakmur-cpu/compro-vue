@@ -109,12 +109,12 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik" loading="lazy">
+                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Triobionik" loading="lazy">
               </div>
               <div class="related-product-info">
-                <h4>PHP Tribionik</h4>
+                <h4>PHP Triobionik</h4>
                 <p>Pupuk Hayati Padat dengan tiga manfaat utama untuk berbagai jenis tanaman.</p>
-                <router-link to="/tribionik" class="related-product-link">
+                <router-link to="/triobionik" class="related-product-link">
                   Lihat Detail <i class="fas fa-arrow-right"></i>
                 </router-link>
               </div>

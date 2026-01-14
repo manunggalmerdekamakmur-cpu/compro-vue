@@ -13,28 +13,33 @@
         <button
           class="filter-btn"
           :class="{ active: activeFilter === 'all' }"
-          @click="setFilter('all')"
+          @click="activeFilter = 'all'"
         >
           <i class="fas fa-boxes"></i> Semua Produk
         </button>
         <button
           class="filter-btn"
           :class="{ active: activeFilter === 'approved' }"
-          @click="setFilter('approved')"
+          @click="activeFilter = 'approved'"
         >
           <i class="fas fa-certificate"></i> Berizin
         </button>
         <button
           class="filter-btn"
           :class="{ active: activeFilter === 'coming-soon' }"
-          @click="setFilter('coming-soon')"
+          @click="activeFilter = 'coming-soon'"
         >
           <i class="fas fa-clock"></i> Segera Hadir
         </button>
       </div>
 
       <div class="products-grid">
-        <div class="product-card approved" data-product="phc-manunggal-lestari">
+        <!-- Produk 1: Manunggal Lestari -->
+        <div 
+          v-show="shouldShow('approved')" 
+          class="product-card approved" 
+          data-product="phc-manunggal-lestari"
+        >
           <div class="product-img">
             <img
               src="/assets/img/manunggal-lestari/manunggal-lestari.webp"
@@ -60,24 +65,29 @@
           </div>
         </div>
 
-        <div class="product-card approved" data-product="php-tribionik">
+        <!-- Produk 2: Triobionik -->
+        <div 
+          v-show="shouldShow('approved')" 
+          class="product-card approved" 
+          data-product="php-triobionik"
+        >
           <div class="product-img">
             <img
               src="/assets/img/triobionik/triobionik.webp"
-              alt="PHP Tribionik"
+              alt="PHP Triobionik"
               loading="lazy"
             />
             <span class="product-badge badge-approved">
               <i class="fas fa-check-circle"></i> Berizin
             </span>
             <div class="product-overlay">
-              <router-link to="/tribionik" class="btn-view-details">
+              <router-link to="/triobionik" class="btn-view-details">
                 <i class="fas fa-eye"></i> Detail Produk
               </router-link>
             </div>
           </div>
           <div class="product-info">
-            <h3>Pupuk Hayati Padat Tribionik</h3>
+            <h3>Pupuk Hayati Padat Triobionik</h3>
             <p>Pupuk Hayati Padat unggulan dengan tiga manfaat utama.</p>
             <div class="product-tags">
               <span class="tag"><i class="fas fa-cube"></i> Padat</span>
@@ -86,7 +96,12 @@
           </div>
         </div>
 
-        <div class="product-card coming-soon" data-product="manunggal-makmur">
+        <!-- Produk 3: Manunggal Makmur -->
+        <div 
+          v-show="shouldShow('coming-soon')" 
+          class="product-card coming-soon" 
+          data-product="manunggal-makmur"
+        >
           <div class="product-img">
             <img
               src="/assets/img/manunggal-makmur/manunggal-makmur.webp"
@@ -114,7 +129,12 @@
           </div>
         </div>
 
-        <div class="product-card coming-soon" data-product="ptorca">
+        <!-- Produk 4: PTORCA -->
+        <div 
+          v-show="shouldShow('coming-soon')" 
+          class="product-card coming-soon" 
+          data-product="ptorca"
+        >
           <div class="product-img">
             <img
               src="/assets/img/ptorca/ptorca.webp"
@@ -153,28 +173,14 @@ export default {
     };
   },
   methods: {
-    setFilter(filter) {
-      this.activeFilter = filter;
-      this.filterProducts();
+    shouldShow(productType) {
+      // Jika filter aktif adalah 'all', tampilkan semua produk
+      if (this.activeFilter === "all") {
+        return true;
+      }
+      // Jika filter aktif sesuai dengan tipe produk, tampilkan produk tersebut
+      return this.activeFilter === productType;
     },
-    filterProducts() {
-      const products = document.querySelectorAll(".product-card");
-
-      products.forEach((product) => {
-        if (this.activeFilter === "all") {
-          product.style.display = "block";
-        } else {
-          if (product.classList.contains(this.activeFilter)) {
-            product.style.display = "block";
-          } else {
-            product.style.display = "none";
-          }
-        }
-      });
-    },
-  },
-  mounted() {
-    this.filterProducts();
   },
 };
 </script>

@@ -4,7 +4,7 @@ import App from './App.vue'
 
 import Home from './pages/Home.vue'
 import ManunggalLestari from './pages/manunggal-lestari.vue'
-import Tribionik from './pages/tribionik.vue'
+import Triobionik from './pages/triobionik.vue'
 import Ptorca from './pages/ptorca.vue'
 import ManunggalMakmur from './pages/manunggal-makmur.vue'
 
@@ -20,9 +20,9 @@ const routes = [
         meta: { title: 'Manunggal Lestari' }
     },
     { 
-        path: '/tribionik', 
-        component: Tribionik,
-        meta: { title: 'Tribionik' }
+        path: '/triobionik', 
+        component: Triobionik,
+        meta: { title: 'Triobionik' }
     },
     { 
         path: '/ptorca', 
