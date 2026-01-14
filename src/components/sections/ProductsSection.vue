@@ -5,7 +5,6 @@
         <h2>Produk Unggulan Kami</h2>
         <p>Produk pupuk hayati dan organik berkualitas untuk mendukung pertanian berkelanjutan</p>
       </div>
-
       <div class="product-filter">
         <button class="filter-btn" :class="{ active: activeFilter === 'all' }" @click="activeFilter = 'all'">
           <i class="fas fa-boxes"></i> Semua Produk
@@ -17,12 +16,8 @@
           <i class="fas fa-clock"></i> Segera Hadir
         </button>
       </div>
-
       <div class="products-grid">
-        <div v-for="product in filteredProducts" 
-             :key="product.id" 
-             class="product-card"
-             :class="product.status">
+        <router-link v-for="product in filteredProducts" :key="product.id" :to="getProductLink(product)" class="product-card" :class="product.status">
           <div class="product-img">
             <img :src="product.images[0]" :alt="product.title" loading="lazy" />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
@@ -30,9 +25,9 @@
               {{ product.badge }}
             </span>
             <div class="product-overlay">
-              <router-link :to="getProductLink(product)" class="btn-view-details">
+              <span class="btn-view-details">
                 <i class="fas fa-eye"></i> {{ getButtonText(product) }}
-              </router-link>
+              </span>
             </div>
           </div>
           <div class="product-info">
@@ -44,7 +39,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </section>
@@ -96,9 +91,7 @@ export default {
         'Cair': 'fas fa-tint',
         'Padat': 'fas fa-cube',
         'Berizin': 'fas fa-certificate',
-        'Proses': 'fas fa-hourglass-half',
-        'Hayati': 'fas fa-leaf',
-        'Organik': 'fas fa-seedling'
+        'Proses': 'fas fa-hourglass-half'
       }
       return icons[tag] || 'fas fa-info-circle'
     }
