@@ -3,52 +3,26 @@
     <div class="container">
       <div class="section-title">
         <h2>Produk Unggulan Kami</h2>
-        <p>
-          Produk pupuk hayati dan organik berkualitas untuk mendukung pertanian
-          berkelanjutan
-        </p>
+        <p>Produk pupuk hayati dan organik berkualitas untuk mendukung pertanian berkelanjutan</p>
       </div>
 
       <div class="product-filter">
-        <button
-          class="filter-btn"
-          :class="{ active: activeFilter === 'all' }"
-          @click="activeFilter = 'all'"
-        >
+        <button class="filter-btn" :class="{ active: activeFilter === 'all' }" @click="activeFilter = 'all'">
           <i class="fas fa-boxes"></i> Semua Produk
         </button>
-        <button
-          class="filter-btn"
-          :class="{ active: activeFilter === 'approved' }"
-          @click="activeFilter = 'approved'"
-        >
+        <button class="filter-btn" :class="{ active: activeFilter === 'approved' }" @click="activeFilter = 'approved'">
           <i class="fas fa-certificate"></i> Berizin
         </button>
-        <button
-          class="filter-btn"
-          :class="{ active: activeFilter === 'coming-soon' }"
-          @click="activeFilter = 'coming-soon'"
-        >
+        <button class="filter-btn" :class="{ active: activeFilter === 'coming-soon' }" @click="activeFilter = 'coming-soon'">
           <i class="fas fa-clock"></i> Segera Hadir
         </button>
       </div>
 
       <div class="products-grid">
-        <!-- Produk 1: Manunggal Lestari -->
-        <div 
-          v-show="shouldShow('approved')" 
-          class="product-card approved" 
-          data-product="phc-manunggal-lestari"
-        >
+        <div v-show="shouldShow('approved')" class="product-card approved" data-product="phc-manunggal-lestari">
           <div class="product-img">
-            <img
-              src="/assets/img/manunggal-lestari/manunggal-lestari.webp"
-              alt="Pupuk Hayati Cair Manunggal Lestari"
-              loading="lazy"
-            />
-            <span class="product-badge badge-approved">
-              <i class="fas fa-check-circle"></i> Berizin
-            </span>
+            <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Pupuk Hayati Cair Manunggal Lestari" loading="lazy" />
+            <span class="product-badge badge-approved"><i class="fas fa-check-circle"></i> Berizin</span>
             <div class="product-overlay">
               <router-link to="/manunggal-lestari" class="btn-view-details">
                 <i class="fas fa-eye"></i> Detail Produk
@@ -65,29 +39,18 @@
           </div>
         </div>
 
-        <!-- Produk 2: Triobionik -->
-        <div 
-          v-show="shouldShow('approved')" 
-          class="product-card approved" 
-          data-product="php-triobionik"
-        >
+        <div v-show="shouldShow('approved')" class="product-card approved" data-product="php-triobionik">
           <div class="product-img">
-            <img
-              src="/assets/img/triobionik/triobionik.webp"
-              alt="PHP Triobionik"
-              loading="lazy"
-            />
-            <span class="product-badge badge-approved">
-              <i class="fas fa-check-circle"></i> Berizin
-            </span>
+            <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Triobionik" loading="lazy" />
+            <span class="product-badge badge-approved"><i class="fas fa-check-circle"></i> Berizin</span>
             <div class="product-overlay">
               <router-link to="/triobionik" class="btn-view-details">
-                <i class="fas fa-eye"></i> Detail Produk
+                <i class="fas fa-eye"></i> Lihat Varian
               </router-link>
             </div>
           </div>
           <div class="product-info">
-            <h3>Pupuk Hayati Padat Triobionik</h3>
+            <h3>Pupuk Hayati Padat Tribionik</h3>
             <p>Pupuk Hayati Padat unggulan dengan tiga manfaat utama.</p>
             <div class="product-tags">
               <span class="tag"><i class="fas fa-cube"></i> Padat</span>
@@ -96,21 +59,10 @@
           </div>
         </div>
 
-        <!-- Produk 3: Manunggal Makmur -->
-        <div 
-          v-show="shouldShow('coming-soon')" 
-          class="product-card coming-soon" 
-          data-product="manunggal-makmur"
-        >
+        <div v-show="shouldShow('coming-soon')" class="product-card coming-soon" data-product="manunggal-makmur">
           <div class="product-img">
-            <img
-              src="/assets/img/manunggal-makmur/manunggal-makmur.webp"
-              alt="Manunggal Makmur"
-              loading="lazy"
-            />
-            <span class="product-badge badge-coming">
-              <i class="fas fa-clock"></i> Segera Hadir
-            </span>
+            <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy" />
+            <span class="product-badge badge-coming"><i class="fas fa-clock"></i> Segera Hadir</span>
             <div class="product-overlay">
               <router-link to="/manunggal-makmur" class="btn-view-details">
                 <i class="fas fa-eye"></i> Detail Produk
@@ -122,28 +74,15 @@
             <p>Pupuk organik remah – dalam proses perizinan.</p>
             <div class="product-tags">
               <span class="tag"><i class="fas fa-seedling"></i> Organik</span>
-              <span class="tag"
-                ><i class="fas fa-hourglass-half"></i> Proses</span
-              >
+              <span class="tag"><i class="fas fa-hourglass-half"></i> Proses</span>
             </div>
           </div>
         </div>
 
-        <!-- Produk 4: PTORCA -->
-        <div 
-          v-show="shouldShow('coming-soon')" 
-          class="product-card coming-soon" 
-          data-product="ptorca"
-        >
+        <div v-show="shouldShow('coming-soon')" class="product-card coming-soon" data-product="ptorca">
           <div class="product-img">
-            <img
-              src="/assets/img/ptorca/ptorca.webp"
-              alt="PTORCA"
-              loading="lazy"
-            />
-            <span class="product-badge badge-coming">
-              <i class="fas fa-clock"></i> Segera Hadir
-            </span>
+            <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy" />
+            <span class="product-badge badge-coming"><i class="fas fa-clock"></i> Segera Hadir</span>
             <div class="product-overlay">
               <router-link to="/ptorca" class="btn-view-details">
                 <i class="fas fa-eye"></i> Detail Produk
@@ -166,21 +105,17 @@
 
 <script>
 export default {
-  name: "ProductsSection",
+  name: 'ProductsSection',
   data() {
     return {
-      activeFilter: "all",
-    };
+      activeFilter: 'all'
+    }
   },
   methods: {
     shouldShow(productType) {
-      // Jika filter aktif adalah 'all', tampilkan semua produk
-      if (this.activeFilter === "all") {
-        return true;
-      }
-      // Jika filter aktif sesuai dengan tipe produk, tampilkan produk tersebut
-      return this.activeFilter === productType;
-    },
-  },
-};
+      if (this.activeFilter === 'all') return true
+      return this.activeFilter === productType
+    }
+  }
+}
 </script>

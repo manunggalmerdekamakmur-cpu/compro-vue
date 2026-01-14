@@ -4,20 +4,20 @@ export const productData = {
     title: 'PHC Manunggal Lestari',
     description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
     specs: [
-      'Nomor Pendaftaran : 03.02.2024.619', 
-      'Bentuk Formula : Cair (Liquid)', 
-      'Warna : Bening Kecoklatan', 
+      'Nomor Pendaftaran : 03.02.2024.619',
+      'Bentuk Formula : Cair (Liquid)',
+      'Warna : Bening Kecoklatan',
       'Ukuran Kemasan : 1 Liter, 2 Liter, dan 5 Liter',
       'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
       'Berdasarkan standar SNI 6729:2016',
       'Nilai TKDN : 87,38%',
-      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan' 
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     benefits: [
-      'Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.', 
+      'Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.',
       'Membantu proses penyiapan unsur hara yang mudah diserap oleh tanaman.',
-      'Menghasilkan beberapa hormon pertumbuhan dan kesehatan pada tanaman.', 
-      'Merangsang sistem penyerapan unsur hara pada tanaman.', 
+      'Menghasilkan beberapa hormon pertumbuhan dan kesehatan pada tanaman.',
+      'Merangsang sistem penyerapan unsur hara pada tanaman.',
       'Melindungi tanaman dari serangan berbagai virus dan penyakit pada tanaman.'
     ],
     features: [
@@ -30,9 +30,6 @@ export const productData = {
       '• Trichoderma sp. : 1,3 x 10⁵ cfu/ml'
     ],
     images: [
-      // 'assets/img/manunggal-lestari/manunggal-lestari.webp',
-      // 'assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
-      // 'assets/img/manunggal-lestari/dekomposer-5l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
     ],
@@ -77,7 +74,7 @@ export const productData = {
     ],
     brochure: 'assets/brochures/triobionik.pdf',
     badge: 'Berizin',
-    certificate: 'Merek Terdaftar: IDM001289921',
+    certificate: '03.03.2025.92',
     status: 'approved'
   },
   'manunggal-makmur': {
@@ -112,7 +109,7 @@ export const productData = {
     brochure: 'assets/brochures/manunggal-makmur.pdf',
     badge: 'Dalam Proses Perizinan',
     certificate: 'Coming Soon',
-    status: 'Coming Soon'
+    status: 'coming-soon'
   },
   'ptorca': {
     id: 'ptorca',

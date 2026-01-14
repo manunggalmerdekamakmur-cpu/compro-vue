@@ -5,7 +5,7 @@
         <nav aria-label="Breadcrumb">
           <ol>
             <li><router-link to="/">Beranda</router-link></li>
-            <li><a href="#products" @click.prevent="scrollToProducts">Produk</a></li>
+            <li><router-link to="/triobionik">Tribionik</router-link></li>
             <li class="current">{{ product.title }}</li>
           </ol>
         </nav>
@@ -17,32 +17,25 @@
         <div class="product-detail-container">
           <div class="product-images">
             <div class="main-image-container" @click="openImageModal">
-              <img :src="currentImage" :alt="product.title" class="main-image">
+              <img :src="currentImage" :alt="product.title" class="main-image" />
             </div>
             <div class="thumbnail-gallery">
-              <div 
-                v-for="(image, index) in product.images" 
-                :key="index"
-                :class="['thumbnail-item', { active: currentImageIndex === index }]"
-                @click="changeImage(image, index)"
-              >
-                <img :src="image" :alt="`${product.title} ${index + 1}`" loading="lazy">
+              <div v-for="(image, index) in product.images" :key="index"
+                   :class="['thumbnail-item', { active: currentImageIndex === index }]"
+                   @click="changeImage(index)">
+                <img :src="image" :alt="`${product.title} ${index + 1}`" loading="lazy" />
               </div>
             </div>
-            
+
             <div class="product-brochure" v-if="product.brochure">
-              <embed 
-                  :src="product.brochure"
-                  type="application/pdf"
-                  style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
-                />
+              <embed :src="product.brochure" type="application/pdf" style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" />
             </div>
 
             <div class="product-stats-detail">
               <div class="product-stat-item">
                 <i class="fas fa-certificate"></i>
                 <h4>Berizin</h4>
-                <p>No. 03.03.2025.92</p>
+                <p>{{ product.certificate }}</p>
               </div>
               <div class="product-stat-item">
                 <i class="fas fa-flask"></i>
@@ -66,36 +59,36 @@
                 <span>Izin Edar No: {{ product.certificate }}</span>
               </div>
             </div>
-            
+
             <p class="product-description">{{ product.description }}</p>
-            
+
             <div class="product-specs">
               <h3><i class="fas fa-clipboard-list"></i> Spesifikasi Produk</h3>
               <ul>
                 <li v-for="(spec, index) in product.specs" :key="`spec-${index}`">{{ spec }}</li>
               </ul>
             </div>
-            
+
             <div class="product-features">
               <h3><i class="fas fa-star"></i> Keunggulan</h3>
               <ul>
                 <li v-for="(feature, index) in product.features" :key="`feature-${index}`">{{ feature }}</li>
               </ul>
             </div>
-            
+
             <div class="product-benefits">
               <h3><i class="fas fa-check-circle"></i> Manfaat</h3>
               <ul>
                 <li v-for="(benefit, index) in product.benefits" :key="`benefit-${index}`">{{ benefit }}</li>
               </ul>
             </div>
-            
+
             <div class="product-actions">
               <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">
                 <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
-              <router-link to="/#products" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Lihat Produk Lain
+              <router-link to="/triobionik" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Lihat Varian Lain
               </router-link>
             </div>
           </div>
@@ -109,38 +102,32 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari" loading="lazy">
+                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari" loading="lazy" />
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Lestari</h4>
                 <p>Pupuk organik cair untuk tanaman pangan, hortikultura, dan perkebunan.</p>
-                <router-link to="/manunggal-lestari" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
+                <router-link to="/manunggal-lestari" class="related-product-link">Lihat Detail <i class="fas fa-arrow-right"></i></router-link>
               </div>
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
+                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy" />
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
                 <p>Pupuk organik remah untuk pertanian berkelanjutan.</p>
-                <router-link to="/manunggal-makmur" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
+                <router-link to="/manunggal-makmur" class="related-product-link">Lihat Detail <i class="fas fa-arrow-right"></i></router-link>
               </div>
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
+                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy" />
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
                 <p>Pupuk organik cair untuk tanaman pangan dan hortikultura.</p>
-                <router-link to="/ptorca" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
+                <router-link to="/ptorca" class="related-product-link">Lihat Detail <i class="fas fa-arrow-right"></i></router-link>
               </div>
             </div>
           </div>
@@ -152,7 +139,7 @@
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal">&times;</button>
         <div class="modal-main-image">
-          <img :src="modalImage" :alt="product.title">
+          <img :src="modalImage" :alt="product.title" />
         </div>
       </div>
     </div>
@@ -169,21 +156,32 @@ export default {
       currentImageIndex: 0,
       showModal: false,
       modalImage: '',
-      product: getProductById('php-triobionik') || {}
+      product: {}
     }
   },
   computed: {
     currentImage() {
-      return this.product.images ? this.product.images[this.currentImageIndex] : ''
+      return this.product.images && this.product.images[this.currentImageIndex]
+        ? this.product.images[this.currentImageIndex]
+        : (this.product.images && this.product.images[0]) || ''
     }
   },
   mounted() {
+    const productId = this.$route.params.productId || 'php-triobionik'
+    const variantIndex = parseInt(this.$route.params.variantIndex, 10)
+    const p = getProductById(productId) || getProductById('php-triobionik') || {}
+    this.product = p
+    if (!Number.isNaN(variantIndex) && variantIndex >= 0 && variantIndex < (p.images || []).length) {
+      this.currentImageIndex = variantIndex
+    } else {
+      this.currentImageIndex = 0
+    }
     document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
     this.updateYear()
     this.initBackToTop()
   },
   methods: {
-    changeImage(image, index) {
+    changeImage(index) {
       this.currentImageIndex = index
     },
     openImageModal() {
@@ -223,21 +221,15 @@ export default {
     },
     updateYear() {
       const yearElement = document.querySelector('#year')
-      if (yearElement) {
-        yearElement.textContent = new Date().getFullYear()
-      }
+      if (yearElement) yearElement.textContent = new Date().getFullYear()
     },
     initBackToTop() {
       const backToTop = document.getElementById('backToTop')
       if (backToTop) {
         window.addEventListener('scroll', () => {
-          if (window.pageYOffset > 300) {
-            backToTop.classList.add('visible')
-          } else {
-            backToTop.classList.remove('visible')
-          }
+          if (window.pageYOffset > 300) backToTop.classList.add('visible')
+          else backToTop.classList.remove('visible')
         })
-        
         backToTop.addEventListener('click', () => {
           window.scrollTo({ top: 0, behavior: 'smooth' })
         })
