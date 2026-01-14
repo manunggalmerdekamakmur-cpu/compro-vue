@@ -2,13 +2,20 @@ export const productData = {
   'phc-manunggal-lestari': {
     id: 'phc-manunggal-lestari',
     title: 'PHC Manunggal Lestari',
-    description: 'Pupuk Hayati Cair untuk tanaman pangan dan hortikultura. Mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
+    description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
     specs: [
-      'Kemasan: 1L, 5L',
-      'Kandungan: Mikroorganisme bermanfaat > 10^9 CFU/ml',
-      'Manfaat: Meningkatkan kesuburan tanah, pertumbuhan tanaman, dan hasil panen',
-      'Aplikasi: Semprot atau siram pada tanah',
-      'Izin: No. 03.03.2025.89'
+      'Nomor Pendaftaran : 03.02.2024.619', 
+      'Bentuk Formula : Cair (Liquid)', 
+      'Warna : Bening Kecoklatan', 
+      'Ukuran Kemasan : 1 Liter',
+      'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 87,38%' 
+      // 'Kemasan: 1L, 5L',
+      // 'Kandungan: Mikroorganisme bermanfaat > 10^9 CFU/ml',
+      // // 'Manfaat: Meningkatkan kesuburan tanah, pertumbuhan tanaman, dan hasil panen',
+      // 'Aplikasi: Semprot atau siram pada tanah',
+      // 'Izin: No. 03.03.2025.89'
     ],
     features: [
       'Memperbaiki struktur tanah sehingga lebih subur',
@@ -18,12 +25,14 @@ export const productData = {
       'Meningkatkan kualitas dan hasil produksi'
     ],
     benefits: [
-      'Meningkatkan hasil panen hingga 30%',
-      'Mengurangi penggunaan pupuk kimia',
-      'Memperbaiki kualitas tanah secara berkelanjutan'
+      'Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.', 
+      'Membantu proses penyiapan unsur hara yang mudah diserap oleh tanaman.',
+      'Menghasilkan beberapa hormon pertumbuhan dan kesehatan pada tanaman.', 
+      'Merangsang sistem penyerapan unsur hara pada tanaman.', 
+      'Melindungi tanaman dari serangan berbagai virus dan penyakit pada tanaman.'
     ],
     images: [
-      'assets/img/manunggal-lestari/manunggal-lestari.webp',
+      // 'assets/img/manunggal-lestari/manunggal-lestari.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari-1lbiru.webp',
       'assets/img/manunggal-lestari/dekomposer-5l.webp',
       'assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
@@ -103,9 +112,9 @@ export const productData = {
       'assets/img/manunggal-makmur/por-50.webp'
     ],
     brochure: 'assets/brochures/manunggal-makmur.pdf',
-    badge: 'Disetujui Kementan',
-    certificate: '03.03.2025.90',
-    status: 'approved'
+    badge: 'Dalam Proses Perizinan',
+    certificate: 'Coming Soon',
+    status: 'Coming Soon'
   },
   'ptorca': {
     id: 'ptorca',

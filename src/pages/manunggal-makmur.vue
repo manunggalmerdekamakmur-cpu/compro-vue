@@ -1,6 +1,5 @@
 <template>
   <div class="product-detail-page">
-    <!-- Breadcrumb -->
     <section class="breadcrumb">
       <div class="container">
         <nav aria-label="Breadcrumb">
@@ -13,19 +12,12 @@
       </div>
     </section>
 
-    <!-- Product Detail -->
     <section class="product-detail-page">
       <div class="container">
         <div class="product-detail-container">
-          <!-- Product Images -->
           <div class="product-images">
-            <div class="main-image-container">
-              <img 
-                :src="currentImage" 
-                :alt="product.title" 
-                class="main-image" 
-                @click="openImageModal"
-              >
+            <div class="main-image-container" @click="openImageModal">
+              <img :src="currentImage" :alt="product.title" class="main-image">
             </div>
             <div class="thumbnail-gallery">
               <div 
@@ -38,27 +30,33 @@
               </div>
             </div>
             
-            <!-- Product Stats -->
-            <div class="product-stats-detail">
-              <div class="product-stat-item">
-                <i class="fas fa-certificate"></i>
-                <h4>Berizin</h4>
-                <p>No. 03.03.2025.89</p>
-              </div>
-              <div class="product-stat-item">
-                <i class="fas fa-flask"></i>
-                <h4>Teruji</h4>
-                <p>Laboratorium Terakreditasi</p>
-              </div>
-              <div class="product-stat-item">
-                <i class="fas fa-leaf"></i>
-                <h4>Organik</h4>
-                <p>100% Ramah Lingkungan</p>
-              </div>
+            <div class="product-brochure" v-if="product.brochure">
+              <embed 
+                  :src="product.brochure"
+                  type="application/pdf"
+                  style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
+                />
             </div>
+
+            <div class="product-stats-detail">
+                            <div class="product-stat-item">
+                                <i class="fas fa-clock"></i>
+                                <h4>Segera</h4>
+                                <p>Dalam Proses</p>
+                            </div>
+                            <div class="product-stat-item">
+                                <i class="fas fa-recycle"></i>
+                                <h4>Organik</h4>
+                                <p>100% Alami</p>
+                            </div>
+                            <div class="product-stat-item">
+                                <i class="fas fa-weight"></i>
+                                <h4>Berat</h4>
+                                <p>5kg - 50kg</p>
+                            </div>
+                        </div>
           </div>
 
-          <!-- Product Info -->
           <div class="product-info">
             <div class="product-header">
               <h1>{{ product.title }}</h1>
@@ -94,7 +92,7 @@
             
             <div class="product-actions">
               <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">
-                <i class="fas fa-whatsapp"></i> Pesan Sekarang
+                <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
               <router-link to="/#products" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Lihat Produk Lain
@@ -103,7 +101,6 @@
           </div>
         </div>
 
-        <!-- Related Products -->
         <section class="related-products">
           <div class="section-title">
             <h2>Produk Lainnya</h2>
@@ -112,7 +109,7 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari">
+                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Lestari</h4>
@@ -124,7 +121,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik">
+                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Tribionik" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PHP Tribionik</h4>
@@ -136,7 +133,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA">
+                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -151,7 +148,6 @@
       </div>
     </section>
 
-    <!-- Image Modal -->
     <div :class="['modal', { active: showModal }]" @click="closeModal">
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal">&times;</button>
@@ -173,44 +169,7 @@ export default {
       currentImageIndex: 0,
       showModal: false,
       modalImage: '',
-      product: getProductById('manunggal-makmur') || {
-        title: 'Manunggal Makmur',
-        badge: 'Disetujui Kementan',
-        certificate: '03.03.2025.90',
-        description: 'Pupuk organik padat yang memperbaiki struktur tanah dan menyediakan nutrisi lengkap untuk tanaman pertanian, perkebunan, dan hortikultura.',
-        images: [
-          '/assets/img/manunggal-makmur/manunggal-makmur.webp'
-        ],
-        specs: [
-          'Bentuk: Padat (Remah)',
-          'Warna: Coklat tua kehitaman',
-          'Konsistensi: Remah homogen',
-          'pH: 6.5 - 7.5',
-          'Kandungan bahan organik: ≥ 40%',
-          'Kadar air: ≤ 25%',
-          'C-Organik: ≥ 20%',
-          'N total: ≥ 1.5%',
-          'P2O5: ≥ 1.0%',
-          'K2O: ≥ 1.0%',
-          'C/N Ratio: ≤ 20'
-        ],
-        features: [
-          'Terbuat dari bahan organik pilihan',
-          'Proses produksi terkontrol',
-          'Tanpa bahan kimia berbahaya',
-          'Ramah lingkungan dan mikroorganisme tanah',
-          'Meningkatkan kapasitas tukar kation tanah'
-        ],
-        benefits: [
-          'Memperbaiki struktur tanah menjadi lebih gembur',
-          'Meningkatkan kandungan bahan organik tanah',
-          'Menyediakan unsur hara makro dan mikro lengkap',
-          'Meningkatkan daya serap air tanah',
-          'Mengaktifkan mikroorganisme menguntungkan',
-          'Meningkatkan produktivitas tanaman',
-          'Mengurangi ketergantungan pada pupuk kimia'
-        ]
-      }
+      product: getProductById('manunggal-makmur') || {}
     }
   },
   computed: {

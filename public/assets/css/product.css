@@ -65,7 +65,7 @@
 
 .product-detail-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(380px, 1fr) minmax(500px, 1.3fr);
   gap: 3rem;
   margin-bottom: 4rem;
 }
@@ -502,7 +502,7 @@
 
 @media (max-width: 992px) {
   .product-detail-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(380px, 1fr) minmax(500px, 1.3fr);
     gap: 2rem;
   }
   

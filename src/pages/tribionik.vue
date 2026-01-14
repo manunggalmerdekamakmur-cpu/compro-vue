@@ -1,6 +1,5 @@
 <template>
   <div class="product-detail-page">
-    <!-- Breadcrumb -->
     <section class="breadcrumb">
       <div class="container">
         <nav aria-label="Breadcrumb">
@@ -13,19 +12,12 @@
       </div>
     </section>
 
-    <!-- Product Detail -->
     <section class="product-detail-page">
       <div class="container">
         <div class="product-detail-container">
-          <!-- Product Images -->
           <div class="product-images">
-            <div class="main-image-container">
-              <img 
-                :src="currentImage" 
-                :alt="product.title" 
-                class="main-image" 
-                @click="openImageModal"
-              >
+            <div class="main-image-container" @click="openImageModal">
+              <img :src="currentImage" :alt="product.title" class="main-image">
             </div>
             <div class="thumbnail-gallery">
               <div 
@@ -38,7 +30,14 @@
               </div>
             </div>
             
-            <!-- Product Stats -->
+            <div class="product-brochure" v-if="product.brochure">
+              <embed 
+                  :src="product.brochure"
+                  type="application/pdf"
+                  style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
+                />
+            </div>
+
             <div class="product-stats-detail">
               <div class="product-stat-item">
                 <i class="fas fa-certificate"></i>
@@ -58,7 +57,6 @@
             </div>
           </div>
 
-          <!-- Product Info -->
           <div class="product-info">
             <div class="product-header">
               <h1>{{ product.title }}</h1>
@@ -94,7 +92,7 @@
             
             <div class="product-actions">
               <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">
-                <i class="fas fa-whatsapp"></i> Pesan Sekarang
+                <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
               <router-link to="/#products" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Lihat Produk Lain
@@ -103,7 +101,6 @@
           </div>
         </div>
 
-        <!-- Related Products -->
         <section class="related-products">
           <div class="section-title">
             <h2>Produk Lainnya</h2>
@@ -112,7 +109,7 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari">
+                <img src="/assets/img/manunggal-lestari/manunggal-lestari.webp" alt="Manunggal Lestari" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Lestari</h4>
@@ -124,7 +121,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur">
+                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -136,7 +133,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA">
+                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -151,7 +148,6 @@
       </div>
     </section>
 
-    <!-- Image Modal -->
     <div :class="['modal', { active: showModal }]" @click="closeModal">
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal">&times;</button>
@@ -173,42 +169,7 @@ export default {
       currentImageIndex: 0,
       showModal: false,
       modalImage: '',
-      product: getProductById('php-tribionik') || {
-        title: 'PHP Tribionik',
-        badge: 'Disetujui Kementan',
-        certificate: '03.03.2025.92',
-        description: 'Pupuk Hayati Padat dengan tiga mikroorganisme unggulan (Trichoderma sp., Pseudomonas sp., dan Bacillus sp.) untuk berbagai jenis tanaman.',
-        images: [
-          '/assets/img/triobionik/triobionik.webp'
-        ],
-        specs: [
-          'Bentuk: Padat (Granul)',
-          'Warna: Abu-abu kecoklatan',
-          'Bobot isi: 0.6 - 0.8 g/cm³',
-          'pH: 6.0 - 7.5',
-          'Kadar air: ≤ 20%',
-          'Trichoderma sp.: ≥ 1 x 10⁸ CFU/g',
-          'Pseudomonas sp.: ≥ 1 x 10⁸ CFU/g',
-          'Bacillus sp.: ≥ 1 x 10⁸ CFU/g',
-          'Bahan pembawa: Zeolit dan bahan organik'
-        ],
-        features: [
-          'Mengandung tiga mikroorganisme unggulan',
-          'Formulasi padat stabil',
-          'Masa simpan panjang',
-          'Mudah diaplikasikan',
-          'Kompatibel dengan sistem pertanian organik'
-        ],
-        benefits: [
-          'Meningkatkan ketersediaan hara dalam tanah',
-          'Mengendalikan patogen tular tanah',
-          'Meningkatkan pertumbuhan akar tanaman',
-          'Memperbaiki struktur fisik tanah',
-          'Meningkatkan efisiensi pupuk',
-          'Mengurangi penggunaan pestisida kimia',
-          'Meningkatkan hasil panen 20-30%'
-        ]
-      }
+      product: getProductById('php-tribionik') || {}
     }
   },
   computed: {
