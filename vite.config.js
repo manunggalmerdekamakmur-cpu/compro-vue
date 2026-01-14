@@ -1,30 +1,19 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
-import { visualizer } from 'rollup-plugin-visualizer'
+import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    // Visualizer hanya untuk analisis lokal
-    process.env.ANALYZE === 'true' && visualizer({
-      open: true,
-      filename: 'dist/stats.html',
-      gzipSize: true,
-      brotliSize: true
-    })
-  ].filter(Boolean),
+  plugins: [vue()],
   
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      'assets': path.resolve(__dirname, './public/assets')
+      '@': resolve(__dirname, './src'),
+      'assets': resolve(__dirname, './public/assets')
     }
   },
   
   server: {
     port: 3000,
-    open: true,
     host: true
   },
   
@@ -33,44 +22,51 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'terser',
-    cssMinify: true,
     
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug']
+      },
+      format: {
+        comments: false
       }
     },
     
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html')
-      },
-      
       output: {
         manualChunks: {
-          'vue-vendor': ['vue', 'vue-router']
+          vendor: ['vue', 'vue-router']
         },
-        
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name.endsWith('.css')) {
-            return 'assets/css/[name]-[hash].css'
+          const ext = assetInfo.name.split('.').pop()
+          const dirs = {
+            css: 'css',
+            js: 'js',
+            png: 'img',
+            jpg: 'img',
+            jpeg: 'img',
+            webp: 'img',
+            svg: 'img',
+            gif: 'img',
+            woff: 'fonts',
+            woff2: 'fonts',
+            ttf: 'fonts',
+            eot: 'fonts'
           }
-          if (/\.(png|jpe?g|gif|svg|webp)$/.test(assetInfo.name)) {
-            return 'assets/img/[name]-[hash][extname]'
-          }
-          if (/\.(woff|woff2|eot|ttf|otf)$/.test(assetInfo.name)) {
-            return 'assets/fonts/[name]-[hash][extname]'
-          }
-          return 'assets/[ext]/[name]-[hash][extname]'
+          return `assets/${dirs[ext] || 'misc'}/[name]-[hash].[ext]`
         }
       }
     },
     
+    target: 'es2015',
     reportCompressedSize: true,
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 500,
+    cssCodeSplit: true,
+    cssMinify: true
   },
   
   css: {
