@@ -3,6 +3,10 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import { compression } from 'vite-plugin-compression2'
+import { visualizer } from 'rollup-plugin-visualizer'
+
+// Conditionally enable visualizer based on env
+const isAnalyze = process.env.ANALYZE === 'true'
 
 export default defineConfig({
   plugins: [
@@ -24,8 +28,15 @@ export default defineConfig({
     compression({
       algorithm: 'brotliCompress',
       exclude: [/\.(br|gz)$/, /\.(png|jpg|jpeg|webp|avif)$/]
+    }),
+    // Visualizer hanya aktif jika ANALYZE=true
+    isAnalyze && visualizer({
+      open: true,
+      filename: 'dist/stats.html',
+      gzipSize: true,
+      brotliSize: true
     })
-  ],
+  ].filter(Boolean), // Filter out false (when visualizer is disabled)
   
   resolve: {
     alias: {
