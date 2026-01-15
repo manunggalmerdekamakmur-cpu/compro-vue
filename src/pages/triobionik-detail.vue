@@ -39,48 +39,80 @@
                 <img :src="img" :alt="`${product.name} - gambar ${index + 1}`" loading="lazy" />
               </button>
             </div>
+            
+            <div v-if="product.brochure" class="product-brochure">
+              <embed 
+                :src="product.brochure"
+                type="application/pdf"
+              />
+            </div>
+
+            <div class="product-stats-detail">
+              <div class="product-stat-item">
+                <i class="fas fa-certificate"></i>
+                <h4>Berizin</h4>
+                <p>{{ product.certificate }}</p>
+              </div>
+              <div class="product-stat-item">
+                <i class="fas fa-flask"></i>
+                <h4>Teruji</h4>
+                <p>Laboratorium Terakreditasi</p>
+              </div>
+              <div class="product-stat-item">
+                <i class="fas fa-leaf"></i>
+                <h4>Organik</h4>
+                <p>100% Ramah Lingkungan</p>
+              </div>
+            </div>
           </div>
           
           <div class="product-info">
             <div class="product-header">
               <h1>{{ product.title }}</h1>
               <span v-if="product.badge" class="status-badge">{{ product.badge }}</span>
+              <div v-if="product.certificate" class="certificate-badge">
+                <i class="fas fa-certificate"></i>
+                <span>Izin Edar No: {{ product.certificate }}</span>
+              </div>
             </div>
             
             <p class="product-description">{{ product.description }}</p>
             
             <div v-if="product.specs" class="specs-section">
-              <h3>Spesifikasi</h3>
+              <h3><i class="fas fa-clipboard-list"></i> Spesifikasi</h3>
               <ul>
                 <li v-for="(spec, index) in product.specs" :key="index">{{ spec }}</li>
               </ul>
             </div>
             
             <div v-if="product.features" class="features-section">
-              <h3>Kandungan Mikroorganisme</h3>
+              <h3><i class="fas fa-star"></i> Kandungan Mikroorganisme</h3>
               <ul>
                 <li v-for="(feature, index) in product.features" :key="index">{{ feature }}</li>
               </ul>
             </div>
             
             <div v-if="product.benefits" class="benefits-section">
-              <h3>Manfaat</h3>
+              <h3><i class="fas fa-check-circle"></i> Manfaat</h3>
               <ul>
                 <li v-for="(benefit, index) in product.benefits" :key="index">{{ benefit }}</li>
               </ul>
             </div>
             
-            <div v-if="product.brochure" class="actions">
-              <a :href="product.brochure" download class="btn btn-primary">
+            <div class="product-actions">
+              <a v-if="product.brochure" :href="product.brochure" download class="btn btn-primary">
                 <i class="fas fa-download"></i> Unduh Brosur
               </a>
+              <router-link to="/triobionik" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Lihat Varian Lain
+              </router-link>
             </div>
           </div>
         </div>
       </div>
     </section>
     
-    <section class="related-products">
+    <section v-if="relatedProducts.length" class="related-products">
       <div class="container">
         <h2>Produk Triobionik Lainnya</h2>
         <div class="grid">
@@ -90,15 +122,18 @@
             :to="`/triobionik/${related.id}`"
             class="product-card-small"
           >
-            <img
-              v-if="related.image"
-              :src="getPlaceholder()"
-              :data-src="related.image"
-              :alt="related.name"
-              v-lazy
-              loading="lazy"
-            />
+            <div class="related-product-img">
+              <img
+                v-if="related.image"
+                :src="getPlaceholder()"
+                :data-src="related.image"
+                :alt="related.name"
+                v-lazy
+                loading="lazy"
+              />
+            </div>
             <h4>{{ related.name }}</h4>
+            <p class="short-desc">{{ related.shortDesc }}</p>
           </router-link>
         </div>
       </div>
@@ -111,7 +146,7 @@
 </template>
 
 <script>
-import { getTriobionikVariantById, getTriobionikVariants } from '../data/product.js'
+import { getTriobionikVariantById, getTriobionikVariants } from '@/data/product.js'
 
 export default {
   name: 'TriobionikDetail',
@@ -146,6 +181,7 @@ export default {
       if (this.product) {
         this.currentImage = this.product.image || this.product.images?.[0] || ''
         this.loadRelatedProducts()
+        this.updateDocumentTitle()
       }
     },
     
@@ -172,6 +208,12 @@ export default {
       } else {
         this.currentImage = img
         this.imageTransitioning = false
+      }
+    },
+    
+    updateDocumentTitle() {
+      if (this.product?.title) {
+        document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
       }
     },
     

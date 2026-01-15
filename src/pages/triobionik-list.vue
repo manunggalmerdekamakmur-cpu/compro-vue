@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { getTriobionikVariants } from '../data/product.js'
+import { getTriobionikVariants } from '@/data/product.js'
 
 export default {
   name: 'TriobionikList',
@@ -53,10 +53,22 @@ export default {
   },
   
   created() {
-    this.variants = getTriobionikVariants()
+    this.loadVariants()
+  },
+  
+  mounted() {
+    this.updateDocumentTitle()
   },
   
   methods: {
+    loadVariants() {
+      this.variants = getTriobionikVariants()
+    },
+    
+    updateDocumentTitle() {
+      document.title = 'Produk Triobionik - PT. Manunggal Merdeka Makmur'
+    },
+    
     getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3C/svg%3E'
     }
