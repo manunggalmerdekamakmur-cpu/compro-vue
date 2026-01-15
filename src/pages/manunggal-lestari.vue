@@ -109,7 +109,7 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/triobionik/triobionik.webp" alt="PHP Triobionik" loading="lazy">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/triobionik_c1jaie.webp" alt="PHP Triobionik" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PHP Triobionik</h4>
@@ -121,7 +121,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/manunggal-makmur/manunggal-makmur.webp" alt="Manunggal Makmur" loading="lazy">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp" alt="Manunggal Makmur" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -133,7 +133,7 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="/assets/img/ptorca/ptorca.webp" alt="PTORCA" loading="lazy">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp" alt="PTORCA" loading="lazy">
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>

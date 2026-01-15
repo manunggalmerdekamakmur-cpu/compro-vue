@@ -3,22 +3,19 @@
     <section class="hero" id="home">
       <div class="container">
         <div class="hero-logo">
-          <img src="/assets/img/logo-stiesia.webp" width="85" height="85" alt="Logo STIESIA" loading="eager" />
-          <img src="/assets/img/logo.webp" width="85" height="85" alt="Logo PT. Manunggal Merdeka Makmur" loading="eager" />
+          <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" width="85" height="85" alt="Logo STIESIA" loading="eager" />
+          <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" width="85" height="85" alt="Logo PT. Manunggal Merdeka Makmur" loading="eager" />
         </div>
         <h1>PT. Manunggal Merdeka Makmur</h1>
         <p>Produsen berbagai produk pendukung sektor Pertanian, Perkebunan, Perikanan, dan Peternakan dengan komitmen menghasilkan produk berkualitas tinggi untuk kemajuan agrobisnis Indonesia.</p>
         <div class="hero-buttons">
-          <a href="#products" class="btn btn-primary" @click.prevent="scrollTo('products')">
+          <a href="#products" class="btn btn-primary">
             <i class="fas fa-seedling"></i> Lihat Produk Kami
           </a>
-          <a href="#contact" class="btn btn-secondary" @click.prevent="scrollTo('contact')">
+          <a href="#contact" class="btn btn-secondary">
             <i class="fas fa-phone-alt"></i> Hubungi Kami
           </a>
         </div>
-        <a href="#about" class="scroll-indicator" @click.prevent="scrollTo('about')">
-          <i class="fas fa-chevron-down"></i>
-        </a>
       </div>
     </section>
     <AboutSection />
@@ -50,17 +47,6 @@ export default {
     CertificationsSection,
     PrinciplesSection,
     ContactSection
-  },
-  methods: {
-    scrollTo(sectionId) {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const headerHeight = 80
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-        window.scrollTo({ top: offsetPosition, behavior: "smooth" })
-      }
-    }
   }
 }
 </script>

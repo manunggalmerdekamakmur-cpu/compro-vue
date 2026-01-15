@@ -32,8 +32,8 @@ export const productData = {
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
     images: [
-      '/assets/img/manunggal-lestari/phc-manunggal-lestari-1l.webp',
-      '/assets/img/manunggal-lestari/phc-manunggal-lestari.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/phc-manunggal-lestari-1l_jisg83.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461331/phc-manunggal-lestari_p9nndd.webp'
     ],
     brochure: '/assets/brochures/manunggal-lestari.pdf',
     badge: 'Berizin',
@@ -65,8 +65,8 @@ export const productData = {
     ],
     images: [
       // '/assets/img/triobionik/triobionik.webp',
-      '/assets/img/triobionik/triobionik-100gr.webp',
-      '/assets/img/triobionik/triobionik-25gr.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp'
     ],
     brochure: '/assets/brochures/triobionik.pdf',
     badge: 'Berizin',
@@ -107,10 +107,10 @@ export const productData = {
       '6. Mengurangi dosis pemupukan kimia pada lahan pertanian maupun perkebunan.',
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
-    image: '/assets/img/triobionik/triobionik-25gr.webp',
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
     images: [
-      '/assets/img/triobionik/triobionik-25gr.webp',
-      '/assets/img/triobionik/triobionik-merah.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461399/triobionik-merah_m65bap.webp'
     ],
     brochure: '/assets/brochures/triobionik-merah.pdf',
     badge: 'Berizin',
@@ -150,9 +150,9 @@ export const productData = {
       '6. Mengurangi dosis pemupukan kimia pada lahan pertanian maupun perkebunan.',
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
-    image: '/assets/img/triobionik/triobionik-100gr.webp',
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
     images: [
-      '/assets/img/triobionik/triobionik-100gr.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp'
     ],
     brochure: '/assets/brochures/triobionik.pdf',
     badge: 'Berizin',
@@ -190,8 +190,8 @@ export const productData = {
       '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak serta manusia sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak maupun lingkungan Manusia',
       '5. Dalam septik toilet mampu mengendalika bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
     ],
-    image: '/assets/img/triobionik/dekomposer.webp',
-    images: ['/assets/img/triobionik/dekomposer.webp'],
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp'],
     brochure: '/assets/brochures/triobionik-dekomposer.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -231,8 +231,8 @@ export const productData = {
       '3. Mengubah bahan organik menjadi gas dan unsur yang lebih aman.',
       '4. Menjaga ekosistem mikroba alami agar tetap seimbang.'
     ],
-    image: '/assets/img/triobionik/dekomposer-septic-tank.webp',
-    images: ['/assets/img/triobionik/dekomposer-septic-tank.webp'],    
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp'],    
     brochure: '/assets/brochures/triobionik-septic.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -272,8 +272,8 @@ export const productData = {
       '3. Menekan agen patogen dan mengurangi kejadian penyakit.',
       '4. Merangsang nafsu makan sehingga pertumbuhan lebih optimal.'
     ],
-    image: '/assets/img/triobionik/ikan.webp',
-    images: ['/assets/img/triobionik/ikan.webp'],    
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp'],    
     brochure: '/assets/brochures/triobionik-ikan.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -313,8 +313,8 @@ export const productData = {
       '3. Menurunkan kebutuhan pakan dengan meningkatkan efisiensi pencernaan.',
       '4. Mempercepat pemecahan limbah kandang untuk manajemen kotoran yang lebih baik.'
     ],
-    image: '/assets/img/triobionik/ternak.webp',
-    images: ['/assets/img/triobionik/ternak.webp'],
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/ternak_itc7wc.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/ternak_itc7wc.webp'],
     brochure: '/assets/brochures/triobionik-ternak.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -356,8 +356,8 @@ export const productData = {
       '4. Mengurangi kebutuhan pupuk kimia dan meningkatkan produktivitas hasil panen.',
       '5. Melindungi tanaman dari beberapa patogen tanah.'
     ],
-    image: '/assets/img/triobionik/unggas.webp',
-    images: ['/assets/img/triobionik/unggas.webp'],
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461391/unggas_nnlx3d.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461391/unggas_nnlx3d.webp'],
     brochure: '/assets/brochures/triobionik-pupuk.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -395,10 +395,10 @@ export const productData = {
       'Meningkatkan kapasitas tukar kation tanah'
     ],
     images: [
-      '/assets/img/manunggal-makmur/por-5.webp',
-      '/assets/img/manunggal-makmur/por-25.webp',
-      '/assets/img/manunggal-makmur/por-40.webp',
-      '/assets/img/manunggal-makmur/por-50.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461363/5kg_c1gmsn.png',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461385/25kg_e3w9z5.png',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461362/40kg_bjlpls.png',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png'
     ],
     brochure: '/assets/brochures/manunggal-makmur.pdf',
     badge: 'Dalam Proses Perizinan',
@@ -428,8 +428,8 @@ export const productData = {
       'Memperbaiki kualitas hasil panen'
     ],
     images: [
-      '/assets/img/ptorca/ptorca-5l.webp',
-      '/assets/img/ptorca/ptorca-1l.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-1l_eacqbn.webp'
     ],
     brochure: '/assets/brochures/ptorca.pdf',
     badge: 'Dalam Proses Perizinan',

@@ -9,7 +9,7 @@
               <router-link to="/triobionik">Triobionik</router-link>
             </li>
             <li v-else>
-              <a href="#products" @click.prevent="scrollToProducts">Produk</a>
+              <a href="#products">Produk</a>
             </li>
             <li class="current">{{ product.title }}</li>
           </ol>
@@ -21,7 +21,7 @@
       <div class="container">
         <div class="product-detail-container">
           <div class="product-images">
-            <div class="main-image-container" @click="openImageModal">
+            <div class="main-image-container">
               <img :src="currentImage" :alt="product.title" class="main-image" loading="lazy">
             </div>
             <div class="thumbnail-gallery">
@@ -96,7 +96,7 @@
             </div>
             
             <div class="product-actions">
-              <a href="#contact" class="btn btn-primary" @click.prevent="scrollToContact">
+              <a href="#contact" class="btn btn-primary">
                 <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
               <router-link v-if="isTriobionik" to="/triobionik" class="btn btn-secondary">
@@ -132,9 +132,9 @@
       </div>
     </section>
 
-    <div :class="['modal', { active: showModal }]" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <button class="modal-close" @click="closeModal">&times;</button>
+    <div class="modal">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
         <div class="modal-main-image">
           <img :src="modalImage" :alt="product.title">
         </div>
@@ -155,31 +155,8 @@ export default {
   data() {
     return {
       currentImageIndex: 0,
-      showModal: false,
       modalImage: '',
-      relatedProducts: [
-        {
-          id: 'triobionik',
-          title: 'PHP Triobionik',
-          description: 'Pupuk Hayati Padat dengan tiga manfaat utama untuk berbagai jenis tanaman.',
-          image: '/assets/img/triobionik/triobionik-25gr.webp',
-          link: '/triobionik'
-        },
-        {
-          id: 'manunggal-lestari',
-          title: 'Manunggal Lestari',
-          description: 'Pupuk hayati cair untuk tanaman pangan, hortikultura, dan perkebunan.',
-          image: '/assets/img/manunggal-lestari/manunggal-lestari.webp',
-          link: '/manunggal-lestari'
-        },
-        {
-          id: 'manunggal-makmur',
-          title: 'Manunggal Makmur',
-          description: 'Pupuk organik remah untuk pertanian berkelanjutan.',
-          image: '/assets/img/manunggal-makmur/manunggal-makmur.webp',
-          link: '/manunggal-makmur'
-        }
-      ]
+      relatedProducts: []
     }
   },
   computed: {
@@ -193,53 +170,6 @@ export default {
   mounted() {
     if (this.product.title) {
       document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
-    }
-    this.initBackToTop()
-  },
-  methods: {
-    openImageModal() {
-      this.modalImage = this.currentImage
-      this.showModal = true
-      document.body.style.overflow = 'hidden'
-    },
-    closeModal() {
-      this.showModal = false
-      document.body.style.overflow = ''
-    },
-    scrollToProducts() {
-      if (this.$route.path === '/') {
-        this.scrollToElement('products')
-      } else {
-        this.$router.push('/#products')
-      }
-    },
-    scrollToContact() {
-      if (this.$route.path === '/') {
-        this.scrollToElement('contact')
-      } else {
-        this.$router.push('/#contact')
-      }
-    },
-    scrollToElement(id) {
-      const element = document.getElementById(id)
-      if (element) {
-        const headerHeight = 80
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-      }
-    },
-    initBackToTop() {
-      const backToTop = document.getElementById('backToTop')
-      if (backToTop) {
-        window.addEventListener('scroll', () => {
-          backToTop.classList.toggle('visible', window.pageYOffset > 300)
-        })
-        
-        backToTop.addEventListener('click', () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        })
-      }
     }
   }
 }

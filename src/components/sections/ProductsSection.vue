@@ -17,18 +17,13 @@
         </button>
       </div>
       <div class="products-grid">
-        <router-link v-for="product in filteredProducts" :key="product.id" :to="getProductLink(product)" class="product-card" :class="product.status">
+        <router-link v-for="product in filteredProducts" :key="product.id" :to="getProductLink(product)" class="product-card">
           <div class="product-img">
             <img :src="product.images[0]" :alt="product.title" loading="lazy" />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
               <i :class="product.status === 'approved' ? 'fas fa-check-circle' : 'fas fa-clock'"></i>
               {{ product.badge }}
             </span>
-            <div class="product-overlay">
-              <span class="btn-view-details">
-                <i class="fas fa-eye"></i> {{ getButtonText(product) }}
-              </span>
-            </div>
           </div>
           <div class="product-info">
             <h3>{{ product.title }}</h3>
@@ -74,9 +69,6 @@ export default {
         'ptorca': '/ptorca'
       }
       return routes[product.id] || '/'
-    },
-    getButtonText(product) {
-      return product.id === 'php-triobionik' ? 'Lihat Varian' : 'Detail Produk'
     },
     getProductTags(product) {
       const tags = []

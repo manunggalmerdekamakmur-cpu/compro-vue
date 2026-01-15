@@ -30,6 +30,23 @@
                 <p>manunggalmerdekamakmur@gmail.com</p>
               </div>
             </div>
+            <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="contact-text">
+              <h4>WhatsApp Kantor Resmi</h4>
+              <p>
+                <a
+                  href="https://wa.me/6285199265858"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  0851 9926 5858
+                </a>
+              </p>
+            </div>
+          </div>
           </div>
           <div class="business-hours">
             <h4><i class="fas fa-clock"></i> Jam Operasional</h4>

@@ -11,8 +11,8 @@
    CSS VARIABLES (CUSTOM PROPERTIES)
    ============================================ */
 :root {
-    --bg-hero-image: url('../img/menyemprot.webp?width=1920&quality=80');
-    --bg-hero-image-mobile: url('../img/menyemprot.webp?width=768&quality=70');
+    --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp');
+    --bg-hero-image-mobile: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp');
     /* Color Palette */
     --primary: #1a7d3e;
     --primary-dark: #0d5527;
