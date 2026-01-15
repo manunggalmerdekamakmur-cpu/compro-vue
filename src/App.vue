@@ -1,77 +1,95 @@
 <template>
-    <div id="app">
-        <Header />
-        <main>
-            <router-view v-slot="{ Component }">
-                <transition name="fade" mode="out-in">
-                    <component :is="Component" />
-                </transition>
-            </router-view>
-        </main>
-        <Footer />
-        <button id="backToTop" class="back-to-top" @click="scrollToTop" :class="{ visible: showBackToTop }" aria-label="Kembali ke atas">
-            <i class="fas fa-chevron-up"></i>
-        </button>
-    </div>
+  <div id="app">
+    <Header />
+    <div class="header-spacer"></div>
+    
+    <main id="main-content">
+      <router-view v-slot="{ Component, route }">
+        <transition name="fade" mode="out-in" @before-enter="beforeEnter" @after-leave="afterLeave">
+          <component :is="Component" :key="route.fullPath" />
+        </transition>
+      </router-view>
+    </main>
+    
+    <Footer />
+    
+    <button
+      class="back-to-top"
+      :class="{ visible: showBackToTop }"
+      @click="scrollToTop"
+      aria-label="Kembali ke atas"
+    >
+      ▲
+    </button>
+  </div>
 </template>
 
 <script>
-import Header from "./components/layout/Header.vue"
-import Footer from "./components/layout/Footer.vue"
-
-// Debounce untuk scroll events
-function debounce(func, wait) {
-    let timeout
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout)
-            func(...args)
-        }
-        clearTimeout(timeout)
-        timeout = setTimeout(later, wait)
-    }
-}
+import Header from './components/layout/Header.vue'
+import Footer from './components/layout/Footer.vue'
 
 export default {
-    name: "App",
-    components: { Header, Footer },
-    data() {
-        return {
-            showBackToTop: false,
-            scrollListener: null
-        }
-    },
-    mounted() {
-        // Debounced scroll handler
-        this.scrollListener = debounce(this.handleScroll, 100)
-        window.addEventListener('scroll', this.scrollListener, { passive: true })
-        
-        // Preload critical components
-        this.preloadCriticalComponents()
-    },
-    beforeUnmount() {
-        if (this.scrollListener) {
-            window.removeEventListener('scroll', this.scrollListener)
-        }
-    },
-    methods: {
-        handleScroll() {
-            this.showBackToTop = window.pageYOffset > 300
-        },
-        scrollToTop() {
-            window.scrollTo({ 
-                top: 0, 
-                behavior: 'smooth',
-                block: 'start'
-            })
-        },
-        preloadCriticalComponents() {
-            // Preload components that might be needed soon
-            if (this.$route.path === '/') {
-                import('./pages/manunggal-lestari.vue').catch(() => {})
-                import('./pages/triobionik-list.vue').catch(() => {})
-            }
-        }
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  },
+  
+  data() {
+    return {
+      showBackToTop: false,
+      scrollTimer: null
     }
+  },
+  
+  mounted() {
+    this.handleScroll = this.debounce(this.onScroll, 100)
+    window.addEventListener('scroll', this.handleScroll, { passive: true })
+    this.setViewportHeight()
+    window.addEventListener('resize', this.debounce(this.setViewportHeight, 150), { passive: true })
+  },
+  
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.setViewportHeight)
+    if (this.scrollTimer) {
+      clearTimeout(this.scrollTimer)
+    }
+  },
+  
+  methods: {
+    debounce(fn, delay) {
+      let timer
+      return function(...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => fn.apply(this, args), delay)
+      }
+    },
+    
+    onScroll() {
+      this.showBackToTop = window.scrollY > 300
+    },
+    
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    },
+    
+    setViewportHeight() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+    },
+    
+    beforeEnter() {
+      document.body.style.minHeight = `${document.body.scrollHeight}px`
+    },
+    
+    afterLeave() {
+      this.scrollTimer = setTimeout(() => {
+        document.body.style.minHeight = ''
+      }, 50)
+    }
+  }
 }
 </script>

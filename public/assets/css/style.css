@@ -1,19 +1,12 @@
-/* ============================================
-   RESET & BASE STYLES
-   ============================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ============================================
-   CSS VARIABLES (CUSTOM PROPERTIES)
-   ============================================ */
 :root {
     --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp');
     --bg-hero-image-mobile: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp');
-    /* Color Palette */
     --primary: #1a7d3e;
     --primary-dark: #0d5527;
     --primary-light: #2ecc71;
@@ -30,42 +23,33 @@
     --danger: #dc3545;
     --info: #17a2b8;
     
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
     --gradient-light: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
     
-    /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
     --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.25);
     
-    /* Border Radius */
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-full: 50px;
     
-    /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Spacing */
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 2rem;
     --space-lg: 3rem;
     --space-xl: 5rem;
     
-    /* Layout */
     --container-max: 1200px;
 }
 
-/* ============================================
-   TYPOGRAPHY & BASE ELEMENTS
-   ============================================ */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
@@ -84,7 +68,6 @@ body {
     letter-spacing: 0.01em;
 }
 
-/* Improved font rendering for better clarity */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
@@ -149,9 +132,6 @@ p {
     color: var(--gray);
 }
 
-/* ============================================
-   LAYOUT CONTAINERS
-   ============================================ */
 .container {
     width: 100%;
     max-width: var(--container-max);
@@ -159,9 +139,6 @@ p {
     padding: 0 var(--space-sm);
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -222,9 +199,6 @@ p {
     width: 100%;
 }
 
-/* ============================================
-   HEADER & NAVIGATION
-   ============================================ */
 header {
     position: fixed;
     top: 0;
@@ -389,10 +363,6 @@ header.scrolled .nav-link {
     transform: scale(1.05);
 }
 
-
-/* ============================================
-   HERO SECTION
-   ============================================ */
 .hero {
     position: relative;
     min-height: 100vh;
@@ -491,9 +461,6 @@ header.scrolled .nav-link {
     }
 }
 
-/* ============================================
-   SECTIONS WITH BACKGROUND
-   ============================================ */
 .section-bg {
     position: relative;
     padding: var(--space-xl) 0;
@@ -626,11 +593,8 @@ header.scrolled .nav-link {
     color: var(--primary);
 }
 
-/* ============================================
-   PRODUCTS SECTION
-   ============================================ */
    #products.section-bg {
-    padding: var(--space-lg) 0; /* 3rem */
+    padding: var(--space-lg) 0; 
 }
 
 #products .products-grid {
@@ -675,7 +639,6 @@ header.scrolled .nav-link {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Filter buttons di products section */
 #products.section-bg .filter-btn {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -691,9 +654,6 @@ header.scrolled .nav-link {
     border-color: var(--primary);
 }
 
-/* ============================================
-   PRINCIPLES SECTION
-   ============================================ */
 #principles.section-bg .principles-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -819,9 +779,6 @@ header.scrolled .nav-link {
     line-height: 1.6;
 }
 
-/* ============================================
-   ABOUT SECTION
-   ============================================ */
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -852,9 +809,6 @@ header.scrolled .nav-link {
     transform: scale(1.05);
 }
 
-/* ============================================
-   VISI MISI SECTION
-   ============================================ */
 .visi-misi-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -915,9 +869,6 @@ header.scrolled .nav-link {
     margin-top: 0.25rem;
 }
 
-/* ============================================
-   PRODUCT STATS
-   ============================================ */
 .product-stats {
     padding: var(--space-lg) 0;
     background: var(--gradient-primary);
@@ -948,9 +899,7 @@ header.scrolled .nav-link {
     margin: 0;
 }
 
-/* ============================================
-   PRODUCTS GRID
-   ============================================ */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1098,9 +1047,7 @@ header.scrolled .nav-link {
   text-overflow: ellipsis;
 }
 
-/* ============================================
-   PRODUCT FILTER
-   ============================================ */
+
 .product-filter {
     display: flex;
     justify-content: center;
@@ -1133,9 +1080,6 @@ header.scrolled .nav-link {
     border-color: var(--primary);
 }
 
-/* ============================================
-   CERTIFICATIONS
-   ============================================ */
 .certifications-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1168,9 +1112,6 @@ header.scrolled .nav-link {
     margin-top: 0.5rem;
 }
 
-/* ============================================
-   PRINCIPLES
-   ============================================ */
 .principles-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1203,9 +1144,6 @@ header.scrolled .nav-link {
     background-clip: text;
 }
 
-/* ============================================
-   CONTACT SECTION
-   ============================================ */
 .contact {
     padding: var(--space-xl) 0;
     background: var(--white);
@@ -1269,9 +1207,6 @@ header.scrolled .nav-link {
     margin: 0 auto var(--space-md);
 }
 
-/* ============================================
-   FORM STYLES
-   ============================================ */
 .form-group {
     margin-bottom: var(--space-md);
 }
@@ -1335,9 +1270,6 @@ header.scrolled .nav-link {
     border: 1px solid #f5c6cb;
 }
 
-/* ============================================
-   BACK TO TOP BUTTON
-   ============================================ */
 .back-to-top {
     position: fixed;
     bottom: 2rem;
@@ -1369,9 +1301,6 @@ header.scrolled .nav-link {
     box-shadow: var(--shadow-md);
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
 footer {
     background: var(--gradient-primary);
     color: var(--white);
@@ -1504,9 +1433,6 @@ footer {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* ============================================
-   MODAL STYLES
-   ============================================ */
 .modal {
     display: none;
     position: fixed;
@@ -1768,9 +1694,6 @@ footer {
     margin-top: var(--space-xl);
 }
 
-/* ============================================
-   LOADING SPINNER
-   ============================================ */
 .loading-spinner {
     width: 40px;
     height: 40px;
@@ -1786,9 +1709,6 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-/* ============================================
-   MEDIA QUERIES - DESKTOP LARGE
-   ============================================ */
 @media (min-width: 992px) {
     .modal-content {
         max-width: 1000px;
@@ -1874,9 +1794,6 @@ footer {
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - TABLET
-   ============================================ */
 @media (max-width: 992px) {
     html {
         font-size: 15px;
@@ -1921,9 +1838,6 @@ footer {
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - MOBILE LARGE (768px ke bawah)
-   ============================================ */
 @media (max-width: 768px) {
     html {
         font-size: 14px;
@@ -1982,7 +1896,6 @@ footer {
         padding: var(--space-sm) var(--space-lg);
     }
     
-    /* Hero Section Mobile */
     .hero {
         min-height: 100svh;
         height: auto;
@@ -2035,7 +1948,6 @@ footer {
         padding: 1rem 1.5rem;
     }
     
-    /* Section Background Mobile - DIKEMBALIKAN TRANSPARANSI */
     .section-bg {
         padding: var(--space-lg) 0;
         background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.7)), 
@@ -2058,7 +1970,6 @@ footer {
         width: 60px;
     }
     
-    /* Products Section Mobile - TRANSPARAN */
     .products-grid {
         grid-template-columns: 1fr;
     }
@@ -2074,7 +1985,6 @@ footer {
         padding: 0.875rem 1.5rem;
     }
     
-    /* Products Section Cards - TRANSPARAN */
     #products.section-bg .product-card,
     .product-card {
         background: rgba(255, 255, 255, 0.95);
@@ -2088,7 +1998,6 @@ footer {
         background: rgba(248, 255, 249, 0.9);
     }
     
-    /* Filter buttons transparan */
     #products.section-bg .filter-btn {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(8px);
@@ -2104,7 +2013,6 @@ footer {
         border-color: var(--primary);
     }
     
-    /* Principles Section Mobile - TRANSPARAN */
     #principles.section-bg .principles-grid,
     .principles-grid {
         grid-template-columns: 1fr;
@@ -2120,13 +2028,11 @@ footer {
         padding: var(--space-md);
     }
     
-    /* About Section Mobile */
     .about-content {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
     }
     
-    /* Visi Misi Mobile - TRANSPARAN */
     .visi-misi-content {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -2141,7 +2047,6 @@ footer {
         padding: var(--space-md);
     }
     
-    /* Stats Mobile */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--space-sm);
@@ -2159,7 +2064,6 @@ footer {
         font-size: 2rem;
     }
     
-    /* Certifications Mobile - TRANSPARAN */
     .certifications-grid {
         grid-template-columns: 1fr;
         gap: var(--space-md);
@@ -2174,7 +2078,6 @@ footer {
         padding: var(--space-md);
     }
     
-    /* Contact Mobile */
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
@@ -2184,7 +2087,6 @@ footer {
         margin-bottom: var(--space-sm);
     }
     
-    /* Footer Mobile */
     .footer-content {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
@@ -2196,7 +2098,6 @@ footer {
         gap: var(--space-md);
     }
     
-    /* Modal Mobile */
     .modal-content {
         margin: 0;
         border-radius: 0;
@@ -2252,7 +2153,6 @@ footer {
         background: rgba(0, 0, 0, 0.7);
     }
     
-    /* Header Mobile */
     header.scrolled .header-container,
     .header-container {
         padding: 0.75rem 1rem;
@@ -2267,7 +2167,6 @@ footer {
         font-size: 1.2rem;
     }
     
-    /* Back to Top Mobile */
     .back-to-top {
         bottom: 1rem;
         right: 1rem;
@@ -2275,7 +2174,6 @@ footer {
         height: 45px;
     }
     
-    /* Touch Friendly Sizes */
     .btn,
     .form-control,
     .nav-link,
@@ -2292,7 +2190,6 @@ footer {
         min-width: 44px;
     }
     
-    /* Safe Area Support */
     @supports (padding: max(0px)) {
         .container,
         .modal-content,
@@ -2311,7 +2208,6 @@ footer {
         }
     }
     
-    /* Mobile Landscape */
     @media (orientation: landscape) and (max-height: 500px) {
         .modal-images {
             height: 60vh;
@@ -2330,7 +2226,6 @@ footer {
             padding: 100px 1rem 40px;
         }
         
-        /* Kurangi blur untuk landscape */
         #products.section-bg .product-card,
         .product-card,
         #principles.section-bg .principle-card,
@@ -2345,9 +2240,6 @@ footer {
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - TABLET PORTRAIT
-   ============================================ */
 @media (min-width: 769px) and (max-width: 991px) {
     .modal-content {
         max-width: 90%;
@@ -2399,9 +2291,6 @@ footer {
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - DESKTOP WIDE
-   ============================================ */
 @media (min-width: 1024px) {
     .modal-content {
         max-width: 1000px;
@@ -2426,9 +2315,6 @@ footer {
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - MOBILE SMALL (576px ke bawah)
-   ============================================ */
 @media (max-width: 576px) {
     html {
         font-size: 14px;
@@ -2504,7 +2390,6 @@ footer {
         height: 180px;
     }
     
-    /* Kurangi blur untuk device kecil */
     #products.section-bg .product-card,
     .product-card,
     #principles.section-bg .principle-card,
@@ -2547,9 +2432,6 @@ footer {
     }
 }
 
-/* ============================================
-   ACCESSIBILITY - REDUCED MOTION
-   ============================================ */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -2561,9 +2443,6 @@ footer {
     }
 }
 
-/* ============================================
-   PRINT STYLES
-   ============================================ */
 @media print {
     header,
     .hero-buttons,

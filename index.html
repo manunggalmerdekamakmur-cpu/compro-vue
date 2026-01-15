@@ -1,158 +1,62 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-loading>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>PT. Manunggal Merdeka Makmur - Produsen Pupuk Organik Berkualitas</title>
-    <meta name="description" content="PT. Manunggal Merdeka Makmur - produsen pupuk organik dan agen hayati berkualitas untuk pertanian Indonesia.">
-    
-    <!-- Preconnect & Preload Critical Resources -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-    
-    <!-- Critical CSS Inline (Above-the-fold) -->
-    <style>
-        :root {
-            --primary: #1a7d3e;
-            --primary-dark: #0d5527;
-            --white: #ffffff;
-            --dark: #1a1a1a;
-            --gray-light: #f8f9fa;
-        }
-        
-        /* Critical layout styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body { 
-            font-family: system-ui, -apple-system, sans-serif; 
-            line-height: 1.6; 
-            color: var(--dark); 
-            background: var(--white); 
-            overflow-x: hidden;
-        }
-        
-        /* Header persistence */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-        }
-        
-        /* App container */
-        #app {
-            min-height: 100vh;
-            padding-top: 80px;
-        }
-        
-        /* Back to Top Button */
-        #backToTop {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 999;
-        }
-        
-        #backToTop.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Loading skeleton */
-        .page-skeleton {
-            height: 100vh;
-            background: var(--gray-light);
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-    </style>
-    
-    <!-- Preload non-critical CSS -->
-    <link rel="preload" href="/assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/assets/css/product.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/assets/css/style.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="/assets/css/product.css" media="print" onload="this.media='all'">
-    
-    <!-- Preload critical images -->
-    <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp" fetchpriority="high">
-    <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp">
-    <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
-    
-    <noscript>
-        <link rel="stylesheet" href="/assets/css/style.css">
-        <link rel="stylesheet" href="/assets/css/product.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </noscript>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>PT. Manunggal Merdeka Makmur – Produsen Pupuk Organik Berkualitas</title>
+  <meta name="description"
+        content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan." />
+
+  <meta name="theme-color" content="#0b1f14" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+
+  <link
+    rel="preload"
+    as="image"
+    href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp"
+    fetchpriority="high"
+  />
+
+  <link
+    rel="preload"
+    as="image"
+    href="/assets/img/spinner.gif"
+    fetchpriority="low"
+  />
+
+  <link rel="preload" href="/assets/css/style.css" as="style" />
+  <link rel="preload" href="/assets/css/product.css" as="style" />
+
+  <link rel="stylesheet" href="/assets/css/style.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="/assets/css/product.css" media="print" onload="this.media='all'" />
+
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/product.css" />
+  </noscript>
+
+  <link rel="icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
 </head>
+
 <body>
-    <!-- App Mount Point -->
-    <div id="app">
-        <!-- Initial skeleton loading -->
-        <div class="page-skeleton"></div>
-    </div>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(console.error);
-            });
-        }
-    </script>
-    
-    <!-- Load scripts with proper strategy -->
-    <script src="/assets/js/app.js" defer></script>
-    <script type="module" src="/src/main.js" defer></script>
-    
-    <!-- Performance monitoring -->
-    <script>
-        window.__PERFORMANCE_METRICS__ = {
-            fcp: null,
-            lcp: null,
-            cls: 0,
-            inp: null
-        };
-        
-        // CLS measurement
-        let clsValue = 0;
-        let clsEntries = [];
-        
-        new PerformanceObserver((entryList) => {
-            for (const entry of entryList.getEntries()) {
-                if (!entry.hadRecentInput) {
-                    clsValue += entry.value;
-                    clsEntries.push(entry);
-                    window.__PERFORMANCE_METRICS__.cls = clsValue;
-                }
-            }
-        }).observe({type: 'layout-shift', buffered: true});
-    </script>
+  <div id="app"></div>
+
+  <div id="app-loading" aria-label="Loading halaman">
+    <img
+      src="/assets/img/spinner.gif"
+      width="48"
+      height="48"
+      alt="Loading"
+      decoding="async"
+      fetchpriority="low"
+    />
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
