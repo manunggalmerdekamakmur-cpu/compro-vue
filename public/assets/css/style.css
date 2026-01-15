@@ -210,7 +210,7 @@ header {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: none;
     box-shadow: none;
 
     transition:
@@ -1164,6 +1164,60 @@ header.scrolled .nav-link {
     margin-bottom: var(--space-lg);
 }
 
+.contact-email {
+  color: #ffffff;
+}
+
+.contact-email a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.contact-email a:hover {
+  text-decoration: underline;
+}
+
+.contact-whatsapp {
+  color: #ffffff;
+}
+
+.contact-whatsapp a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.contact-whatsapp a:hover {
+  text-decoration: underline;
+}
+
+.contact-text.light-bg {
+  background-color: #f0f0f0; 
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.contact-text.light-bg h4 {
+  color: #333333; 
+  margin-bottom: 4px;
+}
+
+.contact-text.light-bg .contact-whatsapp {
+  color: #333333; 
+  margin: 0;
+}
+
+.contact-text.light-bg .contact-whatsapp a {
+  color: #25D366; 
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-text.light-bg .contact-whatsapp a:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+
 .contact-item {
     display: flex;
     align-items: flex-start;
@@ -1172,15 +1226,19 @@ header.scrolled .nav-link {
 }
 
 .contact-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.whatsapp-icon {
+  background-color: #25D366;
 }
 
 .contact-text h4 {
@@ -2085,6 +2143,10 @@ footer {
     
     .contact-item {
         margin-bottom: var(--space-sm);
+        display: flex;
+        align-items: center; 
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
     }
     
     .footer-content {

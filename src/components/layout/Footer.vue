@@ -27,7 +27,7 @@
         <div class="footer-contact">
           <h4><i class="fas fa-address-book"></i> Hubungi Kami</h4>
           <div class="contact-info-footer">
-            <p>
+            <p class="contact-email">
               <i class="fas fa-envelope"></i>
               <a href="mailto:manunggalmerdekamakmur@gmail.com">
                 manunggalmerdekamakmur@gmail.com
@@ -37,14 +37,14 @@
               <i class="fas fa-map-marker-alt"></i>
               Kabupaten Nganjuk, Jawa Timur, Indonesia
             </p>
-            <p>
+            <p class="contact-whatsapp">
               <i class="fab fa-whatsapp"></i>
               <a
                 href="https://wa.me/6285199265858"
                 target="_blank"
                 rel="noopener"
               >
-                WhatsApp Kantor: 0851 9926 5858
+                WhatsApp: 0851 9926 5858
               </a>
             </p>
           </div>
@@ -52,7 +52,7 @@
       </div>
       <div class="footer-bottom">
         <div class="copyright">
-          <p>&copy; <span class="current-year"></span> PT. Manunggal Merdeka Makmur. All rights reserved.</p>
+          <p>&copy; 2026 Sekolah Tinggi Ilmu Ekonomi Indonesia Surabaya & PT. Manunggal Merdeka Makmur. All rights reserved.</p>
           <p class="thank-you">Atas perhatian dan kepedulian serta kebijaksanaannya kami ucapkan terima kasih.</p>
         </div>
       </div>
