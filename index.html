@@ -2,43 +2,70 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PT. Manunggal Merdeka Makmur – Produsen Pupuk Organik Berkualitas</title>
   <meta name="description" content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan.">
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
 
-  <!-- Preload Critical Resources -->
   <link rel="preconnect" href="https://res.cloudinary.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   
-  <link rel="preload" as="style" href="/assets/css/style.css">
-  <link rel="preload" as="style" href="/assets/css/product.css">
+  <link rel="preload" as="style" href="/assets/css/style.css" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="/assets/css/product.css" onload="this.onload=null;this.rel='stylesheet'">
   
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" type="image/webp" fetchpriority="high">
 
-  <!-- CSS Loading -->
-  <link rel="stylesheet" href="/assets/css/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/assets/css/product.css" media="print" onload="this.media='all'">
-  
   <noscript>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/product.css">
   </noscript>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-        crossorigin="anonymous" 
-        referrerpolicy="no-referrer" 
-        media="print" 
-        onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
   
+  <script>
+    (function(){
+      var loadDeferredStyles = function() {
+        var addStyles = document.createElement('link');
+        addStyles.rel = 'stylesheet';
+        addStyles.href = '/assets/css/style.css';
+        document.head.appendChild(addStyles);
+        
+        var addProductStyles = document.createElement('link');
+        addProductStyles.rel = 'stylesheet';
+        addProductStyles.href = '/assets/css/product.css';
+        document.head.appendChild(addProductStyles);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+      else window.addEventListener('load', loadDeferredStyles);
+    })();
+    
+    function preloadImages() {
+      const images = [
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
+      ];
+      
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', preloadImages);
+    } else {
+      preloadImages();
+    }
+  </script>
+  
   <style>
-    /* Loading styles - akan dihapus setelah Vue mount */
     body.loading {
       overflow: hidden;
       height: 100vh;
@@ -56,7 +83,7 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.5s ease;
     }
     
     .spinner-container {
@@ -88,39 +115,20 @@
       text-align: center;
       margin-top: 0.5rem;
     }
-    
-    .error-state {
-      text-align: center;
-      padding: 2rem;
-      max-width: 400px;
-    }
-    
-    .error-state p {
-      margin-bottom: 1.5rem;
-      color: #666;
-    }
-    
-    .error-state .btn {
-      margin-top: 1rem;
-    }
   </style>
 </head>
 
 <body class="loading">
-  <!-- App Container -->
   <div id="app"></div>
 
-  <!-- Global Loading Overlay -->
-  <div id="app-loading" aria-label="Memuat aplikasi">
+  <div id="app-loading">
     <div class="spinner-container">
-      <div class="css-spinner" role="status" aria-label="Loading">
-        <span class="visually-hidden">Memuat...</span>
-      </div>
+      <div class="css-spinner"></div>
       <div class="loading-text">Memuat aplikasi...</div>
     </div>
   </div>
 
-  <!-- Vue Application Script -->
-  <script type="module" src="/src/main.js" defer></script>
+  <script src="/assets/js/app.js" defer></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

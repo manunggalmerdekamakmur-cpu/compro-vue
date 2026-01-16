@@ -5,33 +5,33 @@ import App from './App.vue'
 const routes = [
   { 
     path: '/', 
-    component: () => import('./pages/Home.vue'), 
-    meta: { title: 'Beranda', showLayout: true } 
+    component: () => import('./pages/Home.vue'),
+    meta: { title: 'Beranda' }
   },
   { 
     path: '/triobionik', 
     component: () => import('./pages/triobionik-list.vue'),
-    meta: { title: 'Triobionik', showLayout: true }
+    meta: { title: 'Triobionik' }
   },
   { 
     path: '/triobionik/:id', 
     component: () => import('./pages/triobionik-detail.vue'),
-    meta: { title: 'Detail Triobionik', showLayout: true }
+    meta: { title: 'Detail Triobionik' }
   },
   { 
     path: '/manunggal-lestari', 
     component: () => import('./pages/manunggal-lestari.vue'),
-    meta: { title: 'Manunggal Lestari', showLayout: true }
+    meta: { title: 'Manunggal Lestari' }
   },
   { 
     path: '/manunggal-makmur', 
     component: () => import('./pages/manunggal-makmur.vue'),
-    meta: { title: 'Manunggal Makmur', showLayout: true }
+    meta: { title: 'Manunggal Makmur' }
   },
   { 
     path: '/ptorca', 
     component: () => import('./pages/ptorca.vue'),
-    meta: { title: 'PTORCA', showLayout: true }
+    meta: { title: 'PTORCA' }
   },
   { 
     path: '/:pathMatch(.*)*', 
@@ -44,7 +44,7 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) return savedPosition
-    if (to.hash) return { el: to.hash, behavior: 'smooth' }
+    if (to.hash) return { el: to.hash, behavior: 'smooth', top: 80 }
     return { top: 0, behavior: 'smooth' }
   }
 })
@@ -55,194 +55,164 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-const debounce = (fn, delay) => {
-  let timer
-  return (...args) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => fn(...args), delay)
+const lazyDirective = {
+  mounted(el) {
+    const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
+    
+    imgs.forEach(img => {
+      if (!img.src || img.src === '' || img.src.startsWith('data:')) {
+        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
+      }
+      
+      if (window.App && window.App.lazyLoader) {
+        window.App.lazyLoader.observe(img)
+      }
+    })
+  },
+  
+  updated(el) {
+    const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
+    
+    imgs.forEach(img => {
+      if (window.App && window.App.lazyLoader) {
+        window.App.lazyLoader.observe(img)
+      }
+    })
   }
 }
 
-const waitForDOM = () => {
-  if (document.readyState === 'complete') return Promise.resolve()
-  return new Promise(resolve => {
-    window.addEventListener('load', resolve, { once: true })
+const waitForCriticalAssets = () => {
+  return new Promise((resolve) => {
+    const checkAssets = () => {
+      const stylesLoaded = Array.from(document.styleSheets).every(sheet => {
+        try {
+          return sheet.cssRules || sheet.rules
+        } catch (e) {
+          return false
+        }
+      })
+      
+      if (stylesLoaded) resolve()
+      else setTimeout(checkAssets, 100)
+    }
+    
+    checkAssets()
   })
 }
 
-const preloadCriticalImages = () => {
-  const criticalImages = [
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp'
+const preloadAllCriticalImages = () => {
+  const heroImages = [
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
+  ]
+  
+  const productImages = [
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/manunggal-lestari_yw7uim.webp',
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/manunggal-makmur_w5z3ex.webp',
+    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/ptorca_ps9pno.webp'
   ]
   
   return Promise.all(
-    criticalImages.map(src => {
-      return new Promise((resolve, reject) => {
+    [...heroImages, ...productImages].map(src => {
+      return new Promise((resolve) => {
         const img = new Image()
         img.onload = resolve
-        img.onerror = reject
+        img.onerror = resolve
         img.src = src
       })
     })
   )
 }
 
-const waitForFonts = () => {
-  if ('fonts' in document) {
-    return Promise.all([
-      document.fonts.load('1rem "Segoe UI"'),
-      document.fonts.load('600 1rem "Segoe UI"'),
-      document.fonts.load('700 1rem "Segoe UI"')
-    ])
-  }
-  return Promise.resolve()
-}
-
-class ImageLoader {
-  constructor() {
-    this.loadedImages = new Set()
-    this.pendingImages = new Set()
-    this.observer = null
-  }
-  
-  init() {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target
-            this.loadImage(img)
-          }
-        })
-      },
-      { rootMargin: '100px' }
-    )
-  }
-  
-  loadImage(img) {
-    if (this.loadedImages.has(img) || this.pendingImages.has(img)) return
-    
-    const src = img.dataset.src
-    if (!src) return
-    
-    this.pendingImages.add(img)
-    
-    // Tambah class loading
-    img.classList.add('image-loading')
-    
-    const tempImg = new Image()
-    tempImg.onload = () => {
-      img.src = src
-      img.removeAttribute('data-src')
-      img.classList.remove('image-loading')
-      img.classList.add('image-loaded')
-      this.loadedImages.add(img)
-      this.pendingImages.delete(img)
-      
-      // Trigger custom event
-      img.dispatchEvent(new Event('imageloaded'))
-    }
-    
-    tempImg.onerror = () => {
-      img.classList.remove('image-loading')
-      this.pendingImages.delete(img)
-      console.warn(`Failed to load image: ${src}`)
-    }
-    
-    tempImg.src = src
-  }
-  
-  observe(img) {
-    if (img.dataset.src) {
-      this.observer.observe(img)
-    }
-  }
-  
-  waitForAll() {
-    if (this.pendingImages.size === 0) return Promise.resolve()
-    
-    return new Promise(resolve => {
-      const checkInterval = setInterval(() => {
-        if (this.pendingImages.size === 0) {
-          clearInterval(checkInterval)
-          resolve()
-        }
-      }, 100)
-    })
-  }
-}
-
 const initApp = async () => {
   const loadingEl = document.getElementById('app-loading')
   
   try {
-    // Step 1: Tunggu DOM siap
-    await waitForDOM()
+    if (document.readyState !== 'complete') {
+      await new Promise(resolve => {
+        if (document.readyState === 'complete') resolve()
+        window.addEventListener('load', resolve, { once: true })
+      })
+    }
     
-    // Step 2: Preload critical images
-    await preloadCriticalImages()
+    await Promise.race([
+      Promise.all([waitForCriticalAssets(), preloadAllCriticalImages()]),
+      new Promise(resolve => setTimeout(resolve, 4000))
+    ])
     
-    // Step 3: Tunggu fonts
-    await waitForFonts()
-    
-    // Step 4: Inisialisasi Vue App
     const app = createApp(App)
-    const imageLoader = new ImageLoader()
-    imageLoader.init()
-    
-    // Custom directive untuk lazy loading
-    app.directive('lazy', {
-      mounted(el) {
-        const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
-        imgs.forEach(img => {
-          // Tambah placeholder untuk gambar
-          if (!img.hasAttribute('src')) {
-            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
-          }
-          imageLoader.observe(img)
-        })
-      },
-      updated(el) {
-        const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
-        imgs.forEach(img => imageLoader.observe(img))
-      }
-    })
-    
+    app.directive('lazy', lazyDirective)
     app.use(router)
     
-    // Step 5: Tunggu router ready
     await router.isReady()
     
-    // Step 6: Mount Vue app
     app.mount('#app')
     
-    // Step 7: Hapus loading state dari body
+    if (window.App && window.App.afterVueMount) {
+      window.App.afterVueMount()
+    }
+    
     document.body.classList.remove('loading')
     
-    // Step 8: Fade out loading overlay
+    const checkHeroImages = () => {
+      const heroImages = document.querySelectorAll('.hero img, .hero-logo img')
+      if (heroImages.length === 0) return Promise.resolve()
+      
+      return new Promise(resolve => {
+        let loaded = 0
+        heroImages.forEach(img => {
+          if (img.complete) loaded++
+          else {
+            img.addEventListener('load', () => {
+              loaded++
+              if (loaded === heroImages.length) resolve()
+            })
+            img.addEventListener('error', () => {
+              loaded++
+              if (loaded === heroImages.length) resolve()
+            })
+          }
+        })
+        
+        if (loaded === heroImages.length) resolve()
+      })
+    }
+    
+    await checkHeroImages()
+    
     if (loadingEl) {
       loadingEl.style.opacity = '0'
       loadingEl.style.pointerEvents = 'none'
       
-      // Tunggu sedikit untuk gambar-gambar lazy load
-      setTimeout(async () => {
-        // Tunggu semua gambar selesai loading
-        await imageLoader.waitForAll()
+      setTimeout(() => {
+        loadingEl.style.display = 'none'
         
-        // Hilangkan loading overlay setelah transisi
         setTimeout(() => {
-          loadingEl.style.display = 'none'
-        }, 300)
-      }, 500)
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.scan()
+          }
+        }, 500)
+      }, 600)
     }
     
   } catch (error) {
     console.error('Application initialization failed:', error)
+    
     if (loadingEl) {
       loadingEl.innerHTML = `
-        <div class="error-state">
+        <div style="text-align:center;padding:2rem;color:#666;">
           <p>Gagal memuat aplikasi. Silakan refresh halaman.</p>
-          <button onclick="window.location.reload()" class="btn btn-primary">Coba Lagi</button>
+          <button onclick="window.location.reload()" style="
+            padding:0.75rem 1.5rem;
+            background:#1a7d3e;
+            color:white;
+            border:none;
+            border-radius:25px;
+            cursor:pointer;
+            margin-top:1rem;
+          ">Coba Lagi</button>
         </div>
       `
       loadingEl.style.opacity = '1'
@@ -250,5 +220,8 @@ const initApp = async () => {
   }
 }
 
-// Start the application
-initApp()
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp)
+} else {
+  initApp()
+}

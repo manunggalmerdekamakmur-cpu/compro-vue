@@ -18,8 +18,20 @@
         <div class="product-detail-container">
           <div class="product-images">
             <div class="main-image-container" @click="openImageModal">
-              <img :src="currentImage" :alt="product.name" class="main-image">
+              <img
+                :src="getPlaceholder()"
+                :data-src="currentImageSrc"
+                :alt="product.name"
+                class="main-image"
+                width="600"
+                height="400"
+                v-lazy
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
             </div>
+            
             <div class="thumbnail-gallery" v-if="product.images && product.images.length > 1">
               <div 
                 v-for="(image, index) in product.images" 
@@ -27,7 +39,15 @@
                 :class="['thumbnail-item', { active: currentImageIndex === index }]"
                 @click="changeImage(image, index)"
               >
-                <img :src="image" :alt="`${product.name} ${index + 1}`" loading="lazy">
+                <img
+                  :src="getPlaceholder()"
+                  :data-src="image"
+                  :alt="`${product.name} ${index + 1}`"
+                  width="80"
+                  height="80"
+                  v-lazy
+                  loading="lazy"
+                />
               </div>
             </div>
             
@@ -35,7 +55,7 @@
               <embed 
                 :src="product.brochure"
                 type="application/pdf"
-                style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
+                class="product-pdf-embed"
               />
             </div>
 
@@ -119,6 +139,8 @@
                   :src="getPlaceholder()"
                   :data-src="related.image"
                   :alt="related.name"
+                  width="300"
+                  height="200"
                   v-lazy
                   loading="lazy"
                 />
@@ -166,7 +188,8 @@ export default {
       showModal: false,
       modalImage: '',
       imageTransitioning: false,
-      isLoading: true
+      isLoading: true,
+      preloadedImages: []
     }
   },
   
@@ -177,20 +200,27 @@ export default {
   },
   
   async beforeMount() {
+    await this.preloadAllImages()
     await this.loadProduct()
   },
   
   mounted() {
     this.debounceUpdate = this.debounce(() => {
       this.isLoading = false
-    }, 200)
+      setTimeout(() => {
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.scan()
+        }
+      }, 200)
+    }, 300)
     this.debounceUpdate()
   },
   
   watch: {
     '$route.params.id': {
-      handler() {
-        this.loadProduct()
+      async handler() {
+        await this.preloadAllImages()
+        await this.loadProduct()
       }
     }
   },
@@ -202,6 +232,40 @@ export default {
         clearTimeout(timer)
         timer = setTimeout(() => fn(...args), delay)
       }
+    },
+    
+    async preloadAllImages() {
+      const images = []
+      
+      const id = this.$route.params.id
+      const current = getTriobionikVariantById(id)
+      if (current) {
+        if (current.image) images.push(current.image)
+        if (current.images && current.images.length > 0) {
+          images.push(...current.images)
+        }
+      }
+      
+      const all = getTriobionikVariants()
+      all.forEach(variant => {
+        if (variant.id !== id) {
+          if (variant.image) images.push(variant.image)
+        }
+      })
+      
+      await Promise.all(
+        images.map(src => {
+          return new Promise((resolve) => {
+            const img = new Image()
+            img.onload = () => {
+              this.preloadedImages.push(src)
+              resolve()
+            }
+            img.onerror = resolve
+            img.src = src
+          })
+        })
+      )
     },
     
     async loadProduct() {

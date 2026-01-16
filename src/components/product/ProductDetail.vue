@@ -249,7 +249,6 @@ export default {
   methods: {
     loadProductData() {
       this.loading = true
-      // Simulasi loading data
       setTimeout(() => {
         this.loading = false
       }, 300)

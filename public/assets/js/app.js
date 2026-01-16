@@ -1,99 +1,52 @@
 (function() {
-  'use strict'
-  
   const CONFIG = {
-    debounceDelay: 100,
-    throttleLimit: 150,
+    debounceDelay: 150,
+    throttleLimit: 200,
     scrollThreshold: 300,
-    imageOffset: 100
+    imageOffset: 200
   }
   
-  const perf = {
-    marks: new Map(),
+  const debounce = (fn, delay) => {
+    let timeoutId
+    return function(...args) {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => fn.apply(this, args), delay)
+    }
+  }
+  
+  const throttle = (fn, limit) => {
+    let inThrottle, lastTime
+    return function(...args) {
+      const now = Date.now()
+      if (!inThrottle) {
+        fn.apply(this, args)
+        lastTime = now
+        inThrottle = true
+      } else if (now - lastTime >= limit) {
+        fn.apply(this, args)
+        lastTime = now
+      }
+    }
+  }
+  
+  class PerformanceMonitor {
+    constructor() {
+      this.marks = new Map()
+    }
     
     mark(name) {
       this.marks.set(name, performance.now())
-    },
+    }
     
     measure(name, start, end) {
       const s = this.marks.get(start)
       const e = this.marks.get(end)
       if (s && e) {
         const duration = e - s
-        console.log(`${name}: ${duration.toFixed(2)}ms`)
+        if (duration > 100) {
+          console.log(`Performance: ${name} - ${duration.toFixed(2)}ms`)
+        }
         return duration
-      }
-    }
-  }
-  
-  const debounce = (fn, delay) => {
-    let timer
-    return function(...args) {
-      clearTimeout(timer)
-      timer = setTimeout(() => fn.apply(this, args), delay)
-    }
-  }
-  
-  const throttle = (fn, limit) => {
-    let inThrottle
-    let lastFn
-    let lastTime
-    
-    return function(...args) {
-      if (!inThrottle) {
-        fn.apply(this, args)
-        lastTime = Date.now()
-        inThrottle = true
-      } else {
-        clearTimeout(lastFn)
-        lastFn = setTimeout(() => {
-          if (Date.now() - lastTime >= limit) {
-            fn.apply(this, args)
-            lastTime = Date.now()
-          }
-        }, Math.max(limit - (Date.now() - lastTime), 0))
-      }
-    }
-  }
-  
-  class LayoutManager {
-    constructor() {
-      this.elements = new WeakMap()
-      this.observer = null
-      this.init()
-    }
-    
-    init() {
-      this.observer = new ResizeObserver(
-        debounce(entries => {
-          entries.forEach(entry => {
-            const data = this.elements.get(entry.target)
-            if (data) {
-              const height = Math.max(entry.contentRect.height, data.minHeight || 0)
-              entry.target.style.setProperty('--element-height', `${height}px`)
-            }
-          })
-        }, 50)
-      )
-    }
-    
-    observe(element, minHeight = 0) {
-      if (!element || this.elements.has(element)) return
-      
-      const rect = element.getBoundingClientRect()
-      const height = Math.max(rect.height, minHeight)
-      
-      this.elements.set(element, { minHeight })
-      element.style.setProperty('--element-height', `${height}px`)
-      element.style.minHeight = `${height}px`
-      
-      this.observer.observe(element)
-    }
-    
-    unobserve(element) {
-      if (this.elements.has(element)) {
-        this.observer.unobserve(element)
-        this.elements.delete(element)
       }
     }
   }
@@ -101,57 +54,135 @@
   class LazyLoader {
     constructor() {
       this.observer = null
-      this.images = new Set()
+      this.loadedImages = new Set()
+      this.pendingImages = new WeakMap()
+      this.imageSizes = new WeakMap()
       this.init()
     }
     
     init() {
-      this.observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              this.loadImage(entry.target)
-              this.observer.unobserve(entry.target)
-              this.images.delete(entry.target)
-            }
-          })
-        },
-        {
-          root: null,
-          rootMargin: `${CONFIG.imageOffset}px`,
-          threshold: 0.01
-        }
-      )
+      const config = {
+        root: null,
+        rootMargin: `${CONFIG.imageOffset}px 0px`,
+        threshold: 0.01
+      }
       
-      this.scan()
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.loadImage(entry.target)
+          }
+        })
+      }, config)
     }
     
-    scan() {
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        this.images.add(img)
-        this.observer.observe(img)
-      })
+    observe(img) {
+      if (!img || !img.dataset.src || this.loadedImages.has(img) || this.pendingImages.has(img)) return
+      
+      img.classList.add('image-loading')
+      
+      this.setImageDimensions(img)
+      
+      if (!img.src || img.src.startsWith('data:')) {
+        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
+      }
+      
+      this.pendingImages.set(img, true)
+      this.observer.observe(img)
+      
+      setTimeout(() => {
+        if (this.pendingImages.has(img)) {
+          const rect = img.getBoundingClientRect()
+          if (rect.top < window.innerHeight + 100) {
+            this.loadImage(img)
+          }
+        }
+      }, 300)
+    }
+    
+    setImageDimensions(img) {
+      if (img.width && img.height) return
+      
+      const parent = img.parentElement
+      if (parent) {
+        const style = window.getComputedStyle(parent)
+        const width = parseInt(style.width) || 300
+        const height = parseInt(style.height) || 200
+        img.width = width
+        img.height = height
+        this.imageSizes.set(img, { width, height })
+      }
     }
     
     loadImage(img) {
+      if (!img.dataset.src) return
+      
       const src = img.dataset.src
-      if (src) {
+      
+      if (img.src === src) {
+        this.onImageLoad(img)
+        return
+      }
+      
+      const loader = new Image()
+      loader.src = src
+      
+      loader.onload = () => {
         img.src = src
-        delete img.dataset.src
-        img.classList.add('loaded')
+        img.removeAttribute('data-src')
+        this.onImageLoad(img)
+      }
+      
+      loader.onerror = () => {
+        img.classList.remove('image-loading')
+        img.classList.add('image-error')
+        this.pendingImages.delete(img)
+        this.observer.unobserve(img)
       }
     }
     
-    add(img) {
-      if (img && img.dataset.src) {
-        this.images.add(img)
-        this.observer.observe(img)
-      }
+    onImageLoad(img) {
+      img.classList.remove('image-loading')
+      img.classList.add('image-loaded')
+      this.loadedImages.add(img)
+      this.pendingImages.delete(img)
+      this.observer.unobserve(img)
+      
+      const event = new CustomEvent('imageloaded', { detail: { img } })
+      img.dispatchEvent(event)
+    }
+    
+    scan(container = document) {
+      const images = container.querySelectorAll('img[data-src]')
+      images.forEach(img => this.observe(img))
+    }
+    
+    scanAndWait() {
+      return new Promise(resolve => {
+        this.scan()
+        setTimeout(() => {
+          const pending = Array.from(document.querySelectorAll('img.image-loading'))
+          if (pending.length === 0) {
+            resolve()
+            return
+          }
+          
+          let loadedCount = 0
+          pending.forEach(img => {
+            img.addEventListener('imageloaded', () => {
+              loadedCount++
+              if (loadedCount === pending.length) resolve()
+            }, { once: true })
+          })
+        }, 100)
+      })
     }
     
     destroy() {
-      this.observer.disconnect()
-      this.images.clear()
+      if (this.observer) this.observer.disconnect()
+      this.loadedImages.clear()
+      this.pendingImages = new WeakMap()
+      this.imageSizes = new WeakMap()
     }
   }
   
@@ -161,7 +192,7 @@
       this.positions = new Map()
     }
     
-    save() {
+    savePosition() {
       const path = window.location.pathname
       this.positions.set(path, {
         x: window.pageXOffset,
@@ -170,7 +201,7 @@
       })
     }
     
-    restore() {
+    restorePosition() {
       const path = window.location.pathname
       const pos = this.positions.get(path)
       
@@ -181,25 +212,31 @@
       }
     }
     
-    toTop() {
+    scrollToTop(smooth = true) {
       if (this.isScrolling) return
       
       this.isScrolling = true
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      const options = { top: 0 }
+      if (smooth) options.behavior = 'smooth'
+      
+      window.scrollTo(options)
       
       setTimeout(() => {
         this.isScrolling = false
       }, 500)
     }
     
-    toElement(element, offset = 80) {
+    scrollToElement(element, offset = 80, smooth = true) {
       if (this.isScrolling || !element) return
       
       this.isScrolling = true
       const rect = element.getBoundingClientRect()
       const top = rect.top + window.pageYOffset - offset
       
-      window.scrollTo({ top, behavior: 'smooth' })
+      const options = { top }
+      if (smooth) options.behavior = 'smooth'
+      
+      window.scrollTo(options)
       
       setTimeout(() => {
         this.isScrolling = false
@@ -207,104 +244,167 @@
     }
   }
   
+  class LayoutManager {
+    constructor() {
+      this.observer = null
+      this.elements = new WeakMap()
+      this.init()
+    }
+    
+    init() {
+      this.observer = new ResizeObserver(
+        debounce((entries) => {
+          entries.forEach(entry => {
+            const target = entry.target
+            const cachedHeight = this.elements.get(target)
+            const newHeight = entry.contentRect.height
+            
+            if (!cachedHeight || Math.abs(cachedHeight - newHeight) > 5) {
+              this.elements.set(target, newHeight)
+              target.style.setProperty('--dynamic-height', `${newHeight}px`)
+            }
+          })
+        }, 100)
+      )
+    }
+    
+    observe(element) {
+      if (!element || this.elements.has(element)) return
+      
+      const rect = element.getBoundingClientRect()
+      this.elements.set(element, rect.height)
+      element.style.setProperty('--dynamic-height', `${rect.height}px`)
+      
+      this.observer.observe(element)
+    }
+    
+    unobserve(element) {
+      if (this.elements.has(element)) {
+        this.observer.unobserve(element)
+        this.elements.delete(element)
+      }
+    }
+    
+    destroy() {
+      this.observer.disconnect()
+      this.elements = new WeakMap()
+    }
+  }
+  
   class Application {
     constructor() {
-      this.layout = new LayoutManager()
-      this.lazy = new LazyLoader()
-      this.scroll = new ScrollManager()
-      this.initialized = false
+      this.perf = new PerformanceMonitor()
+      this.lazyLoader = new LazyLoader()
+      this.scrollManager = new ScrollManager()
+      this.layoutManager = new LayoutManager()
+      this.isInitialized = false
+      this.scrollHandler = null
     }
     
     async init() {
-      if (this.initialized) return
+      if (this.isInitialized) return
       
-      perf.mark('app-init-start')
+      this.perf.mark('app-init-start')
       
       await this.waitForDOM()
       
-      this.setupScroll()
+      this.setupEventListeners()
+      this.setupSmoothScrolling()
       this.setupBackToTop()
-      this.observeLayouts()
       
-      window.addEventListener('beforeunload', () => this.scroll.save())
-      window.addEventListener('load', () => this.scroll.restore())
+      this.lazyLoader.init()
       
-      this.initialized = true
+      this.isInitialized = true
       
-      perf.mark('app-init-end')
-      perf.measure('App Init', 'app-init-start', 'app-init-end')
+      this.perf.mark('app-init-end')
+      this.perf.measure('App Initialization', 'app-init-start', 'app-init-end')
     }
     
     waitForDOM() {
-      if (document.readyState === 'complete') {
-        return Promise.resolve()
-      }
+      if (document.readyState === 'complete') return Promise.resolve()
+      
       return new Promise(resolve => {
-        window.addEventListener('load', resolve, { once: true })
+        const checkReady = () => {
+          if (document.readyState === 'complete') resolve()
+          else setTimeout(checkReady, 100)
+        }
+        checkReady()
       })
     }
     
-    setupScroll() {
-      document.addEventListener(
-        'click',
-        debounce(e => {
-          const link = e.target.closest('a[href^="#"]')
-          if (link) {
-            e.preventDefault()
-            const id = link.getAttribute('href').substring(1)
-            const el = document.getElementById(id)
-            if (el) this.scroll.toElement(el)
-          }
-        }, CONFIG.debounceDelay)
-      )
+    setupEventListeners() {
+      this.scrollHandler = throttle(() => {
+        this.scrollManager.savePosition()
+      }, 100)
+      
+      window.addEventListener('scroll', this.scrollHandler, { passive: true })
+      window.addEventListener('beforeunload', () => this.scrollManager.savePosition())
+    }
+    
+    setupSmoothScrolling() {
+      document.addEventListener('click', debounce((e) => {
+        const link = e.target.closest('a[href^="#"]')
+        if (link) {
+          e.preventDefault()
+          const id = link.getAttribute('href').substring(1)
+          const element = document.getElementById(id)
+          if (element) this.scrollManager.scrollToElement(element)
+        }
+      }, CONFIG.debounceDelay))
     }
     
     setupBackToTop() {
       const btn = document.querySelector('.back-to-top')
       if (!btn) return
       
-      const handleScroll = throttle(() => {
-        const show = window.pageYOffset > CONFIG.scrollThreshold
+      const updateButton = throttle(() => {
+        const show = window.scrollY > CONFIG.scrollThreshold
         btn.classList.toggle('visible', show)
       }, CONFIG.throttleLimit)
       
-      window.addEventListener('scroll', handleScroll, { passive: true })
-      btn.addEventListener('click', () => this.scroll.toTop())
+      window.addEventListener('scroll', updateButton, { passive: true })
+      btn.addEventListener('click', () => this.scrollManager.scrollToTop())
       
-      handleScroll()
+      updateButton()
     }
     
-    observeLayouts() {
-      const selectors = [
-        '.site-header',
-        '.site-footer',
-        '.hero',
-        '.product-detail-page',
-        '.product-gallery'
-      ]
+    afterVueMount() {
+      setTimeout(() => {
+        this.scrollManager.restorePosition()
+      }, 100)
       
-      const observer = new MutationObserver(
-        debounce(() => {
-          selectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => {
-              const minHeight = parseInt(getComputedStyle(el).minHeight) || 0
-              this.layout.observe(el, minHeight)
+      this.setupVueLazyLoading()
+    }
+    
+    setupVueLazyLoading() {
+      this.lazyLoader.scan()
+      
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === 1) {
+                const images = node.querySelectorAll ? node.querySelectorAll('img[data-src]') : []
+                if (node.tagName === 'IMG' && node.dataset.src) this.lazyLoader.observe(node)
+                images.forEach(img => this.lazyLoader.observe(img))
+              }
             })
-          })
-        }, 100)
-      )
-      
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-      
-      selectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(el => {
-          const minHeight = parseInt(getComputedStyle(el).minHeight) || 0
-          this.layout.observe(el, minHeight)
+          }
         })
       })
+      
+      observer.observe(document.body, { childList: true, subtree: true })
+    }
+    
+    waitForAllImages() {
+      return this.lazyLoader.scanAndWait()
+    }
+    
+    destroy() {
+      if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler)
+      this.lazyLoader.destroy()
+      this.layoutManager.destroy()
+      this.isInitialized = false
     }
   }
   
@@ -317,12 +417,14 @@
   }
   
   window.App = {
-    scrollToTop: () => app.scroll.toTop(),
+    scrollToTop: () => app.scrollManager.scrollToTop(),
     scrollToElement: (id, offset) => {
       const el = document.getElementById(id)
-      if (el) app.scroll.toElement(el, offset)
+      if (el) app.scrollManager.scrollToElement(el, offset)
     },
-    lazy: app.lazy,
-    layout: app.layout
+    lazyLoader: app.lazyLoader,
+    afterVueMount: () => app.afterVueMount(),
+    waitForAllImages: () => app.waitForAllImages(),
+    destroy: () => app.destroy()
   }
 })()

@@ -31,6 +31,8 @@
                 :src="getPlaceholder()"
                 :data-src="variant.image"
                 :alt="variant.name"
+                width="300"
+                height="200"
                 v-lazy
                 loading="lazy"
                 decoding="async"
@@ -55,7 +57,15 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp" alt="Manunggal Lestari" loading="lazy">
+                <img
+                  :src="getPlaceholder()"
+                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp'"
+                  alt="Manunggal Lestari"
+                  width="300"
+                  height="200"
+                  v-lazy
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Lestari</h4>
@@ -67,7 +77,15 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp" alt="Manunggal Makmur" loading="lazy">
+                <img
+                  :src="getPlaceholder()"
+                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp'"
+                  alt="Manunggal Makmur"
+                  width="300"
+                  height="200"
+                  v-lazy
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -79,7 +97,15 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp" alt="PTORCA" loading="lazy">
+                <img
+                  :src="getPlaceholder()"
+                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp'"
+                  alt="PTORCA"
+                  width="300"
+                  height="200"
+                  v-lazy
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -105,11 +131,13 @@ export default {
   data() {
     return {
       variants: [],
-      isLoading: true
+      isLoading: true,
+      preloadedImages: []
     }
   },
   
   async beforeMount() {
+    await this.preloadImages()
     await this.loadVariants()
   },
   
@@ -117,6 +145,11 @@ export default {
     document.title = 'Triobionik - PT. Manunggal Merdeka Makmur'
     this.debounceScroll = this.debounce(() => {
       this.isLoading = false
+      setTimeout(() => {
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.scan()
+        }
+      }, 200)
     }, 300)
     this.debounceScroll()
   },
@@ -128,6 +161,36 @@ export default {
         clearTimeout(timer)
         timer = setTimeout(() => fn(...args), delay)
       }
+    },
+    
+    async preloadImages() {
+      const images = [
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp'
+      ]
+      
+      const variants = getTriobionikVariants()
+      variants.forEach(variant => {
+        if (variant.image) images.push(variant.image)
+        if (variant.images && variant.images.length > 0) {
+          images.push(...variant.images)
+        }
+      })
+      
+      await Promise.all(
+        images.map(src => {
+          return new Promise((resolve) => {
+            const img = new Image()
+            img.onload = () => {
+              this.preloadedImages.push(src)
+              resolve()
+            }
+            img.onerror = resolve
+            img.src = src
+          })
+        })
+      )
     },
     
     async loadVariants() {

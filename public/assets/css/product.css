@@ -3,7 +3,6 @@
   contain: layout style;
 }
 
-/* Loading States untuk Gambar */
 .product-images .loading-state,
 .related-product-img .loading-state {
   position: absolute;
@@ -27,7 +26,6 @@
   animation: spin 1s linear infinite;
 }
 
-/* Transisi gambar */
 .main-image img,
 .thumbnail-item img,
 .related-product-img img {
@@ -57,7 +55,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Sisa CSS tetap sama... */
 .breadcrumb {
   background-color: #f5f5f5;
   padding: 1rem 0;

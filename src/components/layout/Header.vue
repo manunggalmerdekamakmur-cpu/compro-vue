@@ -1,94 +1,89 @@
 <template>
-  <header :class="{ scrolled: isScrolled }">
+  <header role="banner" :class="{ scrolled: isScrolled, 'at-top': isAtTop }">
     <div class="container header-container">
-      <router-link to="/" class="logo">
-        <img 
-          src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" 
-          width="35" 
-          height="35" 
-          alt="Logo STIESIA" 
+      <div class="logo">
+        <img
+          src="/assets/img/logo-stiesia.webp"
+          width="35"
+          height="35"
+          alt="Logo STIESIA"
           loading="eager"
-          fetchpriority="high"
         />
-        <img 
-          src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" 
-          width="35" 
-          height="35" 
-          alt="Logo PT. Manunggal Merdeka Makmur" 
+        <img
+          src="/assets/img/logo.webp"
+          width="35"
+          height="35"
+          alt="Logo PT. Manunggal Merdeka Makmur"
           loading="eager"
-          fetchpriority="high"
         />
         <div class="logo-text">
-          <h1>PT. Manunggal Merdeka Makmur</h1>
+          <h1 style="opacity: 0">PT. Manunggal Merdeka Makmur</h1>
           <p>Produsen Pupuk Organik dan Agen Hayati Berkualitas</p>
         </div>
-      </router-link>
-      
-      <nav>
-        <button 
-          class="hamburger" 
+      </div>
+      <nav role="navigation">
+        <div
+          class="hamburger"
+          @click="toggleMenu"
           :aria-expanded="menuOpen.toString()"
           aria-label="Toggle menu"
-          @click="toggleMenu"
         >
           <i :class="menuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
-        </button>
-        
+        </div>
         <ul class="nav-menu" :class="{ active: menuOpen }">
           <li>
-            <router-link 
-              to="/" 
-              class="nav-link" 
-              :class="{ active: $route.path === '/' }"
-              @click="closeMenu"
+            <a
+              href="/"
+              class="nav-link"
+              :class="{ active: isActive('/') }"
+              @click="handleNavClick($event, '/')"
+              >Beranda</a
             >
-              Beranda
-            </router-link>
           </li>
           <li>
-            <a 
-              href="#about" 
+            <a
+              href="#about"
               class="nav-link"
-              @click="handleHashClick('#about')"
+              :class="{ active: activeSection === 'about' }"
+              @click="handleNavClick($event, '#about')"
+              >Tentang Kami</a
             >
-              Tentang Kami
-            </a>
           </li>
           <li>
-            <a 
-              href="#visi-misi" 
+            <a
+              href="#visi-misi"
               class="nav-link"
-              @click="handleHashClick('#visi-misi')"
+              :class="{ active: activeSection === 'visi-misi' }"
+              @click="handleNavClick($event, '#visi-misi')"
+              >Visi & Misi</a
             >
-              Visi & Misi
-            </a>
           </li>
           <li>
-            <a 
-              href="#products" 
+            <a
+              href="#products"
               class="nav-link"
-              @click="handleHashClick('#products')"
+              :class="{ active: activeSection === 'products' }"
+              @click="handleNavClick($event, '#products')"
+              >Produk Kami</a
             >
-              Produk Kami
-            </a>
           </li>
           <li>
-            <a 
-              href="#certifications" 
+            <a
+              href="#certifications"
               class="nav-link"
-              @click="handleHashClick('#certifications')"
+              :class="{ active: activeSection === 'certifications' }"
+              @click="handleNavClick($event, '#certifications')"
+              >Sertifikasi</a
             >
-              Sertifikasi
-            </a>
           </li>
           <li>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               class="nav-link"
-              @click="handleHashClick('#contact')"
+              :class="{ active: activeSection === 'contact' }"
+              @click="handleNavClick($event, '#contact')"
+              >Kontak</a
             >
-              Kontak
-            </a>
           </li>
         </ul>
       </nav>
@@ -98,77 +93,109 @@
 
 <script>
 export default {
-  name: 'Header',
-  
+  name: "Header",
   data() {
     return {
       isScrolled: false,
+      isAtTop: true,
       menuOpen: false,
-      resizeTimer: null
-    }
+      activeSection: "home",
+      sections: [],
+    };
   },
-  
   mounted() {
-    this.handleScroll()
-    this.debouncedScroll = this.debounce(this.handleScroll, 100)
-    this.debouncedResize = this.debounce(this.handleResize, 150)
-    
-    window.addEventListener('scroll', this.debouncedScroll, { passive: true })
-    window.addEventListener('resize', this.debouncedResize, { passive: true })
-  },
-  
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.debouncedScroll)
-    window.removeEventListener('resize', this.debouncedResize)
-    
-    if (this.resizeTimer) {
-      clearTimeout(this.resizeTimer)
-    }
-  },
-  
-  methods: {
-    debounce(fn, delay) {
-      let timer
-      return function(...args) {
-        clearTimeout(timer)
-        timer = setTimeout(() => fn.apply(this, args), delay)
+    this.handleScroll();
+    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("resize", this.handleResize);
+
+    this.initSections();
+
+    window.addEventListener("scroll", this.updateActiveSection);
+
+    setTimeout(() => {
+      const logoTextH1 = this.$el.querySelector(".logo-text h1");
+      if (logoTextH1) {
+        logoTextH1.style.opacity = "1";
       }
-    },
-    
+    }, 100);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.updateActiveSection);
+  },
+  methods: {
     handleScroll() {
-      this.isScrolled = window.scrollY > 60
+      const scrollY = window.scrollY;
+      this.isScrolled = scrollY > 60;
+      this.isAtTop = scrollY < 10;
     },
-    
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen
-      document.body.style.overflow = this.menuOpen ? 'hidden' : ''
-    },
-    
-    closeMenu() {
-      this.menuOpen = false
-      document.body.style.overflow = ''
-    },
-    
     handleResize() {
       if (window.innerWidth > 768 && this.menuOpen) {
-        this.closeMenu()
+        this.menuOpen = false;
       }
     },
-    
-    handleHashClick(hash) {
-      this.closeMenu()
-      
-      if (this.$route.path !== '/') {
-        this.$router.push('/' + hash)
-      } else {
-        const element = document.querySelector(hash)
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+      document.body.style.overflow = this.menuOpen ? "hidden" : "";
+    },
+    handleNavClick(event, target) {
+      event.preventDefault();
+
+      if (this.menuOpen) {
+        this.menuOpen = false;
+        document.body.style.overflow = "";
+      }
+
+      if (target === "/") {
+        this.$router.push("/");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (target.startsWith("#")) {
+        const element = document.querySelector(target);
         if (element) {
-          const headerHeight = 80
-          const top = element.offsetTop - headerHeight
-          window.scrollTo({ top, behavior: 'smooth' })
+          const headerHeight = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+
+          this.activeSection = target.substring(1);
         }
       }
-    }
-  }
-}
+    },
+    initSections() {
+      this.sections = [
+        "home",
+        "about",
+        "visi-misi",
+        "products",
+        "certifications",
+        "contact",
+      ];
+    },
+    updateActiveSection() {
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of this.sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+            this.activeSection = section;
+            break;
+          }
+        }
+      }
+    },
+    isActive(route) {
+      return this.$route.path === route;
+    },
+  },
+};
 </script>

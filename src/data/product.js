@@ -35,7 +35,7 @@ export const productData = {
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/phc-manunggal-lestari-1l_jisg83.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461331/phc-manunggal-lestari_p9nndd.webp'
     ],
-    brochure: '/assets/brochures/manunggal-lestari.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     status: 'approved'
@@ -68,7 +68,7 @@ export const productData = {
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp'
     ],
-    brochure: '/assets/brochures/triobionik.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.92',
     status: 'approved'
@@ -112,7 +112,7 @@ export const productData = {
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461399/triobionik-merah_m65bap.webp'
     ],
-    brochure: '/assets/brochures/triobionik-merah.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.92',
     shortDesc: 'PHP Triobionik kemasan 25 gram untuk aplikasi praktis',

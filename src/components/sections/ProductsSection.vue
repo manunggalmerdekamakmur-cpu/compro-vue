@@ -16,10 +16,17 @@
           <i class="fas fa-clock"></i> Segera Hadir
         </button>
       </div>
-      <div class="products-grid">
+      <div class="products-grid" v-lazy>
         <router-link v-for="product in filteredProducts" :key="product.id" :to="getProductLink(product)" class="product-card">
           <div class="product-img">
-            <img :src="product.images[0]" :alt="product.title" loading="lazy" />
+            <img 
+              :src="getPlaceholder()" 
+              :data-src="product.images[0]" 
+              :alt="product.title" 
+              width="300"
+              height="200"
+              loading="lazy"
+            />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
               <i :class="product.status === 'approved' ? 'fas fa-check-circle' : 'fas fa-clock'"></i>
               {{ product.badge }}
@@ -27,7 +34,7 @@
           </div>
           <div class="product-info">
             <h3>{{ product.title }}</h3>
-            <p>{{ product.description.substring(0, 100) }}...</p>
+            <p>{{ truncateDescription(product.description) }}</p>
             <div class="product-tags">
               <span class="tag" v-for="tag in getProductTags(product)" :key="tag">
                 <i :class="getTagIcon(tag)"></i> {{ tag }}
@@ -61,6 +68,12 @@ export default {
     this.products = getAllProducts()
   },
   methods: {
+    getPlaceholder() {
+      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
+    },
+    truncateDescription(desc) {
+      return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
+    },
     getProductLink(product) {
       const routes = {
         'phc-manunggal-lestari': '/manunggal-lestari',
