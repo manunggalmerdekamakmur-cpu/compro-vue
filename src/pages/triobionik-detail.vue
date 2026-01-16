@@ -1,49 +1,41 @@
 <template>
   <div v-if="product" class="product-detail-page">
-    <section class="product-hero">
+    <section class="breadcrumb">
       <div class="container">
-        <div class="breadcrumb">
-          <router-link to="/">Beranda</router-link>
-          <span>/</span>
-          <router-link to="/triobionik">Triobionik</router-link>
-          <span>/</span>
-          <span>{{ product.name }}</span>
-        </div>
+        <nav aria-label="Breadcrumb">
+          <ol>
+            <li><router-link to="/">Beranda</router-link></li>
+            <li><a href="/#products" @click.prevent="scrollToProducts">Produk</a></li>
+            <li><router-link to="/triobionik">Triobionik</router-link></li>
+            <li class="current">{{ product.name }}</li>
+          </ol>
+        </nav>
       </div>
     </section>
-    
-    <section class="product-detail">
+
+    <section class="product-detail-page">
       <div class="container">
-        <div class="product-layout">
-          <div class="product-gallery">
-            <div class="main-image-container">
-              <img
-                :src="currentImage"
-                :alt="product.name"
-                class="main-image"
-                loading="eager"
-                decoding="sync"
-                fetchpriority="high"
-              />
+        <div class="product-detail-container">
+          <div class="product-images">
+            <div class="main-image-container" @click="openImageModal">
+              <img :src="currentImage" :alt="product.name" class="main-image">
             </div>
-            
-            <div v-if="product.images && product.images.length > 1" class="thumbnails">
-              <button
-                v-for="(img, index) in product.images"
+            <div class="thumbnail-gallery" v-if="product.images && product.images.length > 1">
+              <div 
+                v-for="(image, index) in product.images" 
                 :key="index"
-                class="thumbnail-item"
-                :class="{ active: currentImage === img }"
-                @click="selectImage(img)"
-                :aria-label="`Lihat gambar ${index + 1}`"
+                :class="['thumbnail-item', { active: currentImageIndex === index }]"
+                @click="changeImage(image, index)"
               >
-                <img :src="img" :alt="`${product.name} - gambar ${index + 1}`" loading="lazy" />
-              </button>
+                <img :src="image" :alt="`${product.name} ${index + 1}`" loading="lazy">
+              </div>
             </div>
             
-            <div v-if="product.brochure" class="product-brochure">
+            <div class="product-brochure" v-if="product.brochure">
               <embed 
                 :src="product.brochure"
                 type="application/pdf"
+                style="width:100%; height:450px; border:1px solid #ddd; border-radius:8px;" 
               />
             </div>
 
@@ -51,7 +43,7 @@
               <div class="product-stat-item">
                 <i class="fas fa-certificate"></i>
                 <h4>Berizin</h4>
-                <p>{{ product.certificate }}</p>
+                <p>{{ product.certificate || 'Terdaftar' }}</p>
               </div>
               <div class="product-stat-item">
                 <i class="fas fa-flask"></i>
@@ -65,12 +57,12 @@
               </div>
             </div>
           </div>
-          
+
           <div class="product-info">
             <div class="product-header">
-              <h1>{{ product.title }}</h1>
-              <span v-if="product.badge" class="status-badge">{{ product.badge }}</span>
-              <div v-if="product.certificate" class="certificate-badge">
+              <h1>{{ product.title || product.name }}</h1>
+              <div class="product-badge badge-approved" v-if="product.badge">{{ product.badge }}</div>
+              <div class="certificate-badge" v-if="product.certificate">
                 <i class="fas fa-certificate"></i>
                 <span>Izin Edar No: {{ product.certificate }}</span>
               </div>
@@ -78,66 +70,80 @@
             
             <p class="product-description">{{ product.description }}</p>
             
-            <div v-if="product.specs" class="specs-section">
-              <h3><i class="fas fa-clipboard-list"></i> Spesifikasi</h3>
+            <div class="product-specs" v-if="product.specs">
+              <h3><i class="fas fa-clipboard-list"></i> Spesifikasi Produk</h3>
               <ul>
-                <li v-for="(spec, index) in product.specs" :key="index">{{ spec }}</li>
+                <li v-for="(spec, index) in product.specs" :key="`spec-${index}`">{{ spec }}</li>
               </ul>
             </div>
             
-            <div v-if="product.features" class="features-section">
+            <div class="product-features" v-if="product.features">
               <h3><i class="fas fa-star"></i> Kandungan Mikroorganisme</h3>
               <ul>
-                <li v-for="(feature, index) in product.features" :key="index">{{ feature }}</li>
+                <li v-for="(feature, index) in product.features" :key="`feature-${index}`">{{ feature }}</li>
               </ul>
             </div>
             
-            <div v-if="product.benefits" class="benefits-section">
+            <div class="product-benefits" v-if="product.benefits">
               <h3><i class="fas fa-check-circle"></i> Manfaat</h3>
               <ul>
-                <li v-for="(benefit, index) in product.benefits" :key="index">{{ benefit }}</li>
+                <li v-for="(benefit, index) in product.benefits" :key="`benefit-${index}`">{{ benefit }}</li>
               </ul>
             </div>
             
             <div class="product-actions">
-              <a v-if="product.brochure" :href="product.brochure" download class="btn btn-primary">
-                <i class="fas fa-download"></i> Unduh Brosur
+              <a href="/#contact" class="btn btn-primary" @click.prevent="scrollToContact">
+                <i class="fab fa-whatsapp"></i> Pesan Sekarang
               </a>
               <router-link to="/triobionik" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Lihat Varian Lain
+                <i class="fas fa-arrow-left"></i> Lihat Produk Lain
               </router-link>
             </div>
           </div>
         </div>
+
+        <section class="related-products">
+          <div class="section-title">
+            <h2>Produk Triobionik Lainnya</h2>
+            <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
+          </div>
+          <div class="related-products-grid">
+            <router-link
+              v-for="related in relatedProducts"
+              :key="related.id"
+              :to="`/triobionik/${related.id}`"
+              class="related-product-card"
+            >
+              <div class="related-product-img">
+                <img
+                  :src="getPlaceholder()"
+                  :data-src="related.image"
+                  :alt="related.name"
+                  v-lazy
+                  loading="lazy"
+                />
+              </div>
+              <div class="related-product-info">
+                <h4>{{ related.name }}</h4>
+                <p>{{ related.shortDesc }}</p>
+                <span class="related-product-link">
+                  Lihat Detail <i class="fas fa-arrow-right"></i>
+                </span>
+              </div>
+            </router-link>
+          </div>
+        </section>
       </div>
     </section>
-    
-    <section v-if="relatedProducts.length" class="related-products">
-      <div class="container">
-        <h2>Produk Triobionik Lainnya</h2>
-        <div class="grid">
-          <router-link
-            v-for="related in relatedProducts"
-            :key="related.id"
-            :to="`/triobionik/${related.id}`"
-            class="product-card-small"
-          >
-            <div class="related-product-img">
-              <img
-                v-if="related.image"
-                :src="getPlaceholder()"
-                :data-src="related.image"
-                :alt="related.name"
-                v-lazy
-                loading="lazy"
-              />
-            </div>
-            <h4>{{ related.name }}</h4>
-            <p class="short-desc">{{ related.shortDesc }}</p>
-          </router-link>
+
+    <div :class="['modal', { active: showModal }]" @click="closeModal">
+      <div class="modal-content" @click.stop>
+        <button class="modal-close" @click="closeModal">&times;</button>
+        <div class="modal-main-image">
+          <img :src="modalImage" :alt="product.name">
         </div>
       </div>
-    </section>
+    </div>
   </div>
   
   <div v-else class="loading-state">
@@ -146,7 +152,7 @@
 </template>
 
 <script>
-import { getTriobionikVariantById, getTriobionikVariants } from '@/data/product.js'
+import { getTriobionikVariantById, getTriobionikVariants } from '../data/product.js'
 
 export default {
   name: 'TriobionikDetail',
@@ -155,45 +161,72 @@ export default {
     return {
       product: null,
       currentImage: '',
+      currentImageIndex: 0,
       relatedProducts: [],
-      imageTransitioning: false
+      showModal: false,
+      modalImage: '',
+      imageTransitioning: false,
+      isLoading: true
     }
   },
   
-  created() {
-    this.loadProduct()
+  computed: {
+    currentImageSrc() {
+      return this.product?.images?.[this.currentImageIndex] || this.currentImage
+    }
+  },
+  
+  async beforeMount() {
+    await this.loadProduct()
+  },
+  
+  mounted() {
+    this.debounceUpdate = this.debounce(() => {
+      this.isLoading = false
+    }, 200)
+    this.debounceUpdate()
   },
   
   watch: {
     '$route.params.id': {
       handler() {
         this.loadProduct()
-      },
-      immediate: false
+      }
     }
   },
   
   methods: {
-    loadProduct() {
+    debounce(fn, delay) {
+      let timer
+      return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => fn(...args), delay)
+      }
+    },
+    
+    async loadProduct() {
+      await new Promise(resolve => setTimeout(resolve, 100))
       const id = this.$route.params.id
       this.product = getTriobionikVariantById(id)
       
       if (this.product) {
         this.currentImage = this.product.image || this.product.images?.[0] || ''
-        this.loadRelatedProducts()
-        this.updateDocumentTitle()
+        this.currentImageIndex = 0
+        document.title = `${this.product.name} - PT. Manunggal Merdeka Makmur`
+        await this.loadRelatedProducts()
       }
     },
     
-    loadRelatedProducts() {
+    async loadRelatedProducts() {
+      await new Promise(resolve => setTimeout(resolve, 100))
       const all = getTriobionikVariants()
       this.relatedProducts = all
         .filter(v => v.id !== this.product.id)
         .slice(0, 3)
     },
     
-    selectImage(img) {
-      if (this.imageTransitioning || this.currentImage === img) return
+    changeImage(image, index) {
+      if (this.imageTransitioning || this.currentImageIndex === index) return
       
       this.imageTransitioning = true
       const mainImg = document.querySelector('.main-image')
@@ -201,20 +234,35 @@ export default {
       if (mainImg) {
         mainImg.style.opacity = '0'
         setTimeout(() => {
-          this.currentImage = img
+          this.currentImageIndex = index
+          this.currentImage = image
           mainImg.style.opacity = '1'
           this.imageTransitioning = false
         }, 200)
       } else {
-        this.currentImage = img
+        this.currentImageIndex = index
+        this.currentImage = image
         this.imageTransitioning = false
       }
     },
     
-    updateDocumentTitle() {
-      if (this.product?.title) {
-        document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
-      }
+    openImageModal() {
+      this.modalImage = this.currentImageSrc
+      this.showModal = true
+      document.body.style.overflow = 'hidden'
+    },
+    
+    closeModal() {
+      this.showModal = false
+      document.body.style.overflow = ''
+    },
+    
+    scrollToProducts() {
+      this.$router.push('/#products')
+    },
+    
+    scrollToContact() {
+      this.$router.push('/#contact')
     },
     
     getPlaceholder() {

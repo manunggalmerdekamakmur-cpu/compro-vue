@@ -1,24 +1,33 @@
 <template>
-  <div class="triobionik-list-page">
-    <section class="hero-small">
+  <div class="product-detail-page">
+    <section class="breadcrumb">
       <div class="container">
-        <h1>Produk Triobionik</h1>
-        <p>Berbagai varian pupuk hayati berkualitas untuk pertanian dan perkebunan</p>
+        <nav aria-label="Breadcrumb">
+          <ol>
+            <li><router-link to="/">Beranda</router-link></li>
+            <li><a href="/#products" @click.prevent="scrollToProducts">Produk</a></li>
+            <li class="current">Triobionik</li>
+          </ol>
+        </nav>
       </div>
     </section>
-    
-    <section class="products-grid">
+
+    <section class="product-detail-page">
       <div class="container">
-        <div class="grid">
+        <div class="section-title">
+          <h1>Produk Triobionik</h1>
+          <p>Berbagai varian pupuk hayati berkualitas untuk pertanian dan perkebunan</p>
+        </div>
+
+        <div class="related-products-grid">
           <router-link
             v-for="variant in variants"
             :key="variant.id"
             :to="`/triobionik/${variant.id}`"
-            class="product-card"
+            class="related-product-card"
           >
-            <div class="product-image-wrapper">
+            <div class="related-product-img">
               <img
-                v-if="variant.image"
                 :src="getPlaceholder()"
                 :data-src="variant.image"
                 :alt="variant.name"
@@ -26,51 +35,112 @@
                 loading="lazy"
                 decoding="async"
               />
-              <span v-if="variant.badge" class="badge">{{ variant.badge }}</span>
+              <span v-if="variant.badge" class="product-badge badge-approved">{{ variant.badge }}</span>
             </div>
-            <div class="product-info">
-              <h3>{{ variant.name }}</h3>
-              <p class="short-desc">{{ variant.shortDesc }}</p>
-              <span class="view-details">Lihat Detail →</span>
+            <div class="related-product-info">
+              <h4>{{ variant.name }}</h4>
+              <p>{{ variant.shortDesc }}</p>
+              <span class="related-product-link">
+                Lihat Detail <i class="fas fa-arrow-right"></i>
+              </span>
             </div>
           </router-link>
         </div>
+
+        <section class="related-products">
+          <div class="section-title">
+            <h2>Produk Lainnya</h2>
+            <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
+          </div>
+          <div class="related-products-grid">
+            <div class="related-product-card">
+              <div class="related-product-img">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp" alt="Manunggal Lestari" loading="lazy">
+              </div>
+              <div class="related-product-info">
+                <h4>Manunggal Lestari</h4>
+                <p>Pupuk organik cair untuk tanaman pangan, hortikultura, dan perkebunan.</p>
+                <router-link to="/manunggal-lestari" class="related-product-link">
+                  Lihat Detail <i class="fas fa-arrow-right"></i>
+                </router-link>
+              </div>
+            </div>
+            <div class="related-product-card">
+              <div class="related-product-img">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp" alt="Manunggal Makmur" loading="lazy">
+              </div>
+              <div class="related-product-info">
+                <h4>Manunggal Makmur</h4>
+                <p>Pupuk organik remah untuk pertanian berkelanjutan.</p>
+                <router-link to="/manunggal-makmur" class="related-product-link">
+                  Lihat Detail <i class="fas fa-arrow-right"></i>
+                </router-link>
+              </div>
+            </div>
+            <div class="related-product-card">
+              <div class="related-product-img">
+                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp" alt="PTORCA" loading="lazy">
+              </div>
+              <div class="related-product-info">
+                <h4>PTORCA</h4>
+                <p>Pupuk organik cair untuk tanaman pangan dan hortikultura.</p>
+                <router-link to="/ptorca" class="related-product-link">
+                  Lihat Detail <i class="fas fa-arrow-right"></i>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { getTriobionikVariants } from '@/data/product.js'
+import { getTriobionikVariants } from '../data/product.js'
 
 export default {
   name: 'TriobionikList',
   
   data() {
     return {
-      variants: []
+      variants: [],
+      isLoading: true
     }
   },
   
-  created() {
-    this.loadVariants()
+  async beforeMount() {
+    await this.loadVariants()
   },
   
   mounted() {
-    this.updateDocumentTitle()
+    document.title = 'Triobionik - PT. Manunggal Merdeka Makmur'
+    this.debounceScroll = this.debounce(() => {
+      this.isLoading = false
+    }, 300)
+    this.debounceScroll()
   },
   
   methods: {
-    loadVariants() {
-      this.variants = getTriobionikVariants()
+    debounce(fn, delay) {
+      let timer
+      return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => fn(...args), delay)
+      }
     },
     
-    updateDocumentTitle() {
-      document.title = 'Produk Triobionik - PT. Manunggal Merdeka Makmur'
+    async loadVariants() {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      this.variants = getTriobionikVariants()
     },
     
     getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3C/svg%3E'
+    },
+    
+    scrollToProducts() {
+      this.$router.push('/#products')
     }
   }
 }

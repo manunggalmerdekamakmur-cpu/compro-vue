@@ -1,5 +1,9 @@
 <template>
   <div class="product-detail-page">
+    <div v-if="loading" class="loading-overlay">
+      <img src="/assets/img/spinner.gif" width="48" height="48" alt="Loading" />
+    </div>
+    
     <section class="breadcrumb">
       <div class="container">
         <nav aria-label="Breadcrumb">
@@ -18,11 +22,13 @@
           <div class="product-images">
             <div class="main-image-container" @click="openImageModal">
               <img 
-                :src="currentImage" 
+                :src="getPlaceholder()" 
+                :data-src="currentImage" 
                 :alt="product.title" 
                 class="main-image"
+                v-lazy
                 :loading="imageIndex === 0 ? 'eager' : 'lazy'"
-                :fetchpriority="imageIndex === 0 ? 'high' : 'auto'"
+                @load="onImageLoad"
               />
             </div>
             
@@ -34,7 +40,13 @@
                 @click="changeImage(image, index)"
                 :aria-label="`Lihat gambar ${index + 1}`"
               >
-                <img :src="image" :alt="`${product.title} ${index + 1}`" loading="lazy" />
+                <img 
+                  :src="getPlaceholder()" 
+                  :data-src="image" 
+                  :alt="`${product.title} ${index + 1}`" 
+                  v-lazy
+                  loading="lazy"
+                />
               </button>
             </div>
             
@@ -42,6 +54,7 @@
               <embed 
                 :src="product.brochure"
                 type="application/pdf"
+                class="product-pdf-embed"
               />
             </div>
 
@@ -61,7 +74,9 @@
           <div class="product-info">
             <div class="product-header">
               <h1>{{ product.title }}</h1>
-              <div class="product-badge badge-approved">{{ product.badge }}</div>
+              <div :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
+                {{ product.badge }}
+              </div>
               <div v-if="product.certificate" class="certificate-badge">
                 <i class="fas fa-certificate"></i>
                 <span>Izin Edar No: {{ product.certificate }}</span>
@@ -199,7 +214,9 @@ export default {
       imageIndex: 0,
       showModal: false,
       modalImage: '',
-      imageTransitioning: false
+      imageTransitioning: false,
+      loading: false,
+      loadedImages: 0
     }
   },
   
@@ -213,17 +230,47 @@ export default {
     product: {
       handler() {
         this.currentImageIndex = 0
+        this.loadedImages = 0
         this.updateDocumentTitle()
       },
       immediate: true
     }
   },
   
+  created() {
+    this.loadProductData()
+  },
+  
   mounted() {
     this.updateDocumentTitle()
+    this.preloadImages()
   },
   
   methods: {
+    loadProductData() {
+      this.loading = true
+      // Simulasi loading data
+      setTimeout(() => {
+        this.loading = false
+      }, 300)
+    },
+    
+    preloadImages() {
+      if (this.product.images) {
+        this.product.images.forEach(src => {
+          const img = new Image()
+          img.src = src
+          img.onload = () => {
+            this.loadedImages++
+          }
+        })
+      }
+    },
+    
+    onImageLoad() {
+      this.loadedImages++
+    },
+    
     changeImage(image, index) {
       if (this.imageTransitioning || this.currentImageIndex === index) return
       
@@ -271,6 +318,14 @@ export default {
     
     getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3C/svg%3E'
+    },
+    
+    debounce(fn, delay) {
+      let timer
+      return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => fn(...args), delay)
+      }
     }
   }
 }

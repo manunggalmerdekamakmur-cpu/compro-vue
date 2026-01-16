@@ -1,63 +1,126 @@
 <!DOCTYPE html>
-<html lang="id" data-loading>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PT. Manunggal Merdeka Makmur – Produsen Pupuk Organik Berkualitas</title>
-  <meta name="description"
-        content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan." />
+  <meta name="description" content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan.">
+  <meta name="theme-color" content="#0b1f14">
+  <meta name="robots" content="index, follow">
 
-  <meta name="theme-color" content="#0b1f14" />
-  <meta name="robots" content="index, follow" />
+  <!-- Preload Critical Resources -->
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <link rel="preload" as="style" href="/assets/css/style.css">
+  <link rel="preload" as="style" href="/assets/css/product.css">
+  
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp">
 
-  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
-
-  <link
-    rel="preload"
-    as="image"
-    href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="preload"
-    as="image"
-    href="/assets/img/spinner.gif"
-    fetchpriority="low"
-  />
-
-  <link rel="preload" href="/assets/css/style.css" as="style" />
-  <link rel="preload" href="/assets/css/product.css" as="style" />
-
-  <link rel="stylesheet" href="/assets/css/style.css" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="/assets/css/product.css" media="print" onload="this.media='all'" />
-
+  <!-- CSS Loading -->
+  <link rel="stylesheet" href="/assets/css/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/assets/css/product.css" media="print" onload="this.media='all'">
+  
   <noscript>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/product.css" />
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/product.css">
   </noscript>
 
-  <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico" />
-  <link rel="shortcut icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico" />
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+        media="print" 
+        onload="this.media='all'">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
+  
+  <style>
+    /* Loading styles - akan dihapus setelah Vue mount */
+    body.loading {
+      overflow: hidden;
+      height: 100vh;
+    }
+    
+    #app-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    
+    .css-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(26, 125, 62, 0.1);
+      border-radius: 50%;
+      border-top-color: #1a7d3e;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      color: #1a7d3e;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    
+    .error-state {
+      text-align: center;
+      padding: 2rem;
+      max-width: 400px;
+    }
+    
+    .error-state p {
+      margin-bottom: 1.5rem;
+      color: #666;
+    }
+    
+    .error-state .btn {
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 
-<body>
+<body class="loading">
+  <!-- App Container -->
   <div id="app"></div>
 
-  <div id="app-loading" aria-label="Loading halaman">
-    <img
-      src="/assets/img/spinner.gif"
-      width="48"
-      height="48"
-      alt="Loading"
-      decoding="async"
-      fetchpriority="low"
-    />
+  <!-- Global Loading Overlay -->
+  <div id="app-loading" aria-label="Memuat aplikasi">
+    <div class="spinner-container">
+      <div class="css-spinner" role="status" aria-label="Loading">
+        <span class="visually-hidden">Memuat...</span>
+      </div>
+      <div class="loading-text">Memuat aplikasi...</div>
+    </div>
   </div>
 
-  <script type="module" src="/src/main.js"></script>
+  <!-- Vue Application Script -->
+  <script type="module" src="/src/main.js" defer></script>
 </body>
 </html>

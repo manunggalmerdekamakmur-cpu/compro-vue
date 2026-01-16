@@ -3,6 +3,61 @@
   contain: layout style;
 }
 
+/* Loading States untuk Gambar */
+.product-images .loading-state,
+.related-product-img .loading-state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+.product-images .spinner,
+.related-product-img .spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--primary-color, #1a7d3e);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Transisi gambar */
+.main-image img,
+.thumbnail-item img,
+.related-product-img img {
+  transition: opacity 0.3s ease;
+}
+
+.main-image img.loading,
+.thumbnail-item img.loading,
+.related-product-img img.loading {
+  opacity: 0;
+}
+
+.main-image img.loaded,
+.thumbnail-item img.loaded,
+.related-product-img img.loaded {
+  opacity: 1;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Sisa CSS tetap sama... */
 .breadcrumb {
   background-color: #f5f5f5;
   padding: 1rem 0;
@@ -75,7 +130,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s ease-out;
 }
 
 .thumbnail-gallery {
@@ -94,6 +149,11 @@
   transition: all 0.2s;
   background: none;
   padding: 0;
+  position: relative;
+}
+
+.thumbnail-item.active {
+  border-color: #2ecc71;
 }
 
 .thumbnail-item:hover,
@@ -332,6 +392,7 @@
   color: inherit;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .related-product-card:hover {
@@ -343,17 +404,18 @@
   aspect-ratio: 4/3;
   overflow: hidden;
   background-color: #f5f5f5;
+  position: relative;
 }
 
 .related-product-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .related-product-card:hover .related-product-img img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .related-product-info {
@@ -390,14 +452,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal.active {
@@ -407,8 +469,8 @@
 
 .modal-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 90%;
+  max-height: 90%;
 }
 
 .modal-close {
@@ -418,9 +480,11 @@
   background: none;
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 30px;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
+  width:40px;
+  height:40px;
   transition: transform 0.2s;
 }
 
@@ -476,6 +540,7 @@
   color: inherit;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .product-card:hover {
@@ -541,31 +606,17 @@
   gap: 0.5rem;
 }
 
-.loading-state {
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .product-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+}
+
+.product-pdf-embed {
+  width: 100%;
+  height: 450px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .product-gallery {

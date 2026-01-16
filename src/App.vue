@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header />
-    <div class="header-spacer"></div>
+    <Header v-if="showLayout" />
+    <div v-if="showLayout" class="header-spacer"></div>
     
     <main id="main-content">
       <router-view v-slot="{ Component, route }">
@@ -11,9 +11,10 @@
       </router-view>
     </main>
     
-    <Footer />
+    <Footer v-if="showLayout" />
     
     <button
+      v-if="showLayout"
       class="back-to-top"
       :class="{ visible: showBackToTop }"
       @click="scrollToTop"
@@ -30,55 +31,67 @@ import Footer from './components/layout/Footer.vue'
 
 export default {
   name: 'App',
-  components: {
-    Header,
-    Footer
-  },
+  components: { Header, Footer },
   
   data() {
     return {
       showBackToTop: false,
-      scrollTimer: null
+      scrollTimer: null,
+      showLayout: true,
+      resizeDebounce: null
+    }
+  },
+  
+  watch: {
+    '$route'(to) {
+      this.showLayout = to.meta.showLayout !== false
     }
   },
   
   mounted() {
-    this.handleScroll = this.debounce(this.onScroll, 100)
-    window.addEventListener('scroll', this.handleScroll, { passive: true })
+    this.showLayout = this.$route.meta.showLayout !== false
+    this.setupEventListeners()
     this.setViewportHeight()
-    window.addEventListener('resize', this.debounce(this.setViewportHeight, 150), { passive: true })
   },
   
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', this.setViewportHeight)
-    if (this.scrollTimer) {
-      clearTimeout(this.scrollTimer)
-    }
+    this.cleanupEventListeners()
+    if (this.scrollTimer) clearTimeout(this.scrollTimer)
   },
   
   methods: {
+    setupEventListeners() {
+      this.onScroll = this.debounce(this.handleScroll, 100)
+      this.resizeDebounce = this.debounce(this.setViewportHeight, 150)
+      
+      window.addEventListener('scroll', this.onScroll, { passive: true })
+      window.addEventListener('resize', this.resizeDebounce, { passive: true })
+    },
+    
+    cleanupEventListeners() {
+      window.removeEventListener('scroll', this.onScroll)
+      window.removeEventListener('resize', this.resizeDebounce)
+    },
+    
     debounce(fn, delay) {
       let timer
-      return function(...args) {
+      return (...args) => {
         clearTimeout(timer)
         timer = setTimeout(() => fn.apply(this, args), delay)
       }
     },
     
-    onScroll() {
+    handleScroll() {
       this.showBackToTop = window.scrollY > 300
     },
     
     scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     
     setViewportHeight() {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
     },
     
     beforeEnter() {
