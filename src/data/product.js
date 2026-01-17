@@ -1,7 +1,7 @@
 export const productData = {
   'phc-manunggal-lestari': {
     id: 'phc-manunggal-lestari',
-    title: 'PHC Manunggal Lestari',
+    title: 'Pupuk Hayati Cair Manunggal Lestari',
     description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
     specs: [
       'Nomor Pendaftaran : 03.02.2024.619',
@@ -40,10 +40,52 @@ export const productData = {
     certificate: '03.03.2025.89',
     status: 'approved'
   },
+
+  'phc-manunggal-lestari-dekomposer': {
+    id: 'phc-manunggal-lestari-dekomposer',
+    title: 'Pupuk Hayati Cair Manunggal Lestari Dekomposer',
+    description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
+    specs: [
+      'Nomor Pendaftaran : 03.02.2024.619',
+      'Bentuk Formula : Cair (Liquid)',
+      'Warna : Bening Kecoklatan',
+      'Ukuran Kemasan : 1 Liter, 2 Liter, dan 5 Liter',
+      'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 87,38%',
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
+    ],
+    features: [
+      '• Bacillus Subtillis : 5,7 x 10⁷ cfu/ml',
+      '• Rhizobium sp. : 5,4 x 10⁷ cfu/ml',
+      '• Azotobacter sp. : 1,9 x 10⁷ cfu/ml',
+      '• Azospirillum sp. : 3,3 x 10⁷ cfu/ml',
+      '• Pseudomonas Fluorescens : 4,1 x 10⁷ cfu/ml',
+      '• Streptomyces sp. : 5,5 x 10⁶ cfu/ml',
+      '• Trichoderma sp. : 1,3 x 10⁵ cfu/ml'
+    ],    
+    benefits: [
+      '1. Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.',
+      '2. Membantu proses penyiapan unsur hara yang mudah diserap oleh tanaman.',
+      '3. Menghasilkan beberapa hormon pertumbuhan dan kesehatan pada tanaman.',
+      '4. Merangsang sistem penyerapan unsur hara pada tanaman.',
+      '5. Melindungi tanaman dari serangan dari berbagai virus dan penyakit pada tanaman.',
+      '6. Mengurangi dosis pemupukan kimia pada lahan pertanian maupun perkebunan.',
+      '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
+    ],
+    images: [
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461341/dekomposer-5l_jahcyp.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461330/phc-manunggal-lestari-1lbiru_yrwkp1.webp'
+    ],
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
+    badge: 'Berizin',
+    certificate: '03.03.2025.89',
+    status: 'approved'
+  },
   
   'php-triobionik': {
     id: 'php-triobionik',
-    title: 'PHP Triobionik',
+    title: 'Pupuk Hayati Padat Triobionik',
     description: 'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
     specs: [
       'Kemasan: 25gr, 100gr',
@@ -395,10 +437,11 @@ export const productData = {
       'Meningkatkan kapasitas tukar kation tanah'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461363/5kg_c1gmsn.png',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461385/25kg_e3w9z5.png',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461362/40kg_bjlpls.png',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461363/5kg_c1gmsn.png'
     ],
     brochure: '/assets/brochures/manunggal-makmur.pdf',
     badge: 'Dalam Proses Perizinan',
@@ -408,7 +451,7 @@ export const productData = {
   
   'ptorca': {
     id: 'ptorca',
-    title: 'PTORCA',
+    title: 'Pupuk Organik Cair PTORCA',
     description: 'Pupuk organik cair untuk tanaman pangan dan hortikultura.',
     specs: [
       'Kemasan: 500ml, 1L, 5L',
