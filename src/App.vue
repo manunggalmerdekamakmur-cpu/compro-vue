@@ -44,12 +44,12 @@ export default {
   
   watch: {
     '$route'(to) {
-      this.showLayout = to.meta.showLayout !== false
+      this.showLayout = to.meta.layout !== false
     }
   },
   
   mounted() {
-    this.showLayout = this.$route.meta.showLayout !== false
+    this.showLayout = this.$route.meta.layout !== false
     this.setupEventListeners()
     this.setViewportHeight()
   },

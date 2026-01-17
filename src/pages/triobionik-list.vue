@@ -5,7 +5,7 @@
         <nav aria-label="Breadcrumb">
           <ol>
             <li><router-link to="/">Beranda</router-link></li>
-            <li><a href="/#products" @click.prevent="scrollToProducts">Produk</a></li>
+            <li><router-link to="/#products">Produk</router-link></li>
             <li class="current">Triobionik</li>
           </ol>
         </nav>
@@ -55,12 +55,17 @@
             <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
           </div>
           <div class="related-products-grid">
-            <div class="related-product-card">
+            <router-link
+              v-for="product in relatedProducts"
+              :key="product.id"
+              :to="getProductLink(product)"
+              class="related-product-card"
+            >
               <div class="related-product-img">
                 <img
                   :src="getPlaceholder()"
-                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp'"
-                  alt="Manunggal Lestari"
+                  :data-src="product.images[0]"
+                  :alt="product.title"
                   width="300"
                   height="200"
                   v-lazy
@@ -68,53 +73,13 @@
                 />
               </div>
               <div class="related-product-info">
-                <h4>Manunggal Lestari</h4>
-                <p>Pupuk organik cair untuk tanaman pangan, hortikultura, dan perkebunan.</p>
-                <router-link to="/manunggal-lestari" class="related-product-link">
+                <h4>{{ product.title }}</h4>
+                <p>{{ truncateDescription(product.description) }}</p>
+                <span class="related-product-link">
                   Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
+                </span>
               </div>
-            </div>
-            <div class="related-product-card">
-              <div class="related-product-img">
-                <img
-                  :src="getPlaceholder()"
-                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp'"
-                  alt="Manunggal Makmur"
-                  width="300"
-                  height="200"
-                  v-lazy
-                  loading="lazy"
-                />
-              </div>
-              <div class="related-product-info">
-                <h4>Manunggal Makmur</h4>
-                <p>Pupuk organik remah untuk pertanian berkelanjutan.</p>
-                <router-link to="/manunggal-makmur" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
-              </div>
-            </div>
-            <div class="related-product-card">
-              <div class="related-product-img">
-                <img
-                  :src="getPlaceholder()"
-                  :data-src="'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp'"
-                  alt="PTORCA"
-                  width="300"
-                  height="200"
-                  v-lazy
-                  loading="lazy"
-                />
-              </div>
-              <div class="related-product-info">
-                <h4>PTORCA</h4>
-                <p>Pupuk organik cair untuk tanaman pangan dan hortikultura.</p>
-                <router-link to="/ptorca" class="related-product-link">
-                  Lihat Detail <i class="fas fa-arrow-right"></i>
-                </router-link>
-              </div>
-            </div>
+            </router-link>
           </div>
         </section>
       </div>
@@ -123,7 +88,7 @@
 </template>
 
 <script>
-import { getTriobionikVariants } from '../data/product.js'
+import { getTriobionikVariants, getApprovedProducts } from '@/data/product.js'
 
 export default {
   name: 'TriobionikList',
@@ -131,6 +96,7 @@ export default {
   data() {
     return {
       variants: [],
+      relatedProducts: [],
       isLoading: true,
       preloadedImages: []
     }
@@ -138,7 +104,7 @@ export default {
   
   async beforeMount() {
     await this.preloadImages()
-    await this.loadVariants()
+    await this.loadData()
   },
   
   mounted() {
@@ -164,18 +130,11 @@ export default {
     },
     
     async preloadImages() {
-      const images = [
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/manunggal-lestari_qayrkt.webp',
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp',
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp'
-      ]
-      
       const variants = getTriobionikVariants()
+      const images = []
+      
       variants.forEach(variant => {
         if (variant.image) images.push(variant.image)
-        if (variant.images && variant.images.length > 0) {
-          images.push(...variant.images)
-        }
       })
       
       await Promise.all(
@@ -193,17 +152,30 @@ export default {
       )
     },
     
-    async loadVariants() {
+    async loadData() {
       await new Promise(resolve => setTimeout(resolve, 100))
       this.variants = getTriobionikVariants()
+      this.relatedProducts = getApprovedProducts().slice(0, 3)
     },
     
     getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3C/svg%3E'
     },
     
-    scrollToProducts() {
-      this.$router.push('/#products')
+    getProductLink(product) {
+      const routes = {
+        'phc-manunggal-lestari': '/manunggal-lestari',
+        'phc-manunggal-lestari-dekomposer': '/manunggal-lestari-dekomposer',
+        'php-triobionik': '/triobionik',
+        'manunggal-makmur': '/manunggal-makmur',
+        'ptorca': '/ptorca'
+      }
+      return routes[product.id] || '/'
+    },
+    
+    truncateDescription(desc) {
+      if (!desc) return ''
+      return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
     }
   }
 }

@@ -1,3 +1,4 @@
+// src/data/product.js
 export const productData = {
   'phc-manunggal-lestari': {
     id: 'phc-manunggal-lestari',
@@ -106,7 +107,6 @@ export const productData = {
       'Memperbaiki kualitas tanah jangka panjang'
     ],
     images: [
-      // '/assets/img/triobionik/triobionik.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp'
     ],
@@ -481,7 +481,16 @@ export const productData = {
   }
 }
 
-export const getAllProducts = () => Object.values(productData).filter(p => !Array.isArray(p))
+export const getAllProducts = () => {
+  const products = []
+  Object.keys(productData).forEach(key => {
+    if (!Array.isArray(productData[key])) {
+      products.push(productData[key])
+    }
+  })
+  return products
+}
+
 export const getApprovedProducts = () => getAllProducts().filter(p => p.status === 'approved')
 export const getComingSoonProducts = () => getAllProducts().filter(p => p.status === 'coming-soon')
 export const getProductById = (id) => productData[id]
@@ -493,4 +502,17 @@ export const getProductVariantById = (id) => {
   const variant = getTriobionikVariantById(id)
   if (variant) return variant
   return getProductById(id)
+}
+
+export const getAllProductItems = () => {
+  const mainProducts = getAllProducts()
+  const variants = getTriobionikVariants()
+  return [...mainProducts, ...variants]
+}
+
+export const getRelatedProducts = (excludeId, limit = 3) => {
+  const allItems = getAllProductItems()
+  return allItems
+    .filter(item => item.id !== excludeId)
+    .slice(0, limit)
 }

@@ -9,8 +9,9 @@
         <nav aria-label="Breadcrumb">
           <ol>
             <li><router-link to="/">Beranda</router-link></li>
-            <li><a href="#products" @click.prevent="scrollToProducts">Produk</a></li>
-            <li class="current">{{ product.title }}</li>
+            <li><router-link to="/#products">Produk</router-link></li>
+            <li v-if="breadcrumbParent"><router-link :to="breadcrumbParent.to">{{ breadcrumbParent.name }}</router-link></li>
+            <li class="current">{{ product.title || product.name }}</li>
           </ol>
         </nav>
       </div>
@@ -24,10 +25,10 @@
               <img 
                 :src="getPlaceholder()" 
                 :data-src="currentImage" 
-                :alt="product.title" 
+                :alt="product.title || product.name" 
                 class="main-image"
                 v-lazy
-                :loading="imageIndex === 0 ? 'eager' : 'lazy'"
+                :loading="currentImageIndex === 0 ? 'eager' : 'lazy'"
                 @load="onImageLoad"
               />
             </div>
@@ -43,7 +44,7 @@
                 <img 
                   :src="getPlaceholder()" 
                   :data-src="image" 
-                  :alt="`${product.title} ${index + 1}`" 
+                  :alt="`${product.title || product.name} ${index + 1}`" 
                   v-lazy
                   loading="lazy"
                 />
@@ -73,7 +74,7 @@
 
           <div class="product-info">
             <div class="product-header">
-              <h1>{{ product.title }}</h1>
+              <h1>{{ product.title || product.name }}</h1>
               <div :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
                 {{ product.badge }}
               </div>
@@ -141,21 +142,21 @@
             <router-link
               v-for="related in relatedProducts"
               :key="related.id"
-              :to="related.to"
+              :to="getRelatedLink(related)"
               class="related-product-card"
             >
               <div class="related-product-img">
                 <img 
                   :src="getPlaceholder()" 
-                  :data-src="related.image" 
-                  :alt="related.title" 
+                  :data-src="getRelatedImage(related)" 
+                  :alt="related.title || related.name" 
                   v-lazy
                   loading="lazy"
                 />
               </div>
               <div class="related-product-info">
-                <h4>{{ related.title }}</h4>
-                <p>{{ related.description }}</p>
+                <h4>{{ related.title || related.name }}</h4>
+                <p>{{ truncateDescription(related.description || related.shortDesc) }}</p>
                 <span class="related-product-link">
                   Lihat Detail <i class="fas fa-arrow-right"></i>
                 </span>
@@ -170,7 +171,7 @@
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal" aria-label="Tutup">&times;</button>
         <div class="modal-main-image">
-          <img :src="modalImage" :alt="product.title" />
+          <img :src="modalImage" :alt="product.title || product.name" />
         </div>
       </div>
     </div>
@@ -178,6 +179,8 @@
 </template>
 
 <script>
+import { getRelatedProducts } from '@/data/product.js'
+
 export default {
   name: 'ProductDetail',
   
@@ -187,10 +190,6 @@ export default {
       required: true
     },
     productStats: {
-      type: Array,
-      default: () => []
-    },
-    relatedProducts: {
       type: Array,
       default: () => []
     },
@@ -205,6 +204,10 @@ export default {
     benefitsTitle: {
       type: String,
       default: 'Manfaat'
+    },
+    breadcrumbParent: {
+      type: Object,
+      default: null
     }
   },
   
@@ -216,7 +219,8 @@ export default {
       modalImage: '',
       imageTransitioning: false,
       loading: false,
-      loadedImages: 0
+      loadedImages: 0,
+      relatedProducts: []
     }
   },
   
@@ -232,37 +236,43 @@ export default {
         this.currentImageIndex = 0
         this.loadedImages = 0
         this.updateDocumentTitle()
+        this.loadRelatedProducts()
       },
       immediate: true
     }
   },
   
-  created() {
-    this.loadProductData()
+  async created() {
+    await this.loadProductData()
   },
   
-  mounted() {
+  async mounted() {
     this.updateDocumentTitle()
-    this.preloadImages()
+    await this.preloadImages()
   },
   
   methods: {
-    loadProductData() {
+    async loadProductData() {
       this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 300)
+      await new Promise(resolve => setTimeout(resolve, 300))
+      this.loading = false
     },
     
-    preloadImages() {
+    async preloadImages() {
       if (this.product.images) {
-        this.product.images.forEach(src => {
-          const img = new Image()
-          img.src = src
-          img.onload = () => {
-            this.loadedImages++
-          }
-        })
+        await Promise.all(
+          this.product.images.map(src => {
+            return new Promise((resolve) => {
+              const img = new Image()
+              img.onload = () => {
+                this.loadedImages++
+                resolve()
+              }
+              img.onerror = resolve
+              img.src = src
+            })
+          })
+        )
       }
     },
     
@@ -290,6 +300,40 @@ export default {
       }
     },
     
+    async loadRelatedProducts() {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      this.relatedProducts = getRelatedProducts(this.product.id, 3)
+    },
+    
+    getRelatedLink(related) {
+      const routeMap = {
+        'phc-manunggal-lestari': '/manunggal-lestari',
+        'phc-manunggal-lestari-dekomposer': '/manunggal-lestari-dekomposer',
+        'php-triobionik': '/triobionik',
+        'manunggal-makmur': '/manunggal-makmur',
+        'ptorca': '/ptorca'
+      }
+      
+      if (routeMap[related.id]) {
+        return routeMap[related.id]
+      }
+      
+      if (related.id && related.id.includes('triobionik')) {
+        return `/triobionik/${related.id}`
+      }
+      
+      return '/'
+    },
+    
+    getRelatedImage(related) {
+      return related.images?.[0] || related.image || ''
+    },
+    
+    truncateDescription(desc) {
+      if (!desc) return ''
+      return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
+    },
+    
     openImageModal() {
       this.modalImage = this.currentImage
       this.showModal = true
@@ -301,17 +345,14 @@ export default {
       document.body.style.overflow = ''
     },
     
-    scrollToProducts() {
-      this.$router.push('/#products')
-    },
-    
     scrollToContact() {
       this.$router.push('/#contact')
     },
     
     updateDocumentTitle() {
-      if (this.product?.title) {
-        document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
+      if (this.product?.title || this.product?.name) {
+        const title = this.product.title || this.product.name
+        document.title = `${title} - PT. Manunggal Merdeka Makmur`
       }
     },
     

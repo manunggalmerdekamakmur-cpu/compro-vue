@@ -49,6 +49,7 @@
               height="200"
               loading="lazy"
               decoding="async"
+              v-lazy
             />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
               {{ product.badge }}
@@ -128,23 +129,26 @@ export default {
     
     onMounted(async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, 200))
         products.value = getAllProducts()
         preloadImages()
         
+        isLoading.value = false
+        
         setTimeout(() => {
-          isLoading.value = false
-          
-          setTimeout(() => {
-            if (window.App && window.App.lazyLoader) {
-              window.App.lazyLoader.scan()
-            }
-          }, 100)
-        }, 200)
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.scan()
+          }
+        }, 100)
         
       } catch (error) {
         console.error('Error loading products:', error)
         isLoading.value = false
       }
+    })
+    
+    onUnmounted(() => {
+      products.value = []
     })
     
     return {

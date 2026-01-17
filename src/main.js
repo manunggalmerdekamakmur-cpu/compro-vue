@@ -1,4 +1,4 @@
-// src/main.js - PERBAIKAN RADIKAL: Hapus lazy directive, gunakan hanya App.js lazy loader
+// src/main.js - PERBAIKAN: Tambahkan meta untuk layout persistence
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
@@ -9,6 +9,7 @@ const routes = [
     component: () => import('./pages/Home.vue'),
     meta: { 
       title: 'Beranda',
+      layout: true, // ✅ Tandai bahwa halaman ini menggunakan layout
       preloadImages: [
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
@@ -19,32 +20,50 @@ const routes = [
   { 
     path: '/triobionik', 
     component: () => import('./pages/triobionik-list.vue'),
-    meta: { title: 'Triobionik' }
+    meta: { 
+      title: 'Triobionik',
+      layout: true
+    }
   },
   { 
     path: '/triobionik/:id', 
     component: () => import('./pages/triobionik-detail.vue'),
-    meta: { title: 'Detail Triobionik' }
+    meta: { 
+      title: 'Detail Triobionik',
+      layout: true
+    }
   },
   { 
     path: '/manunggal-lestari', 
     component: () => import('./pages/manunggal-lestari.vue'),
-    meta: { title: 'Manunggal Lestari' }
+    meta: { 
+      title: 'Manunggal Lestari',
+      layout: true
+    }
   },
   { 
     path: '/manunggal-lestari-dekomposer', 
     component: () => import('./pages/manunggal-lestari-dekomposer.vue'),
-    meta: { title: 'Manunggal Lestari Dekomposer' }
+    meta: { 
+      title: 'Manunggal Lestari Dekomposer',
+      layout: true
+    }
   },
   { 
     path: '/manunggal-makmur', 
     component: () => import('./pages/manunggal-makmur.vue'),
-    meta: { title: 'Manunggal Makmur' }
+    meta: { 
+      title: 'Manunggal Makmur',
+      layout: true
+    }
   },
   { 
     path: '/ptorca', 
     component: () => import('./pages/ptorca.vue'),
-    meta: { title: 'PTORCA' }
+    meta: { 
+      title: 'PTORCA',
+      layout: true
+    }
   },
   { 
     path: '/:pathMatch(.*)*', 
