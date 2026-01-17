@@ -1,3 +1,4 @@
+// src/main.js - PERBAIKAN RADIKAL: Hapus lazy directive, gunakan hanya App.js lazy loader
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
@@ -6,7 +7,14 @@ const routes = [
   { 
     path: '/', 
     component: () => import('./pages/Home.vue'),
-    meta: { title: 'Beranda' }
+    meta: { 
+      title: 'Beranda',
+      preloadImages: [
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
+      ]
+    }
   },
   { 
     path: '/triobionik', 
@@ -22,6 +30,11 @@ const routes = [
     path: '/manunggal-lestari', 
     component: () => import('./pages/manunggal-lestari.vue'),
     meta: { title: 'Manunggal Lestari' }
+  },
+  { 
+    path: '/manunggal-lestari-dekomposer', 
+    component: () => import('./pages/manunggal-lestari-dekomposer.vue'),
+    meta: { title: 'Manunggal Lestari Dekomposer' }
   },
   { 
     path: '/manunggal-makmur', 
@@ -43,163 +56,151 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) return savedPosition
-    if (to.hash) return { el: to.hash, behavior: 'smooth', top: 80 }
-    return { top: 0, behavior: 'smooth' }
-  }
-})
-
-router.beforeEach((to, from, next) => {
-  const title = to.meta.title || 'Produk'
-  document.title = `${title} - PT. Manunggal Merdeka Makmur`
-  next()
-})
-
-const lazyDirective = {
-  mounted(el) {
-    const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
-    
-    imgs.forEach(img => {
-      if (!img.src || img.src === '' || img.src.startsWith('data:')) {
-        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
-      }
-      
-      if (window.App && window.App.lazyLoader) {
-        window.App.lazyLoader.observe(img)
-      }
-    })
-  },
-  
-  updated(el) {
-    const imgs = el.tagName === 'IMG' ? [el] : el.querySelectorAll('img[data-src]')
-    
-    imgs.forEach(img => {
-      if (window.App && window.App.lazyLoader) {
-        window.App.lazyLoader.observe(img)
-      }
-    })
-  }
-}
-
-const waitForCriticalAssets = () => {
-  return new Promise((resolve) => {
-    const checkAssets = () => {
-      const stylesLoaded = Array.from(document.styleSheets).every(sheet => {
-        try {
-          return sheet.cssRules || sheet.rules
-        } catch (e) {
-          return false
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (savedPosition) {
+          resolve(savedPosition)
+        } else if (to.hash) {
+          resolve({ 
+            el: to.hash, 
+            behavior: 'smooth', 
+            top: 80 
+          })
+        } else {
+          resolve({ top: 0, behavior: 'smooth' })
         }
-      })
-      
-      if (stylesLoaded) resolve()
-      else setTimeout(checkAssets, 100)
-    }
-    
-    checkAssets()
-  })
-}
+      }, 100)
+    })
+  }
+})
 
-const preloadAllCriticalImages = () => {
-  const heroImages = [
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
-  ]
-  
-  const productImages = [
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/manunggal-lestari_yw7uim.webp',
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/manunggal-makmur_w5z3ex.webp',
-    'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/ptorca_ps9pno.webp'
-  ]
-  
+const preloadImages = (urls) => {
   return Promise.all(
-    [...heroImages, ...productImages].map(src => {
+    urls.map(url => {
       return new Promise((resolve) => {
+        if (!url) return resolve()
         const img = new Image()
         img.onload = resolve
         img.onerror = resolve
-        img.src = src
+        img.src = url
       })
     })
   )
 }
 
+const waitForCriticalCSS = () => {
+  return new Promise((resolve) => {
+    if (document.readyState === 'complete') return resolve()
+    
+    const checkCSS = () => {
+      const stylesheets = Array.from(document.styleSheets)
+      const loaded = stylesheets.every(sheet => {
+        try {
+          return sheet.cssRules || sheet.rules
+        } catch {
+          return false
+        }
+      })
+      if (loaded || stylesheets.length === 0) {
+        resolve()
+      } else {
+        setTimeout(checkCSS, 50)
+      }
+    }
+    checkCSS()
+  })
+}
+
+router.beforeEach((to, from, next) => {
+  const title = to.meta.title || 'Produk'
+  document.title = `${title} - PT. Manunggal Merdeka Makmur`
+  
+  const loadingEl = document.getElementById('app-loading')
+  if (loadingEl && from.name !== to.name) {
+    loadingEl.style.display = 'flex'
+    loadingEl.style.opacity = '1'
+  }
+  
+  next()
+})
+
+router.afterEach((to) => {
+  setTimeout(() => {
+    if (window.App && window.App.lazyLoader) {
+      window.App.lazyLoader.scan()
+    }
+    
+    const images = document.querySelectorAll('img[data-src]')
+    images.forEach(img => {
+      const rect = img.getBoundingClientRect()
+      if (rect.top < window.innerHeight + 300) {
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.loadImage(img)
+        }
+      }
+    })
+  }, 300)
+})
+
 const initApp = async () => {
   const loadingEl = document.getElementById('app-loading')
   
   try {
-    if (document.readyState !== 'complete') {
-      await new Promise(resolve => {
-        if (document.readyState === 'complete') resolve()
-        window.addEventListener('load', resolve, { once: true })
-      })
-    }
-    
     await Promise.race([
-      Promise.all([waitForCriticalAssets(), preloadAllCriticalImages()]),
-      new Promise(resolve => setTimeout(resolve, 4000))
+      Promise.all([
+        new Promise(resolve => {
+          if (document.readyState === 'complete') resolve()
+          else window.addEventListener('load', resolve, { once: true })
+        }),
+        waitForCriticalCSS()
+      ]),
+      new Promise(resolve => setTimeout(resolve, 2000))
     ])
-    
+
+    const currentRoute = router.currentRoute.value
+    if (currentRoute.meta?.preloadImages) {
+      await preloadImages(currentRoute.meta.preloadImages)
+    }
+
     const app = createApp(App)
-    app.directive('lazy', lazyDirective)
     app.use(router)
-    
+
     await router.isReady()
-    
+
     app.mount('#app')
-    
-    if (window.App && window.App.afterVueMount) {
-      window.App.afterVueMount()
-    }
-    
-    document.body.classList.remove('loading')
-    
-    const checkHeroImages = () => {
-      const heroImages = document.querySelectorAll('.hero img, .hero-logo img')
-      if (heroImages.length === 0) return Promise.resolve()
-      
-      return new Promise(resolve => {
-        let loaded = 0
-        heroImages.forEach(img => {
-          if (img.complete) loaded++
-          else {
-            img.addEventListener('load', () => {
-              loaded++
-              if (loaded === heroImages.length) resolve()
-            })
-            img.addEventListener('error', () => {
-              loaded++
-              if (loaded === heroImages.length) resolve()
-            })
-          }
-        })
-        
-        if (loaded === heroImages.length) resolve()
-      })
-    }
-    
-    await checkHeroImages()
-    
-    if (loadingEl) {
-      loadingEl.style.opacity = '0'
-      loadingEl.style.pointerEvents = 'none'
+
+    setTimeout(() => {
+      if (window.App && window.App.afterVueMount) {
+        window.App.afterVueMount()
+      }
+
+      document.body.classList.remove('loading')
+      if (loadingEl) {
+        loadingEl.style.opacity = '0'
+        loadingEl.style.pointerEvents = 'none'
+        setTimeout(() => {
+          loadingEl.style.display = 'none'
+        }, 500)
+      }
       
       setTimeout(() => {
-        loadingEl.style.display = 'none'
-        
-        setTimeout(() => {
-          if (window.App && window.App.lazyLoader) {
-            window.App.lazyLoader.scan()
-          }
-        }, 500)
-      }, 600)
-    }
-    
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.scan()
+          
+          const images = document.querySelectorAll('img[data-src]')
+          images.forEach(img => {
+            const rect = img.getBoundingClientRect()
+            if (rect.top < window.innerHeight + 500) {
+              window.App.lazyLoader.loadImage(img)
+            }
+          })
+        }
+      }, 200)
+      
+    }, 500)
+
   } catch (error) {
-    console.error('Application initialization failed:', error)
-    
+    console.error('App initialization failed:', error)
     if (loadingEl) {
       loadingEl.innerHTML = `
         <div style="text-align:center;padding:2rem;color:#666;">
@@ -215,7 +216,6 @@ const initApp = async () => {
           ">Coba Lagi</button>
         </div>
       `
-      loadingEl.style.opacity = '1'
     }
   }
 }

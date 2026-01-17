@@ -5,41 +5,58 @@
         <h2>Produk Unggulan Kami</h2>
         <p>Produk pupuk hayati dan organik berkualitas untuk mendukung pertanian berkelanjutan</p>
       </div>
+      
       <div class="product-filter">
-        <button class="filter-btn" :class="{ active: activeFilter === 'all' }" @click="activeFilter = 'all'">
-          <i class="fas fa-boxes"></i> Semua Produk
-        </button>
-        <button class="filter-btn" :class="{ active: activeFilter === 'approved' }" @click="activeFilter = 'approved'">
-          <i class="fas fa-certificate"></i> Berizin
-        </button>
-        <button class="filter-btn" :class="{ active: activeFilter === 'coming-soon' }" @click="activeFilter = 'coming-soon'">
-          <i class="fas fa-clock"></i> Segera Hadir
+        <button 
+          v-for="filter in filters" 
+          :key="filter.value"
+          :class="['filter-btn', { active: activeFilter === filter.value }]"
+          @click="setFilter(filter.value)"
+        >
+          <i :class="filter.icon"></i> {{ filter.label }}
         </button>
       </div>
-      <div class="products-grid" v-lazy>
-        <router-link v-for="product in filteredProducts" :key="product.id" :to="getProductLink(product)" class="product-card">
+      
+      <div v-if="isLoading" class="products-grid">
+        <div v-for="n in 4" :key="`skeleton-${n}`" class="product-card product-skeleton">
+          <div class="skeleton-img">
+            <div class="image-spinner"></div>
+          </div>
+          <div class="skeleton-content">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text short"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div v-else class="products-grid">
+        <router-link 
+          v-for="product in visibleProducts" 
+          :key="product.id" 
+          :to="getProductLink(product)" 
+          class="product-card"
+        >
           <div class="product-img">
+            <div class="image-placeholder">
+              <div class="image-spinner"></div>
+            </div>
             <img 
               :src="getPlaceholder()" 
-              :data-src="product.images[0]" 
+              :data-src="getProductImage(product)" 
               :alt="product.title" 
               width="300"
               height="200"
               loading="lazy"
+              decoding="async"
             />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
-              <i :class="product.status === 'approved' ? 'fas fa-check-circle' : 'fas fa-clock'"></i>
               {{ product.badge }}
             </span>
           </div>
           <div class="product-info">
             <h3>{{ product.title }}</h3>
             <p>{{ truncateDescription(product.description) }}</p>
-            <div class="product-tags">
-              <span class="tag" v-for="tag in getProductTags(product)" :key="tag">
-                <i :class="getTagIcon(tag)"></i> {{ tag }}
-              </span>
-            </div>
           </div>
         </router-link>
       </div>
@@ -48,57 +65,100 @@
 </template>
 
 <script>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { getAllProducts } from '@/data/product.js'
 
 export default {
   name: 'ProductsSection',
-  data() {
-    return {
-      products: [],
-      activeFilter: 'all'
+  
+  setup() {
+    const products = ref([])
+    const activeFilter = ref('all')
+    const isLoading = ref(true)
+    
+    const filters = [
+      { value: 'all', label: 'Semua Produk', icon: 'fas fa-boxes' },
+      { value: 'approved', label: 'Berizin', icon: 'fas fa-certificate' },
+      { value: 'coming-soon', label: 'Segera Hadir', icon: 'fas fa-clock' }
+    ]
+    
+    const filteredProducts = computed(() => {
+      if (activeFilter.value === 'all') return products.value
+      return products.value.filter(p => p.status === activeFilter.value)
+    })
+    
+    const setFilter = (value) => {
+      activeFilter.value = value
     }
-  },
-  computed: {
-    filteredProducts() {
-      if (this.activeFilter === 'all') return this.products
-      return this.products.filter(p => p.status === this.activeFilter)
+    
+    const getPlaceholder = () => {
+      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect fill="%23f5f5f5" width="300" height="200"/%3E%3C/svg%3E'
     }
-  },
-  created() {
-    this.products = getAllProducts()
-  },
-  methods: {
-    getPlaceholder() {
-      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
-    },
-    truncateDescription(desc) {
+    
+    const getProductImage = (product) => {
+      return product.images?.[0] || product.image || ''
+    }
+    
+    const truncateDescription = (desc) => {
+      if (!desc) return ''
       return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
-    },
-    getProductLink(product) {
+    }
+    
+    const getProductLink = (product) => {
       const routes = {
         'phc-manunggal-lestari': '/manunggal-lestari',
+        'phc-manunggal-lestari-dekomposer': '/manunggal-lestari-dekomposer',
         'php-triobionik': '/triobionik',
         'manunggal-makmur': '/manunggal-makmur',
         'ptorca': '/ptorca'
       }
       return routes[product.id] || '/'
-    },
-    getProductTags(product) {
-      const tags = []
-      if (product.id.includes('cair')) tags.push('Cair')
-      if (product.id.includes('padat') || product.id.includes('remah')) tags.push('Padat')
-      if (product.status === 'approved') tags.push('Berizin')
-      if (product.status === 'coming-soon') tags.push('Proses')
-      return tags.slice(0, 2)
-    },
-    getTagIcon(tag) {
-      const icons = {
-        'Cair': 'fas fa-tint',
-        'Padat': 'fas fa-cube',
-        'Berizin': 'fas fa-certificate',
-        'Proses': 'fas fa-hourglass-half'
+    }
+    
+    const preloadImages = () => {
+      const firstProducts = products.value.slice(0, 4)
+      firstProducts.forEach(product => {
+        const imgSrc = getProductImage(product)
+        if (imgSrc) {
+          const img = new Image()
+          img.src = imgSrc
+        }
+      })
+    }
+    
+    onMounted(async () => {
+      try {
+        products.value = getAllProducts()
+        preloadImages()
+        
+        setTimeout(() => {
+          isLoading.value = false
+          
+          setTimeout(() => {
+            if (window.App && window.App.lazyLoader) {
+              window.App.lazyLoader.scan()
+            }
+          }, 100)
+        }, 200)
+        
+      } catch (error) {
+        console.error('Error loading products:', error)
+        isLoading.value = false
       }
-      return icons[tag] || 'fas fa-info-circle'
+    })
+    
+    return {
+      products,
+      activeFilter,
+      isLoading,
+      filters,
+      filteredProducts,
+      visibleProducts: filteredProducts,
+      setFilter,
+      getPlaceholder,
+      getProductImage,
+      truncateDescription,
+      getProductLink
     }
   }
 }

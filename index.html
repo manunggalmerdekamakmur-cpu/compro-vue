@@ -9,66 +9,16 @@
   <meta name="robots" content="index, follow">
 
   <link rel="preconnect" href="https://res.cloudinary.com">
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-  
-  <link rel="preload" as="style" href="/assets/css/style.css" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" as="style" href="/assets/css/product.css" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" type="image/webp" fetchpriority="high">
-
-  <noscript>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/product.css">
-  </noscript>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
-  
-  <script>
-    (function(){
-      var loadDeferredStyles = function() {
-        var addStyles = document.createElement('link');
-        addStyles.rel = 'stylesheet';
-        addStyles.href = '/assets/css/style.css';
-        document.head.appendChild(addStyles);
-        
-        var addProductStyles = document.createElement('link');
-        addProductStyles.rel = 'stylesheet';
-        addProductStyles.href = '/assets/css/product.css';
-        document.head.appendChild(addProductStyles);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
-      else window.addEventListener('load', loadDeferredStyles);
-    })();
-    
-    function preloadImages() {
-      const images = [
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
-      ];
-      
-      images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-      });
-    }
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', preloadImages);
-    } else {
-      preloadImages();
-    }
-  </script>
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   
   <style>
-    body.loading {
-      overflow: hidden;
-      height: 100vh;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { 
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden; 
+      background: #ffffff;
     }
     
     #app-loading {
@@ -84,14 +34,6 @@
       justify-content: center;
       z-index: 9999;
       transition: opacity 0.5s ease;
-    }
-    
-    .spinner-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
     }
     
     .css-spinner {
@@ -112,23 +54,64 @@
       color: #1a7d3e;
       font-size: 0.9rem;
       font-weight: 500;
-      text-align: center;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
   </style>
+
+  <link rel="preload" href="/assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="/assets/css/product.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/product.css">
+  </noscript>
+
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
+  
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" type="image/webp" fetchpriority="high">
+  
+  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/phc-manunggal-lestari-1l_jisg83.webp" type="image/webp">
+  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp" type="image/webp">
+  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png" type="image/png">
+  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp" type="image/webp">
 </head>
 
 <body class="loading">
   <div id="app"></div>
 
   <div id="app-loading">
-    <div class="spinner-container">
-      <div class="css-spinner"></div>
-      <div class="loading-text">Memuat aplikasi...</div>
-    </div>
+    <div class="css-spinner"></div>
+    <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
   <script src="/assets/js/app.js" defer></script>
-  <script type="module" src="/src/main.js"></script>
+  <script src="/src/main.js" type="module" defer></script>
+  
+  <script>
+    const lcpObserver = new PerformanceObserver((entryList) => {
+      const entries = entryList.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      console.log('LCP:', lastEntry.startTime);
+    });
+    lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+    const clsObserver = new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (!entry.hadRecentInput) {
+          console.log('CLS:', entry.value);
+        }
+      }
+    });
+    clsObserver.observe({ type: 'layout-shift', buffered: true });
+  </script>
 </body>
 </html>

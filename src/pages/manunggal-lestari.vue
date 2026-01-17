@@ -17,16 +17,35 @@
         <div class="product-detail-container">
           <div class="product-images">
             <div class="main-image-container" @click="openImageModal">
-              <img :src="currentImage" :alt="product.title" class="main-image">
+              <div class="image-placeholder">
+                <div class="image-spinner"></div>
+              </div>
+              <img 
+                :src="getPlaceholder()" 
+                :data-src="currentImage" 
+                :alt="product.title" 
+                class="main-image"
+                loading="eager"
+                decoding="async"
+                @load="onImageLoad"
+              />
             </div>
-            <div class="thumbnail-gallery">
+            <div class="thumbnail-gallery" v-if="product.images && product.images.length > 1">
               <div 
                 v-for="(image, index) in product.images" 
                 :key="index"
                 :class="['thumbnail-item', { active: currentImageIndex === index }]"
                 @click="changeImage(image, index)"
               >
-                <img :src="image" :alt="`${product.title} ${index + 1}`" loading="lazy">
+                <div class="image-placeholder">
+                  <div class="image-spinner"></div>
+                </div>
+                <img 
+                  :src="getPlaceholder()" 
+                  :data-src="image" 
+                  :alt="`${product.title} ${index + 1}`" 
+                  loading="lazy"
+                />
               </div>
             </div>
             
@@ -109,7 +128,14 @@
           <div class="related-products-grid">
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/triobionik_c1jaie.webp" alt="PHP Triobionik" loading="lazy">
+                <div class="image-placeholder">
+                  <div class="image-spinner"></div>
+                </div>
+                <img 
+                  src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/triobionik_c1jaie.webp" 
+                  alt="PHP Triobionik" 
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>PHP Triobionik</h4>
@@ -121,7 +147,14 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp" alt="Manunggal Makmur" loading="lazy">
+                <div class="image-placeholder">
+                  <div class="image-spinner"></div>
+                </div>
+                <img 
+                  src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461343/manunggal-makmur_l37kqf.webp" 
+                  alt="Manunggal Makmur" 
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>Manunggal Makmur</h4>
@@ -133,7 +166,14 @@
             </div>
             <div class="related-product-card">
               <div class="related-product-img">
-                <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp" alt="PTORCA" loading="lazy">
+                <div class="image-placeholder">
+                  <div class="image-spinner"></div>
+                </div>
+                <img 
+                  src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461354/ptorca_nxre0r.webp" 
+                  alt="PTORCA" 
+                  loading="lazy"
+                />
               </div>
               <div class="related-product-info">
                 <h4>PTORCA</h4>
@@ -181,34 +221,77 @@ export default {
     }
   },
   
-  async beforeMount() {
+  async mounted() {
     await this.loadProduct()
-  },
-  
-  mounted() {
-    this.debounceUpdate = this.debounce(() => {
-      this.isLoading = false
-    }, 200)
-    this.debounceUpdate()
+    
+    this.isLoading = false
+    
+    setTimeout(() => {
+      if (window.App && window.App.lazyLoader) {
+        window.App.lazyLoader.scan(this.$el)
+        
+        const images = this.$el.querySelectorAll('img[data-src]')
+        images.forEach(img => {
+          const rect = img.getBoundingClientRect()
+          if (rect.top < window.innerHeight + 500) {
+            window.App.lazyLoader.loadImage(img)
+          }
+        })
+      }
+    }, 300)
   },
   
   methods: {
-    debounce(fn, delay) {
-      let timer
-      return (...args) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => fn(...args), delay)
+    async loadProduct() {
+      this.product = getProductById('phc-manunggal-lestari') || {}
+      document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
+      
+      if (this.product.images && this.product.images[0]) {
+        const img = new Image()
+        img.onload = () => {
+          console.log('Manunggal Lestari image preloaded')
+        }
+        img.src = this.product.images[0]
       }
     },
     
-    async loadProduct() {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      this.product = getProductById('phc-manunggal-lestari') || {}
-      document.title = `${this.product.title} - PT. Manunggal Merdeka Makmur`
+    getPlaceholder() {
+      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23f5f5f5" width="600" height="400"/%3E%3C/svg%3E'
+    },
+    
+    onImageLoad(e) {
+      const img = e.target
+      img.classList.add('image-loaded')
+      const placeholder = img.parentElement.querySelector('.image-placeholder')
+      if (placeholder) {
+        placeholder.style.opacity = '0'
+        setTimeout(() => {
+          placeholder.style.display = 'none'
+        }, 300)
+      }
     },
     
     changeImage(image, index) {
       this.currentImageIndex = index
+      
+      const mainImg = document.querySelector('.main-image')
+      if (mainImg) {
+        mainImg.classList.remove('image-loaded')
+        mainImg.src = this.getPlaceholder()
+        mainImg.dataset.src = image
+        
+        const placeholder = mainImg.parentElement.querySelector('.image-placeholder')
+        if (placeholder) {
+          placeholder.style.display = 'flex'
+          placeholder.style.opacity = '1'
+        }
+        
+        setTimeout(() => {
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.loadImage(mainImg)
+          }
+        }, 50)
+      }
     },
     
     openImageModal() {

@@ -3,7 +3,7 @@
     debounceDelay: 150,
     throttleLimit: 200,
     scrollThreshold: 300,
-    imageOffset: 200
+    imageOffset: 100
   }
   
   const debounce = (fn, delay) => {
@@ -22,9 +22,7 @@
         fn.apply(this, args)
         lastTime = now
         inThrottle = true
-      } else if (now - lastTime >= limit) {
-        fn.apply(this, args)
-        lastTime = now
+        setTimeout(() => { inThrottle = false }, limit)
       }
     }
   }
@@ -52,139 +50,102 @@
   }
   
   class LazyLoader {
-    constructor() {
-      this.observer = null
-      this.loadedImages = new Set()
-      this.pendingImages = new WeakMap()
-      this.imageSizes = new WeakMap()
-      this.init()
+  constructor() {
+    this.observer = null
+    this.loadedImages = new Set()
+    this.init()
+  }
+  
+  init() {
+    const config = {
+      root: null,
+      rootMargin: '300px 0px',
+      threshold: 0.1
     }
     
-    init() {
-      const config = {
-        root: null,
-        rootMargin: `${CONFIG.imageOffset}px 0px`,
-        threshold: 0.01
-      }
-      
-      this.observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            this.loadImage(entry.target)
-          }
-        })
-      }, config)
-    }
-    
-    observe(img) {
-      if (!img || !img.dataset.src || this.loadedImages.has(img) || this.pendingImages.has(img)) return
-      
-      img.classList.add('image-loading')
-      
-      this.setImageDimensions(img)
-      
-      if (!img.src || img.src.startsWith('data:')) {
-        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+'
-      }
-      
-      this.pendingImages.set(img, true)
-      this.observer.observe(img)
-      
-      setTimeout(() => {
-        if (this.pendingImages.has(img)) {
-          const rect = img.getBoundingClientRect()
-          if (rect.top < window.innerHeight + 100) {
-            this.loadImage(img)
-          }
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.loadImage(entry.target)
         }
-      }, 300)
-    }
-    
-    setImageDimensions(img) {
-      if (img.width && img.height) return
-      
-      const parent = img.parentElement
-      if (parent) {
-        const style = window.getComputedStyle(parent)
-        const width = parseInt(style.width) || 300
-        const height = parseInt(style.height) || 200
-        img.width = width
-        img.height = height
-        this.imageSizes.set(img, { width, height })
-      }
-    }
-    
-    loadImage(img) {
-      if (!img.dataset.src) return
-      
-      const src = img.dataset.src
-      
-      if (img.src === src) {
-        this.onImageLoad(img)
-        return
-      }
-      
-      const loader = new Image()
-      loader.src = src
-      
-      loader.onload = () => {
-        img.src = src
-        img.removeAttribute('data-src')
-        this.onImageLoad(img)
-      }
-      
-      loader.onerror = () => {
-        img.classList.remove('image-loading')
-        img.classList.add('image-error')
-        this.pendingImages.delete(img)
-        this.observer.unobserve(img)
-      }
-    }
-    
-    onImageLoad(img) {
-      img.classList.remove('image-loading')
-      img.classList.add('image-loaded')
-      this.loadedImages.add(img)
-      this.pendingImages.delete(img)
-      this.observer.unobserve(img)
-      
-      const event = new CustomEvent('imageloaded', { detail: { img } })
-      img.dispatchEvent(event)
-    }
-    
-    scan(container = document) {
-      const images = container.querySelectorAll('img[data-src]')
-      images.forEach(img => this.observe(img))
-    }
-    
-    scanAndWait() {
-      return new Promise(resolve => {
-        this.scan()
-        setTimeout(() => {
-          const pending = Array.from(document.querySelectorAll('img.image-loading'))
-          if (pending.length === 0) {
-            resolve()
-            return
-          }
-          
-          let loadedCount = 0
-          pending.forEach(img => {
-            img.addEventListener('imageloaded', () => {
-              loadedCount++
-              if (loadedCount === pending.length) resolve()
-            }, { once: true })
-          })
-        }, 100)
       })
-    }
+    }, config)
+  }
+  
+  observe(img) {
+    if (!img || !img.dataset.src || this.loadedImages.has(img)) return
     
-    destroy() {
-      if (this.observer) this.observer.disconnect()
-      this.loadedImages.clear()
-      this.pendingImages = new WeakMap()
-      this.imageSizes = new WeakMap()
+    const rect = img.getBoundingClientRect()
+    const isInViewport = rect.top < window.innerHeight + 300
+    
+    if (isInViewport) {
+      this.loadImage(img)
+    } else {
+      this.observer.observe(img)
     }
   }
+  
+  loadImage(img) {
+    if (!img.dataset.src || this.loadedImages.has(img)) return
+    
+    const src = img.dataset.src
+    const parent = img.parentElement
+    const placeholder = parent?.querySelector('.image-placeholder')
+    
+    if (placeholder) {
+      placeholder.style.display = 'flex'
+      placeholder.style.opacity = '1'
+    }
+    
+    img.classList.add('image-loading')
+    
+    const loader = new Image()
+    
+    loader.onload = () => {
+      setTimeout(() => {
+        img.src = src
+        img.removeAttribute('data-src')
+        img.classList.remove('image-loading')
+        img.classList.add('image-loaded')
+        
+        if (placeholder) {
+          placeholder.style.opacity = '0'
+          setTimeout(() => {
+            placeholder.style.display = 'none'
+          }, 300)
+        }
+        
+        this.loadedImages.add(img)
+        this.observer.unobserve(img)
+      }, 100)
+    }
+    
+    loader.onerror = () => {
+      img.classList.remove('image-loading')
+      img.classList.add('image-error')
+      
+      if (placeholder) {
+        placeholder.innerHTML = '<div style="color:#999;font-size:14px;">⚠️ Gagal memuat</div>'
+      }
+      
+      this.observer.unobserve(img)
+    }
+    
+    loader.src = src
+  }
+  
+  scan(container = document) {
+    const images = container.querySelectorAll('img[data-src]')
+    images.forEach(img => {
+      this.observe(img)
+    })
+  }
+  
+  destroy() {
+    if (this.observer) this.observer.disconnect()
+    this.loadedImages.clear()
+  }
+}
   
   class ScrollManager {
     constructor() {
@@ -312,8 +273,6 @@
       this.setupSmoothScrolling()
       this.setupBackToTop()
       
-      this.lazyLoader.init()
-      
       this.isInitialized = true
       
       this.perf.mark('app-init-end')
@@ -325,8 +284,11 @@
       
       return new Promise(resolve => {
         const checkReady = () => {
-          if (document.readyState === 'complete') resolve()
-          else setTimeout(checkReady, 100)
+          if (document.readyState === 'complete') {
+            resolve()
+          } else {
+            setTimeout(checkReady, 50)
+          }
         }
         checkReady()
       })
@@ -335,7 +297,7 @@
     setupEventListeners() {
       this.scrollHandler = throttle(() => {
         this.scrollManager.savePosition()
-      }, 100)
+      }, CONFIG.throttleLimit)
       
       window.addEventListener('scroll', this.scrollHandler, { passive: true })
       window.addEventListener('beforeunload', () => this.scrollManager.savePosition())
@@ -377,7 +339,9 @@
     }
     
     setupVueLazyLoading() {
-      this.lazyLoader.scan()
+      setTimeout(() => {
+        this.lazyLoader.scan()
+      }, 50)
       
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -385,7 +349,9 @@
             mutation.addedNodes.forEach((node) => {
               if (node.nodeType === 1) {
                 const images = node.querySelectorAll ? node.querySelectorAll('img[data-src]') : []
-                if (node.tagName === 'IMG' && node.dataset.src) this.lazyLoader.observe(node)
+                if (node.tagName === 'IMG' && node.dataset.src) {
+                  this.lazyLoader.observe(node)
+                }
                 images.forEach(img => this.lazyLoader.observe(img))
               }
             })
