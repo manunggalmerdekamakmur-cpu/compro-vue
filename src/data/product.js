@@ -471,8 +471,8 @@ export const productData = {
       'Memperbaiki kualitas hasil panen'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-1l_eacqbn.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-1l_eacqbn.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp'
     ],
     brochure: '/assets/brochures/ptorca.pdf',
     badge: 'Dalam Proses Perizinan',

@@ -27,9 +27,7 @@
                 :data-src="currentImage" 
                 :alt="product.title || product.name" 
                 class="main-image"
-                v-lazy
                 :loading="currentImageIndex === 0 ? 'eager' : 'lazy'"
-                @load="onImageLoad"
               />
             </div>
             
@@ -45,7 +43,6 @@
                   :src="getPlaceholder()" 
                   :data-src="image" 
                   :alt="`${product.title || product.name} ${index + 1}`" 
-                  v-lazy
                   loading="lazy"
                 />
               </button>
@@ -150,7 +147,6 @@
                   :src="getPlaceholder()" 
                   :data-src="getRelatedImage(related)" 
                   :alt="related.title || related.name" 
-                  v-lazy
                   loading="lazy"
                 />
               </div>
@@ -214,12 +210,10 @@ export default {
   data() {
     return {
       currentImageIndex: 0,
-      imageIndex: 0,
       showModal: false,
       modalImage: '',
       imageTransitioning: false,
       loading: false,
-      loadedImages: 0,
       relatedProducts: []
     }
   },
@@ -232,60 +226,70 @@ export default {
   
   watch: {
     product: {
-      handler() {
-        this.currentImageIndex = 0
-        this.loadedImages = 0
-        this.updateDocumentTitle()
-        this.loadRelatedProducts()
+      handler(newVal) {
+        if (newVal && newVal.id) {
+          this.currentImageIndex = 0
+          this.updateDocumentTitle()
+          this.loadRelatedProductsDebounced()
+        }
       },
       immediate: true
     }
   },
   
-  async created() {
+  async beforeMount() {
     await this.loadProductData()
   },
   
-  async mounted() {
+  mounted() {
     this.updateDocumentTitle()
-    await this.preloadImages()
+    this.initializeLazyLoad()
   },
   
   methods: {
     async loadProductData() {
       this.loading = true
-      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      await Promise.race([
+        this.preloadMainImage(),
+        new Promise(resolve => setTimeout(resolve, 500))
+      ])
+      
       this.loading = false
     },
     
-    async preloadImages() {
-      if (this.product.images) {
-        await Promise.all(
-          this.product.images.map(src => {
-            return new Promise((resolve) => {
-              const img = new Image()
-              img.onload = () => {
-                this.loadedImages++
-                resolve()
-              }
-              img.onerror = resolve
-              img.src = src
-            })
-          })
-        )
-      }
+    async preloadMainImage() {
+      if (!this.currentImage) return
+      
+      return new Promise((resolve) => {
+        const img = new Image()
+        img.onload = resolve
+        img.onerror = resolve
+        img.src = this.currentImage
+        setTimeout(resolve, 800)
+      })
     },
     
-    onImageLoad() {
-      this.loadedImages++
+    initializeLazyLoad() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.scan()
+            
+            const mainImg = this.$el.querySelector('.main-image')
+            if (mainImg && mainImg.dataset.src) {
+              window.App.lazyLoader.loadImage(mainImg)
+            }
+          }
+        }, 150)
+      })
     },
     
     changeImage(image, index) {
       if (this.imageTransitioning || this.currentImageIndex === index) return
       
       this.imageTransitioning = true
-      this.imageIndex = index
-      const mainImg = document.querySelector('.main-image')
+      const mainImg = this.$el.querySelector('.main-image')
       
       if (mainImg) {
         mainImg.style.opacity = '0'
@@ -300,9 +304,12 @@ export default {
       }
     },
     
-    async loadRelatedProducts() {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      this.relatedProducts = getRelatedProducts(this.product.id, 3)
+    loadRelatedProductsDebounced() {
+      if (this.relatedTimeout) clearTimeout(this.relatedTimeout)
+      
+      this.relatedTimeout = setTimeout(() => {
+        this.relatedProducts = getRelatedProducts(this.product.id, 3)
+      }, 200)
     },
     
     getRelatedLink(related) {
@@ -358,14 +365,6 @@ export default {
     
     getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3C/svg%3E'
-    },
-    
-    debounce(fn, delay) {
-      let timer
-      return (...args) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => fn(...args), delay)
-      }
     }
   }
 }

@@ -49,7 +49,6 @@
               height="200"
               loading="lazy"
               decoding="async"
-              v-lazy
             />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
               {{ product.badge }}
@@ -66,46 +65,112 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { getAllProducts } from '@/data/product.js'
 
 export default {
   name: 'ProductsSection',
   
-  setup() {
-    const products = ref([])
-    const activeFilter = ref('all')
-    const isLoading = ref(true)
-    
-    const filters = [
-      { value: 'all', label: 'Semua Produk', icon: 'fas fa-boxes' },
-      { value: 'approved', label: 'Berizin', icon: 'fas fa-certificate' },
-      { value: 'coming-soon', label: 'Segera Hadir', icon: 'fas fa-clock' }
-    ]
-    
-    const filteredProducts = computed(() => {
-      if (activeFilter.value === 'all') return products.value
-      return products.value.filter(p => p.status === activeFilter.value)
-    })
-    
-    const setFilter = (value) => {
-      activeFilter.value = value
+  data() {
+    return {
+      products: [],
+      activeFilter: 'all',
+      isLoading: true,
+      filters: [
+        { value: 'all', label: 'Semua Produk', icon: 'fas fa-boxes' },
+        { value: 'approved', label: 'Berizin', icon: 'fas fa-certificate' },
+        { value: 'coming-soon', label: 'Segera Hadir', icon: 'fas fa-clock' }
+      ]
     }
+  },
+  
+  computed: {
+    visibleProducts() {
+      if (this.activeFilter === 'all') return this.products
+      return this.products.filter(p => p.status === this.activeFilter)
+    }
+  },
+  
+  async beforeMount() {
+    await this.loadProducts()
+  },
+  
+  mounted() {
+    this.initializeLazyLoad()
+  },
+  
+  beforeUnmount() {
+    this.products = []
+  },
+  
+  methods: {
+    async loadProducts() {
+      try {
+        this.products = getAllProducts()
+        await this.preloadFirstImages()
+        this.isLoading = false
+      } catch (error) {
+        console.error('Error loading products:', error)
+        this.isLoading = false
+      }
+    },
     
-    const getPlaceholder = () => {
+    async preloadFirstImages() {
+      const firstProducts = this.products.slice(0, 2)
+      const promises = firstProducts.map(product => {
+        const imgSrc = this.getProductImage(product)
+        if (!imgSrc) return Promise.resolve()
+        
+        return new Promise((resolve) => {
+          const img = new Image()
+          img.onload = resolve
+          img.onerror = resolve
+          img.src = imgSrc
+          setTimeout(resolve, 1000)
+        })
+      })
+      
+      await Promise.race([
+        Promise.all(promises),
+        new Promise(resolve => setTimeout(resolve, 800))
+      ])
+    },
+    
+    initializeLazyLoad() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.scan()
+            
+            const images = this.$el.querySelectorAll('img[data-src]')
+            images.forEach(img => {
+              const rect = img.getBoundingClientRect()
+              if (rect.top < window.innerHeight + 300) {
+                window.App.lazyLoader.loadImage(img)
+              }
+            })
+          }
+        }, 100)
+      })
+    },
+    
+    setFilter(value) {
+      this.activeFilter = value
+    },
+    
+    getPlaceholder() {
       return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect fill="%23f5f5f5" width="300" height="200"/%3E%3C/svg%3E'
-    }
+    },
     
-    const getProductImage = (product) => {
+    getProductImage(product) {
       return product.images?.[0] || product.image || ''
-    }
+    },
     
-    const truncateDescription = (desc) => {
+    truncateDescription(desc) {
       if (!desc) return ''
       return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
-    }
+    },
     
-    const getProductLink = (product) => {
+    getProductLink(product) {
       const routes = {
         'phc-manunggal-lestari': '/manunggal-lestari',
         'phc-manunggal-lestari-dekomposer': '/manunggal-lestari-dekomposer',
@@ -114,55 +179,6 @@ export default {
         'ptorca': '/ptorca'
       }
       return routes[product.id] || '/'
-    }
-    
-    const preloadImages = () => {
-      const firstProducts = products.value.slice(0, 4)
-      firstProducts.forEach(product => {
-        const imgSrc = getProductImage(product)
-        if (imgSrc) {
-          const img = new Image()
-          img.src = imgSrc
-        }
-      })
-    }
-    
-    onMounted(async () => {
-      try {
-        await new Promise(resolve => setTimeout(resolve, 200))
-        products.value = getAllProducts()
-        preloadImages()
-        
-        isLoading.value = false
-        
-        setTimeout(() => {
-          if (window.App && window.App.lazyLoader) {
-            window.App.lazyLoader.scan()
-          }
-        }, 100)
-        
-      } catch (error) {
-        console.error('Error loading products:', error)
-        isLoading.value = false
-      }
-    })
-    
-    onUnmounted(() => {
-      products.value = []
-    })
-    
-    return {
-      products,
-      activeFilter,
-      isLoading,
-      filters,
-      filteredProducts,
-      visibleProducts: filteredProducts,
-      setFilter,
-      getPlaceholder,
-      getProductImage,
-      truncateDescription,
-      getProductLink
     }
   }
 }

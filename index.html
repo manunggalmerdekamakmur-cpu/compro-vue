@@ -8,11 +8,13 @@
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
 
+  <!-- Preconnect untuk CDN -->
   <link rel="preconnect" href="https://res.cloudinary.com">
-  <link rel="dns-prefetch" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   
+  <!-- Critical CSS Inline -->
   <style>
+    /* Critical CSS - minimal untuk above-the-fold */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { 
@@ -21,6 +23,7 @@
       background: #ffffff;
     }
     
+    /* Loading overlay */
     #app-loading {
       position: fixed;
       top: 0;
@@ -57,13 +60,27 @@
       margin-top: 1rem;
     }
     
+    /* Container untuk mencegah layout shift */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
     }
+    
+    /* Skeleton loading untuk images */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
   </style>
 
+  <!-- Non-critical CSS (load async) -->
   <link rel="preload" href="/assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="/assets/css/product.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
@@ -71,32 +88,33 @@
     <link rel="stylesheet" href="/assets/css/product.css">
   </noscript>
 
+  <!-- Font Awesome (async) -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
   
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" type="image/webp" fetchpriority="high">
-  
-  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/phc-manunggal-lestari-1l_jisg83.webp" type="image/webp">
-  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp" type="image/webp">
-  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png" type="image/png">
-  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp" type="image/webp">
+  <!-- Preload hanya gambar kritis untuk above-the-fold -->
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp" type="image/webp" fetchpriority="high">
 </head>
 
 <body class="loading">
   <div id="app"></div>
 
+  <!-- Loading overlay -->
   <div id="app-loading">
     <div class="css-spinner"></div>
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
+  <!-- Scripts - defer semua -->
   <script src="/assets/js/app.js" defer></script>
   <script src="/src/main.js" type="module" defer></script>
   
+  <!-- Performance monitoring -->
   <script>
+    // Track LCP
     const lcpObserver = new PerformanceObserver((entryList) => {
       const entries = entryList.getEntries();
       const lastEntry = entries[entries.length - 1];
@@ -104,6 +122,7 @@
     });
     lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
+    // Track CLS
     const clsObserver = new PerformanceObserver((entryList) => {
       for (const entry of entryList.getEntries()) {
         if (!entry.hadRecentInput) {

@@ -33,7 +33,6 @@
                 :alt="variant.name"
                 width="300"
                 height="200"
-                v-lazy
                 loading="lazy"
                 decoding="async"
               />
@@ -68,7 +67,6 @@
                   :alt="product.title"
                   width="300"
                   height="200"
-                  v-lazy
                   loading="lazy"
                 />
               </div>
@@ -96,66 +94,55 @@ export default {
   data() {
     return {
       variants: [],
-      relatedProducts: [],
-      isLoading: true,
-      preloadedImages: []
+      relatedProducts: []
     }
   },
   
   async beforeMount() {
-    await this.preloadImages()
     await this.loadData()
   },
   
   mounted() {
     document.title = 'Triobionik - PT. Manunggal Merdeka Makmur'
-    this.debounceScroll = this.debounce(() => {
-      this.isLoading = false
-      setTimeout(() => {
-        if (window.App && window.App.lazyLoader) {
-          window.App.lazyLoader.scan()
-        }
-      }, 200)
-    }, 300)
-    this.debounceScroll()
+    this.initializeLazyLoad()
   },
   
   methods: {
-    debounce(fn, delay) {
-      let timer
-      return (...args) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => fn(...args), delay)
-      }
-    },
-    
-    async preloadImages() {
-      const variants = getTriobionikVariants()
-      const images = []
-      
-      variants.forEach(variant => {
-        if (variant.image) images.push(variant.image)
-      })
-      
-      await Promise.all(
-        images.map(src => {
-          return new Promise((resolve) => {
-            const img = new Image()
-            img.onload = () => {
-              this.preloadedImages.push(src)
-              resolve()
-            }
-            img.onerror = resolve
-            img.src = src
-          })
-        })
-      )
-    },
-    
     async loadData() {
-      await new Promise(resolve => setTimeout(resolve, 100))
       this.variants = getTriobionikVariants()
       this.relatedProducts = getApprovedProducts().slice(0, 3)
+      
+      await this.preloadFirstImages()
+    },
+    
+    async preloadFirstImages() {
+      const firstTwo = this.variants.slice(0, 2)
+      const promises = firstTwo.map(variant => {
+        if (!variant.image) return Promise.resolve()
+        
+        return new Promise((resolve) => {
+          const img = new Image()
+          img.onload = resolve
+          img.onerror = resolve
+          img.src = variant.image
+          setTimeout(resolve, 1000)
+        })
+      })
+      
+      await Promise.race([
+        Promise.all(promises),
+        new Promise(resolve => setTimeout(resolve, 600))
+      ])
+    },
+    
+    initializeLazyLoad() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          if (window.App && window.App.lazyLoader) {
+            window.App.lazyLoader.scan()
+          }
+        }, 150)
+      })
     },
     
     getPlaceholder() {

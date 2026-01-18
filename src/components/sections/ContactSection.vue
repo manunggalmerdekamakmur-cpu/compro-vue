@@ -1,5 +1,5 @@
 <template>
-  <section class="contact" id="contact">
+  <section class="contact section-bg" id="contact"> <!-- Tambah class section-bg -->
     <div class="container">
       <div class="section-header">
         <div class="header-decoration">

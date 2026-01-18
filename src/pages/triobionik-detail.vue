@@ -30,21 +30,24 @@ export default {
   
   watch: {
     '$route.params.id': {
-      async handler() {
-        await this.loadProduct()
+      handler(newId) {
+        if (newId) {
+          this.loadProduct(newId)
+        }
       },
       immediate: true
     }
   },
   
-  async beforeMount() {
-    await this.loadProduct()
+  beforeMount() {
+    const id = this.$route.params.id
+    if (id) {
+      this.loadProduct(id)
+    }
   },
   
   methods: {
-    async loadProduct() {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      const id = this.$route.params.id
+    loadProduct(id) {
       this.product = getTriobionikVariantById(id) || {}
     }
   }

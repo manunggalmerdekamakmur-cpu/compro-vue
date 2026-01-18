@@ -1,4 +1,3 @@
-// src/main.js - PERBAIKAN: Tambahkan meta untuk layout persistence
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
@@ -9,9 +8,10 @@ const routes = [
     component: () => import('./pages/Home.vue'),
     meta: { 
       title: 'Beranda',
-      layout: true, // ✅ Tandai bahwa halaman ini menggunakan layout
+      layout: true,
       preloadImages: [
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461104/menyemprot_a4hkac.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
       ]
@@ -102,6 +102,7 @@ const preloadImages = (urls) => {
         img.onload = resolve
         img.onerror = resolve
         img.src = url
+        setTimeout(resolve, 800)
       })
     })
   )
@@ -143,22 +144,12 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach((to) => {
+router.afterEach(() => {
   setTimeout(() => {
     if (window.App && window.App.lazyLoader) {
       window.App.lazyLoader.scan()
     }
-    
-    const images = document.querySelectorAll('img[data-src]')
-    images.forEach(img => {
-      const rect = img.getBoundingClientRect()
-      if (rect.top < window.innerHeight + 300) {
-        if (window.App && window.App.lazyLoader) {
-          window.App.lazyLoader.loadImage(img)
-        }
-      }
-    })
-  }, 300)
+  }, 200)
 })
 
 const initApp = async () => {
@@ -173,15 +164,27 @@ const initApp = async () => {
         }),
         waitForCriticalCSS()
       ]),
-      new Promise(resolve => setTimeout(resolve, 2000))
+      new Promise(resolve => setTimeout(resolve, 1500))
     ])
 
     const currentRoute = router.currentRoute.value
     if (currentRoute.meta?.preloadImages) {
-      await preloadImages(currentRoute.meta.preloadImages)
+      await Promise.race([
+        preloadImages(currentRoute.meta.preloadImages),
+        new Promise(resolve => setTimeout(resolve, 1000))
+      ])
     }
 
     const app = createApp(App)
+    
+    app.directive('lazy', {
+      mounted(el) {
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.observe(el)
+        }
+      }
+    })
+    
     app.use(router)
 
     await router.isReady()
@@ -205,18 +208,10 @@ const initApp = async () => {
       setTimeout(() => {
         if (window.App && window.App.lazyLoader) {
           window.App.lazyLoader.scan()
-          
-          const images = document.querySelectorAll('img[data-src]')
-          images.forEach(img => {
-            const rect = img.getBoundingClientRect()
-            if (rect.top < window.innerHeight + 500) {
-              window.App.lazyLoader.loadImage(img)
-            }
-          })
         }
-      }, 200)
+      }, 150)
       
-    }, 500)
+    }, 300)
 
   } catch (error) {
     console.error('App initialization failed:', error)

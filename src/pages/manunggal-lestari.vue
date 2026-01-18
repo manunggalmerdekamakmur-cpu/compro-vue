@@ -28,13 +28,12 @@ export default {
     }
   },
   
-  async beforeMount() {
-    await this.loadProduct()
+  created() {
+    this.loadProduct()
   },
   
   methods: {
-    async loadProduct() {
-      await new Promise(resolve => setTimeout(resolve, 100))
+    loadProduct() {
       this.product = getProductById('phc-manunggal-lestari') || {}
     }
   }
