@@ -33,8 +33,8 @@ export const productData = {
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461329/phc-manunggal-lestari-1l_jisg83.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461331/phc-manunggal-lestari_p9nndd.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808217/phc-manunggal-lestari-1l_jisg83_ch9ov2.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808171/phc-manunggal-lestari_p9nndd_mxooss.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
     badge: 'Berizin',
@@ -75,8 +75,8 @@ export const productData = {
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461341/dekomposer-5l_jahcyp.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461330/phc-manunggal-lestari-1lbiru_yrwkp1.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808344/phc-manunggal-lestari-dekomposer_t3uwbi.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808269/phc-manunggal-lestari-1lbiru_sqexqm.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
     badge: 'Berizin',
@@ -152,7 +152,7 @@ export const productData = {
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461399/triobionik-merah_m65bap.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807855/triobionik-merah_zwq1ni.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
     badge: 'Berizin',
@@ -437,13 +437,12 @@ export const productData = {
       'Meningkatkan kapasitas tukar kation tanah'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461385/25kg_e3w9z5.png',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461362/40kg_bjlpls.png',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461369/50kg_mmt3hd.png',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461363/5kg_c1gmsn.png'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808787/50kg_d2xhnv.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808784/40kg_gfzchx.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808791/25kg_zbjhdg.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808871/5kg_r07coa.webp'
     ],
-    brochure: '/assets/brochures/manunggal-makmur.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768803090/manunggal-makmur_irkwti.pdf',
     badge: 'Dalam Proses Perizinan',
     certificate: 'Coming Soon',
     status: 'coming-soon'
@@ -471,10 +470,10 @@ export const productData = {
       'Memperbaiki kualitas hasil panen'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-1l_eacqbn.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461355/ptorca-5l_mwmwae.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808410/ptorca-1l_eacqbn_epxtld.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808441/ptorca-5l_mwmwae_urmlof.webp'
     ],
-    brochure: '/assets/brochures/ptorca.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768803091/ptorca_izeoo5.pdf',
     badge: 'Dalam Proses Perizinan',
     certificate: 'Coming Soon',
     status: 'coming-soon'

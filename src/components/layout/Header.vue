@@ -3,14 +3,14 @@
     <div class="container header-container">
       <div class="logo">
         <img
-          src="/assets/img/logo-stiesia.webp"
+          src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp"
           width="35"
           height="35"
           alt="Logo STIESIA"
           loading="eager"
         />
         <img
-          src="/assets/img/logo.webp"
+          src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp"
           width="35"
           height="35"
           alt="Logo PT. Manunggal Merdeka Makmur"

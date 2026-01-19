@@ -40,14 +40,14 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/icon-192x192.png',
+            src: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/x-icon'
           },
           {
-            src: '/icon-512x512.png',
+            src: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/x-icon'
           }
         ]
       },

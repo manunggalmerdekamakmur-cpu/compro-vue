@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
     margin: 0;
     padding: 0;
@@ -5,8 +9,8 @@
 }
 
 :root {
-    --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp');
-    --bg-hero-image-mobile: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp');
+    --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp');
+    --bg-hero-image-mobile: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp');
     
     --primary: #1a7d3e;
     --primary-dark: #0d5527;

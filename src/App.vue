@@ -3,7 +3,8 @@
     <Header v-if="showLayout" />
     <div v-if="showLayout" class="header-spacer"></div>
     
-    <main id="main-content">
+    <!-- <main id="main-content"> -->
+      <main id="main-content" class="bg-gray-50 min-h-screen">
       <router-view v-slot="{ Component, route }">
         <transition name="fade" mode="out-in" @before-enter="beforeEnter" @after-leave="afterLeave">
           <component :is="Component" :key="route.fullPath" />
