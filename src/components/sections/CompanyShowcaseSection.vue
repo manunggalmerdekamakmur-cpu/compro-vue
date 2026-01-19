@@ -26,7 +26,9 @@
         <div v-for="(counter, index) in counters" :key="index" class="counter-card">
           <p class="counter-label"><strong>{{ counter.key }}</strong></p>
           <div class="counter-number">
-            <span>{{ displayedCounts[index] }}</span>
+            <span :class="{ 'coming-soon': displayedCounts[index] === 'Coming Soon' }">
+              {{ displayedCounts[index] }}
+            </span>
           </div>
           <div class="counter-unit">{{ counter.unit }}</div>
         </div>
@@ -65,13 +67,32 @@ export default {
         }
       ],
       counters: [
-        { key: "PHC Manunggal Lestari", value: 148640, unit: "Liter" },
-        { key: "PHC Dekomposer", value: 76000, unit: "Liter" },
-        { key: "PHP Triobionik", value: 70300, unit: "Unit" },
-        { key: "Pupuk Organik Remah", value: 4999, unit: "Ton" },
-        { key: "Pupuk Organik Granul", value: 10000, unit: "Ton" },
-        { key: "Varian Produk", value: 11, unit: "Jenis" }
-      ],
+  {
+    key: "Pupuk Hayati Cair Manunggal Lestari",
+    value: 125000,
+    unit: "Liter"
+  },
+  {
+    key: "Pupuk Hayati Cair Manunggal Lestari Dekomposer",
+    value: 85000,
+    unit: "Liter"
+  },
+  {
+    key: "Pupuk Hayati Padat Triobionik",
+    value: 11,
+    unit: "Varian"
+  },
+  {
+    key: "Pupuk Organik Remah Manunggal Makmur",
+    value: "Coming Soon",
+    unit: ""
+  },
+  {
+    key: "Pupuk Organik Cair PTORCA",
+    value: "Coming Soon",
+    unit: ""
+  }
+],
       displayedCounts: [0, 0, 0, 0, 0, 0],
       hasAnimated: false
     }
@@ -120,29 +141,35 @@ export default {
       })
     },
     animateCounter(index, targetValue) {
-      const duration = 2000
-      const startTime = Date.now()
-      const startValue = 0
-      
-      const updateCounter = () => {
-        const currentTime = Date.now()
-        const elapsed = currentTime - startTime
-        const progress = Math.min(elapsed / duration, 1)
-        
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-        const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart)
-        
-        this.displayedCounts.splice(index, 1, currentValue)
-        
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter)
-        } else {
-          this.displayedCounts.splice(index, 1, targetValue)
-        }
-      }
-      
+  if (typeof targetValue !== 'number') {
+    this.displayedCounts.splice(index, 1, targetValue)
+    return
+  }
+
+  const duration = 2000
+  const startTime = Date.now()
+  const startValue = 0
+
+  const updateCounter = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+
+    const currentValue = Math.floor(
+      startValue + (targetValue - startValue) * easeOutQuart
+    )
+
+    this.displayedCounts.splice(index, 1, currentValue)
+
+    if (progress < 1) {
       requestAnimationFrame(updateCounter)
-    },
+    } else {
+      this.displayedCounts.splice(index, 1, targetValue)
+    }
+  }
+
+  requestAnimationFrame(updateCounter)
+},
     truncateDescription(desc) {
       if (!desc) return ''
       return desc.length > 80 ? desc.substring(0, 80) + '...' : desc

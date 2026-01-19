@@ -1,20 +1,13 @@
-/* ========================================
-   RESET & BASE STYLES
-   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ========================================
-   CSS VARIABLES
-   ======================================== */
 :root {
     --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp');
     --bg-hero-image-mobile: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461097/visi-misi-bg_w1tk8e.webp');
     
-    /* Colors */
     --primary: #1a7d3e;
     --primary-dark: #0d5527;
     --primary-light: #2ecc71;
@@ -31,29 +24,24 @@
     --danger: #dc3545;
     --info: #17a2b8;
     
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
     --gradient-light: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
     
-    /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
     --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.25);
     
-    /* Border Radius */
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-full: 50px;
     
-    /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Spacing */
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 2rem;
@@ -63,9 +51,6 @@
     --container-max: 1200px;
 }
 
-/* ========================================
-   HTML & BODY
-   ======================================== */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
@@ -84,9 +69,6 @@ body {
     letter-spacing: 0.01em;
 }
 
-/* ========================================
-   TYPOGRAPHY
-   ======================================== */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
@@ -119,9 +101,6 @@ p {
     font-size: 1.05rem;
 }
 
-/* ========================================
-   UTILITY CLASSES
-   ======================================== */
 .visually-hidden {
     position: absolute !important;
     width: 1px !important;
@@ -146,9 +125,6 @@ p {
     padding: 0 1.5rem;
 }
 
-/* ========================================
-   SECTION TITLES
-   ======================================== */
 .section-title {
     font-size: 2rem;
     margin-bottom: 0.25rem;
@@ -244,9 +220,6 @@ p {
     line-height: 1.8;
 }
 
-/* ========================================
-   BUTTONS
-   ======================================== */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -329,9 +302,6 @@ p {
     transform: scale(1.05);
 }
 
-/* ========================================
-   HEADER
-   ======================================== */
 header {
     position: fixed;
     top: 0;
@@ -371,7 +341,6 @@ header.scrolled .header-container {
     padding: 0.6rem 1.5rem;
 }
 
-/* Logo */
 .logo {
     display: flex;
     align-items: center;
@@ -404,7 +373,6 @@ header:not(.scrolled) .logo img {
     opacity: 0.75;
 }
 
-/* Navigation */
 .nav-menu {
     display: flex;
     gap: 2.25rem;
@@ -454,7 +422,6 @@ header.scrolled .nav-link {
     color: var(--primary);
 }
 
-/* Hamburger */
 .hamburger {
     display: none;
     border: none;
@@ -473,9 +440,6 @@ header.scrolled .nav-link {
     transform: scale(1.05);
 }
 
-/* ========================================
-   HERO SECTION
-   ======================================== */
 .hero {
     position: relative;
     min-height: 100vh;
@@ -575,9 +539,6 @@ header.scrolled .nav-link {
     }
 }
 
-/* ========================================
-   SECTION WITH BACKGROUND
-   ======================================== */
 .section-bg {
     position: relative;
     padding: var(--space-xl) 0;
@@ -600,7 +561,6 @@ header.scrolled .nav-link {
     z-index: -1;
 }
 
-/* Section BG Typography */
 .section-bg .section-title h2 {
     color: var(--primary-dark);
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
@@ -651,9 +611,6 @@ header.scrolled .nav-link {
     color: var(--primary-dark);
 }
 
-/* ========================================
-   CARDS
-   ======================================== */
 .card-hover {
     transition: all var(--transition-normal);
     border-radius: var(--radius-md);
@@ -702,7 +659,6 @@ header.scrolled .nav-link {
     text-decoration: none;
 }
 
-/* Section BG Cards */
 .section-bg .card-hover {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -715,9 +671,6 @@ header.scrolled .nav-link {
     color: var(--primary);
 }
 
-/* ========================================
-   ABOUT SECTION
-   ======================================== */
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -755,9 +708,6 @@ header.scrolled .nav-link {
     transform: scale(1.05);
 }
 
-/* ========================================
-   VISI MISI SECTION
-   ======================================== */
 .visi-misi-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -812,9 +762,6 @@ header.scrolled .nav-link {
     color: var(--success);
 }
 
-/* ========================================
-   PRODUCTS SECTION
-   ======================================== */
 #products.section-bg {
     padding: var(--space-lg) 0;
 }
@@ -968,7 +915,6 @@ header.scrolled .nav-link {
     text-overflow: ellipsis;
 }
 
-/* Section BG Product Styles */
 #products.section-bg .product-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -1001,7 +947,6 @@ header.scrolled .nav-link {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Product Filter */
 .product-filter {
     display: flex;
     justify-content: center;
@@ -1050,7 +995,6 @@ header.scrolled .nav-link {
     border-color: var(--primary);
 }
 
-/* Product Skeleton Loader */
 .product-skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
@@ -1095,9 +1039,6 @@ header.scrolled .nav-link {
     width: 60%;
 }
 
-/* ========================================
-   PRINCIPLES SECTION
-   ======================================== */
 .principles-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1154,7 +1095,6 @@ header.scrolled .nav-link {
     line-height: 1.6;
 }
 
-/* Section BG Principles */
 #principles.section-bg .principles-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1211,9 +1151,6 @@ header.scrolled .nav-link {
     line-height: 1.6;
 }
 
-/* ========================================
-   CERTIFICATIONS SECTION
-   ======================================== */
 .certifications-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1252,7 +1189,6 @@ header.scrolled .nav-link {
     margin-top: 0.5rem;
 }
 
-/* Section BG Certifications */
 .section-bg .cert-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -1272,9 +1208,6 @@ header.scrolled .nav-link {
     background-clip: text;
 }
 
-/* ========================================
-   COMPANY SHOWCASE
-   ======================================== */
 .company-showcase {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     color: var(--dark);
@@ -1343,9 +1276,28 @@ header.scrolled .nav-link {
 }
 
 .counters-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.coming-soon {
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.6px;
+  color: #6b7280;
+  opacity: 0.9;
+  position: relative;
+}
+
+.coming-soon::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #9ca3af, transparent);
+  margin: 6px auto 0;
 }
 
 .counter-card {
@@ -1388,9 +1340,6 @@ header.scrolled .nav-link {
     font-weight: 600;
 }
 
-/* ========================================
-   PRODUCT STATS
-   ======================================== */
 .product-stats {
     padding: var(--space-lg) 0;
     background: var(--gradient-primary);
@@ -1421,9 +1370,6 @@ header.scrolled .nav-link {
     margin: 0;
 }
 
-/* ========================================
-   CONTACT SECTION
-   ======================================== */
 .contact {
     padding: 2.5rem 0;
 }
@@ -1567,7 +1513,6 @@ header.scrolled .nav-link {
     opacity: 0.8;
 }
 
-/* Contact Form */
 .form-group {
     margin-bottom: var(--space-md);
 }
@@ -1631,9 +1576,6 @@ header.scrolled .nav-link {
     border: 1px solid #f5c6cb;
 }
 
-/* ========================================
-   IMAGE LOADING STATES
-   ======================================== */
 .image-loading {
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -1746,9 +1688,6 @@ img.image-loading {
     opacity: 1;
 }
 
-/* ========================================
-   FOOTER
-   ======================================== */
 footer {
     background: var(--gradient-primary);
     color: var(--white);
@@ -1840,7 +1779,6 @@ footer {
     color: #9fd9be;
 }
 
-/* Alternative Footer Layouts */
 .footer-content {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
@@ -1957,9 +1895,6 @@ footer {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* ========================================
-   BACK TO TOP BUTTON
-   ======================================== */
 .back-to-top {
     position: fixed;
     bottom: 2rem;
@@ -1991,9 +1926,6 @@ footer {
     box-shadow: var(--shadow-md);
 }
 
-/* ========================================
-   MODAL
-   ======================================== */
 .modal {
     display: none;
     position: fixed;
@@ -2229,7 +2161,6 @@ footer {
     margin-top: var(--space-xl);
 }
 
-/* Product Detail Page */
 .product-detail-page {
     padding-top: 100px;
 }
@@ -2299,7 +2230,6 @@ footer {
     background: rgba(0, 0, 0, 0.02);
 }
 
-/* Loading Spinner */
 .loading-spinner {
     width: 40px;
     height: 40px;
@@ -2310,9 +2240,6 @@ footer {
     margin: 0 auto;
 }
 
-/* ========================================
-   ANIMATIONS
-   ======================================== */
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
@@ -2328,9 +2255,6 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-/* ========================================
-   RESPONSIVE - LARGE DESKTOP (min 1024px)
-   ======================================== */
 @media (min-width: 1024px) {
     .modal-content {
         max-width: 1000px;
@@ -2427,9 +2351,6 @@ footer {
     }
 }
 
-/* ========================================
-   RESPONSIVE - TABLET (769px - 991px)
-   ======================================== */
 @media (min-width: 769px) and (max-width: 991px) {
     .modal-content {
         max-width: 90%;
@@ -2481,18 +2402,12 @@ footer {
     }
 }
 
-/* ========================================
-   RESPONSIVE - LARGE TABLET (max 1200px)
-   ======================================== */
 @media (max-width: 1200px) {
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* ========================================
-   RESPONSIVE - TABLET (max 992px)
-   ======================================== */
 @media (max-width: 992px) {
     html {
         font-size: 15px;
@@ -2537,9 +2452,6 @@ footer {
     }
 }
 
-/* ========================================
-   RESPONSIVE - MOBILE (max 768px)
-   ======================================== */
 @media (max-width: 768px) {
     html {
         font-size: 14px;
@@ -2600,6 +2512,163 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
+
+      .company-showcase.section-bg {
+    padding: var(--space-lg) 0;
+  }
+
+  .company-showcase .why-choose,
+  .company-showcase .achievements {
+    padding: 0 1rem;
+  }
+
+  .company-showcase .section-head h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .company-showcase .section-head .lead {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  .company-showcase .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .company-showcase .feature-card {
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: var(--radius-md);
+    margin: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-md);
+  }
+
+  .company-showcase .feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .company-showcase .icon-wrap {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    padding: 1rem;
+  }
+
+  .company-showcase .icon-wrap svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .company-showcase .feature-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  .company-showcase .feature-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--dark);
+    margin: 0;
+    text-align: left;
+  }
+
+  .company-showcase .achievements {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 2px solid rgba(26, 125, 62, 0.1);
+  }
+
+  .company-showcase .achievements .section-title h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .company-showcase .counters-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .company-showcase .counter-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: all var(--transition-normal);
+  }
+
+  .company-showcase .counter-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .company-showcase .counter-label {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    color: var(--dark);
+    font-weight: 600;
+    line-height: 1.4;
+    min-height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .company-showcase .counter-label strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  .company-showcase .counter-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0.5rem 0;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .company-showcase .counter-unit {
+    font-size: 1rem;
+    color: var(--gray);
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  .company-showcase .coming-soon {
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.6px;
+    color: #6b7280;
+    opacity: 0.9;
+    position: relative;
+    font-size: 1.1rem;
+  }
+
+  .company-showcase .coming-soon::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #9ca3af, transparent);
+    margin: 6px auto 0;
+  }
     
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -2997,9 +3066,6 @@ footer {
     }
 }
 
-/* ========================================
-   RESPONSIVE - SMALL MOBILE (max 576px)
-   ======================================== */
 @media (max-width: 576px) {
     html {
         font-size: 14px;
@@ -3062,6 +3128,70 @@ footer {
         width: 50px;
         height: 3px;
     }
+
+      .company-showcase.section-bg {
+    padding: var(--space-md) 0;
+  }
+
+  .company-showcase .section-head h2 {
+    font-size: 1.6rem;
+  }
+
+  .company-showcase .section-head .lead {
+    font-size: 0.95rem;
+    padding: 0;
+  }
+
+  .company-showcase .features-grid {
+    gap: 1rem;
+  }
+
+  .company-showcase .feature-card {
+    padding: 1.25rem;
+  }
+
+  .company-showcase .feature-title {
+    font-size: 1.15rem;
+  }
+
+  .company-showcase .feature-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .company-showcase .achievements {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  .company-showcase .achievements .section-title h2 {
+    font-size: 1.6rem;
+  }
+
+  .company-showcase .counters-grid {
+    gap: 1rem;
+  }
+
+  .company-showcase .counter-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .company-showcase .counter-label {
+    font-size: 0.9rem;
+    min-height: 2.6rem;
+  }
+
+  .company-showcase .counter-number {
+    font-size: 2rem;
+  }
+
+  .company-showcase .counter-unit {
+    font-size: 0.9rem;
+  }
+
+  .company-showcase .coming-soon {
+    font-size: 1rem;
+  }
     
     .stats-grid {
         grid-template-columns: 1fr;
@@ -3117,9 +3247,6 @@ footer {
     }
 }
 
-/* ========================================
-   ACCESSIBILITY
-   ======================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -3137,9 +3264,6 @@ footer {
     }
 }
 
-/* ========================================
-   PRINT STYLES
-   ======================================== */
 @media print {
     header,
     .hero-buttons,

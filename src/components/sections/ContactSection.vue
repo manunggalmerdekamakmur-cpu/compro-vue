@@ -68,7 +68,7 @@
 
           <div class="hours-grid">
             <div class="hours-row">
-              <span>Sen–Jum</span>
+              <span>Senin – Jum'at</span>
               <span>08:00–16:00</span>
             </div>
             <div class="hours-row">

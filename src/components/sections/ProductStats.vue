@@ -19,7 +19,7 @@
         </div>
         <div class="stat-item">
           <i class="fas fa-check-circle"></i>
-          <h3>7+</h3>
+          <h3>11+</h3>
           <p>Total Produk</p>
         </div>
       </div>
