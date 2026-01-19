@@ -1,4 +1,3 @@
-// src/data/product.js
 export const productData = {
   'phc-manunggal-lestari': {
     id: 'phc-manunggal-lestari',
@@ -233,7 +232,7 @@ export const productData = {
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp'],
-    brochure: '/assets/brochures/triobionik-dekomposer.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768819232/triobionik_bosster_dekomposer_voqyd9.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     shortDesc: 'Triobionik Dekomposer kemasan 100 gram — untuk kompos & septic tank',
@@ -315,7 +314,7 @@ export const productData = {
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp'],    
-    brochure: '/assets/brochures/triobionik-ikan.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768819232/triobionik_bosster_ikan_x61tbr.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     shortDesc: 'Triobionik Probiotik Ikan kemasan 100 gram untuk budidaya',

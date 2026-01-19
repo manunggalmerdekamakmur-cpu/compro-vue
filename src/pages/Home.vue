@@ -26,7 +26,9 @@
           <a href="#products" class="btn btn-primary">
             <i class="fas fa-seedling"></i> Lihat Produk Kami
           </a>
-          <a href="#contact" class="btn btn-secondary">
+          <a href="https://wa.me/6285199265858"
+            target="_blank"
+            rel="noopener" class="btn btn-secondary">
             <i class="fas fa-phone-alt"></i> Hubungi Kami
           </a>
         </div>
