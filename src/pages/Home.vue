@@ -32,12 +32,6 @@
         </div>
       </div>
     </section>
-    <!-- <div class="media-container">
-      <div class="container media-grid">
-        <NewsSection />
-        <VideoSection />
-      </div>
-    </div> -->
     <AboutSection />
     <VisionMission />
     <ProductStats />
@@ -50,8 +44,6 @@
 </template>
 
 <script>
-// import NewsSection from '@/components/sections/NewsSection.vue'
-// import VideoSection from '@/components/sections/VideoSection.vue'  
 import AboutSection from '@/components/sections/AboutSection.vue'
 import VisionMission from '@/components/sections/VisionMission.vue'
 import ProductStats from '@/components/sections/ProductStats.vue'
@@ -65,8 +57,6 @@ export default {
   name: 'Home',
   
   components: {
-    // NewsSection,
-    // VideoSection,
     AboutSection,
     VisionMission,
     ProductStats,
