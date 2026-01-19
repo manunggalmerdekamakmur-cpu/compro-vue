@@ -39,6 +39,7 @@
     <CertificationsSection />
     <PrinciplesSection />
     <CompanyShowcaseSection />
+    <CustomerFeedbackSection />
     <ContactSection />
   </div>
 </template>
@@ -51,6 +52,7 @@ import ProductsSection from '@/components/sections/ProductsSection.vue'
 import CertificationsSection from '@/components/sections/CertificationsSection.vue'
 import PrinciplesSection from '@/components/sections/PrinciplesSection.vue'
 import CompanyShowcaseSection from '@/components/sections/CompanyShowcaseSection.vue'
+import CustomerFeedbackSection from '@/components/sections/CustomerFeedbackSection.vue'
 import ContactSection from '@/components/sections/ContactSection.vue'
 
 export default {
@@ -64,6 +66,7 @@ export default {
     CertificationsSection,
     PrinciplesSection,
     CompanyShowcaseSection,
+    CustomerFeedbackSection,
     ContactSection
   },
   

@@ -151,8 +151,7 @@ export const productData = {
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807855/triobionik-merah_zwq1ni.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
     badge: 'Berizin',
