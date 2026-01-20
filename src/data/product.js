@@ -32,7 +32,7 @@ export const productData = {
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808217/phc-manunggal-lestari-1l_jisg83_ch9ov2.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768891067/phc-manunggal-lestari-1l_jisg83_ch9ov2_20_kxkzer.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808171/phc-manunggal-lestari_p9nndd_mxooss.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
@@ -106,7 +106,7 @@ export const productData = {
       'Memperbaiki kualitas tanah jangka panjang'
     ],
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768891936/triobionik-100gr_c6daud_20_fpmf2q.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461390/triobionik-25gr_fib4dz.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
@@ -120,7 +120,7 @@ export const productData = {
     id: 'triobionik-25gr',
     productId: 'php-triobionik',
     name: 'Triobionik Booster Tanaman Pertanian & Perkebunan',
-    title: 'Triobionik 25gr - Pupuk Hayati Padat Booster Tanaman',
+    title: 'Triobionik 25gr - Pupuk Hayati Padat Booster Tanaman Pertanian & Perkebunan',
     description: 'Pupuk hayati padat mengandung beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.98',
@@ -162,7 +162,7 @@ export const productData = {
     id: 'triobionik-100gr',
     productId: 'php-triobionik',
     name: 'Triobionik Booster Tanaman Pertanian & Perkebunan',
-    title: 'Triobionik 100gr - Pupuk Hayati Padat untuk Hortikultura',
+    title: 'Triobionik 100gr - Pupuk Hayati Padat Booster Tanaman Pertanian & Perkebunan',
     description: 'Pupuk hayati padat mengandung beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.98',
@@ -190,11 +190,11 @@ export const productData = {
       '6. Mengurangi dosis pemupukan kimia pada lahan pertanian maupun perkebunan.',
       '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
     ],
-    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp',
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768891936/triobionik-100gr_c6daud_20_fpmf2q.webp',
     images: [
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/triobionik-100gr_c6daud.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768891936/triobionik-100gr_c6daud_20_fpmf2q.webp'
     ],
-    brochure: '/assets/brochures/triobionik.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768465925/triobionik-merah_mbgdwy.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.98',
     shortDesc: 'PHP Triobionik kemasan 100 gram untuk kebutuhan menengah',
@@ -204,7 +204,7 @@ export const productData = {
     id: 'triobionik-dekomposer-100gr',
     productId: 'php-triobionik-dekomposer',
     name: 'Triobionik Booster Dekomposer',
-    title: 'Triobionik 100gr - Booster Dekomposer untuk Kompos & Septic Tank',
+    title: 'Dekomposer Triobionik 100gr - Booster Dekomposer',
     description:
       'Dekomposer / agen hayati mengandung beberapa mikroorganisme menguntungkan yang membantu menguraikan bahan organik, mempercepat pembuatan kompos, mengurangi bau pada septic tank, serta membantu mengurangi sedimentasi.',
     specs: [
@@ -228,10 +228,10 @@ export const productData = {
       '2. Mengandung bahan yang merangsang nafsu akan pada ikan, unggas dan hewan ternak',
       '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
       '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak serta manusia sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak maupun lingkungan Manusia',
-      '5. Dalam septik toilet mampu mengendalika bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
+      '5. Dalam septik toilet mampu mengendalikan bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
     ],
-    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp',
-    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461394/dekomposer_snpwhp.webp'],
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892177/dekomposer_snpwhp_20_xktp7s.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892177/dekomposer_snpwhp_20_xktp7s.webp'],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768819232/triobionik_bosster_dekomposer_voqyd9.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -247,8 +247,8 @@ export const productData = {
   {
     id: 'triobionik-septic-100gr',
     productId: 'php-triobionik-septic',
-    name: 'Triobionik Septic Tank Booster',
-    title: 'Triobionik 100gr - Booster Septic Tank & Pengelolaan Limbah',
+    name: 'Triobionik Booster Septic Tank',
+    title: 'Dekomposer Triobionik 100gr - Dekomposer Septic Tank',
     description:
       'Formulasi mikroba untuk pengelolaan septic tank: membantu menguraikan sisa makanan, kotoran, dan organik sehingga mengurangi bau dan memperkecil sedimentasi di jamban / septic tank.',
     specs: [
@@ -273,7 +273,7 @@ export const productData = {
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp'],    
-    brochure: '/assets/brochures/triobionik-septic.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768897609/brosur_triobionik___dekomposer_septic_tank_vxwnfg.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     shortDesc: 'Triobionik untuk perawatan septic tank — 100 gram',
@@ -289,7 +289,7 @@ export const productData = {
     id: 'triobionik-ikan-100gr',
     productId: 'php-triobionik-ikan',
     name: 'Triobionik Booster Probiotik Ikan',
-    title: 'Triobionik 100gr - Probiotik untuk Budidaya Perikanan',
+    title: 'Triobionik 100gr - Booster Probiotik Ikan',
     description:
       'Probiotik agen hayati untuk ikan dan udang: membantu memperbaiki kualitas air, memperlancar pencernaan ikan, menekan patogen, serta merangsang nafsu makan pada ikan budidaya.',
     specs: [
@@ -307,13 +307,13 @@ export const productData = {
       '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
     ],
     benefits: [
-      '1. Memperbaiki kualitas air kolam dengan menguraikan sisa organik.',
-      '2. Meningkatkan penyerapan nutrisi dan pencernaan ikan.',
-      '3. Menekan agen patogen dan mengurangi kejadian penyakit.',
-      '4. Merangsang nafsu makan sehingga pertumbuhan lebih optimal.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan bahan organik dan mineral menjadi unsur unsur sederhana yang mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak.',
+      '2. Mengadung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
+      '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
+      '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
     ],
-    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp',
-    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461389/ikan_vclevn.webp'],    
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892257/ikan_vclevn_20_yp2ntm.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892257/ikan_vclevn_20_yp2ntm.webp'],    
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768819232/triobionik_bosster_ikan_x61tbr.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
@@ -330,7 +330,7 @@ export const productData = {
     id: 'triobionik-ternak-100gr',
     productId: 'php-triobionik-ternak',
     name: 'Triobionik Booster Probiotik Ternak',
-    title: 'Triobionik 100gr - Probiotik & Agen Hayati untuk Ternak',
+    title: 'Triobionik 100gr - Booster Probiotik Ternak',
     description:
       'Probiotik untuk ternak (sapi, kambing, domba, ayam, kelinci, dsb.) yang membantu pencernaan, mengurangi bau kotoran, meningkatkan kesehatan pencernaan, serta mengoptimalkan konversi pakan.',
     specs: [
@@ -348,14 +348,14 @@ export const productData = {
       '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
     ],
     benefits: [
-      '1. Meningkatkan kesehatan pencernaan ternak.',
-      '2. Mengurangi bau dan kandungan patogen pada kotoran ternak.',
-      '3. Menurunkan kebutuhan pakan dengan meningkatkan efisiensi pencernaan.',
-      '4. Mempercepat pemecahan limbah kandang untuk manajemen kotoran yang lebih baik.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan bahan organik dan mineral menjadi unsur unsur sederhana yang',
+      '2. Mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak Mengadung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
+      '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
+      '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
     ],
-    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/ternak_itc7wc.webp',
-    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461393/ternak_itc7wc.webp'],
-    brochure: '/assets/brochures/triobionik-ternak.pdf',
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892401/ternak_itc7wc_20_hwqoum.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892401/ternak_itc7wc_20_hwqoum.webp'],
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890092/brosur_TRIOBIONIK_BOOSTER_PROBIOTIK_TERNAK_rdpfif.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     shortDesc: 'Triobionik Probiotik Ternak kemasan 100 gram untuk berbagai jenis ternak',
@@ -370,8 +370,8 @@ export const productData = {
   {
     id: 'triobionik-pupuk-hayati-250gr',
     productId: 'php-triobionik-pupuk',
-    name: 'Triobionik Pupuk Hayati Padat',
-    title: 'Triobionik 250gr - Pupuk Hayati Padat untuk Pertanian & Hortikultura',
+    name: 'Triobionik Booster Probiotik Unggas',
+    title: 'Triobionik 100gr - Booster Probiotik Unggas',
     description:
       'Pupuk hayati padat yang diperkaya mikroba hayati & hormon pertumbuhan. Membantu memperbaiki struktur tanah, menyuplai unsur hara yang mudah diserap tanaman, merangsang penyerapan nutrisi, serta mendukung kesehatan akar dan hasil panen.',
     specs: [
@@ -396,9 +396,9 @@ export const productData = {
       '4. Mengurangi kebutuhan pupuk kimia dan meningkatkan produktivitas hasil panen.',
       '5. Melindungi tanaman dari beberapa patogen tanah.'
     ],
-    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461391/unggas_nnlx3d.webp',
-    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461391/unggas_nnlx3d.webp'],
-    brochure: '/assets/brochures/triobionik-pupuk.pdf',
+    image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892331/unggas_nnlx3d_20_tgjttd.webp',
+    images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892331/unggas_nnlx3d_20_tgjttd.webp'],
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890092/brosur_TRIOBIONIK_BOOSTER_PROBIOTIK_UNGGAS_u75ufw.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     shortDesc: 'Triobionik Pupuk Hayati Padat — kemasan 250 gram (varian lain tersedia)',
@@ -430,9 +430,11 @@ export const productData = {
       'Cocok untuk semua jenis tanaman'
     ],
     benefits: [
-      'Meningkatkan kesuburan tanah jangka panjang',
-      'Memperbaiki struktur fisik tanah',
-      'Meningkatkan kapasitas tukar kation tanah'
+      '1. Mempertahankan Kesuburan Tanah',
+      '2. Memperbaiki Tekstur Tanah',
+      '3. Menciptakan Sistem Serapan Tanaman',
+      '4. Menghasilkan Buah Berkwalitas Tinggi',
+      '5. Meningkatkan Hasil Panen'
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808787/50kg_d2xhnv.webp',
@@ -441,7 +443,7 @@ export const productData = {
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808871/5kg_r07coa.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768803090/manunggal-makmur_irkwti.pdf',
-    badge: 'Dalam Proses Perizinan',
+    badge: 'Coming Soon',
     certificate: 'Coming Soon',
     status: 'coming-soon'
   },
@@ -463,16 +465,19 @@ export const productData = {
       'Aplikasi praktis dan efisien'
     ],
     benefits: [
-      'Mempercepat pertumbuhan vegetatif',
-      'Meningkatkan pembungaan dan pembuahan',
-      'Memperbaiki kualitas hasil panen'
+      '1. Mampu menyuburkan Tanah, dalam waktu jangka panjang dan membangkitkan unsur hara tanah.',
+      '2. Ramah lingkungan, tanpa mengandung unsur limbah kimia serta dari segi kesehatan sangat aman dan baik.',
+      '3. Memiliki kandungan nutrisi sangat baik untuk tanaman dan berguna memberikan kualitas pertumbuhan tanaman agar jauh lebih baik.',
+      '4. Memiliki daya serap air yang baik, mampu meningkatkan daya serap tanah untuk menyimpan cadangan air di dalamnya yang membuat kesuburan tanah tetap terjaga.',
+      '5. Menghasilkan tanaman yang sehat dapat dikonsumsi dan memberikan rasa aman dan menyehatkan bagi siapa saja yang mengkonsumsi hasil panen tanaman tersebut.',
+      '6. Merangsang pertumbuhan akar. Mampu membentuk anakan dalam upaya pemulihan dan adaptasi saat tanaman berpotensi menghasilkan biji atau buah dengan ukuran yang baik.'
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808410/ptorca-1l_eacqbn_epxtld.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808441/ptorca-5l_mwmwae_urmlof.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768803091/ptorca_izeoo5.pdf',
-    badge: 'Dalam Proses Perizinan',
+    badge: 'Coming Soon',
     certificate: 'Coming Soon',
     status: 'coming-soon'
   }

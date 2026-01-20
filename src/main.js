@@ -14,7 +14,7 @@ const routes = [
       title: 'Beranda',
       layout: true,
       preloadImages: [
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808498/menyemprot_tlcghj.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890938/menyemprot_tlcghj_20_mm1irt.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'

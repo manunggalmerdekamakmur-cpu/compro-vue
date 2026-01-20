@@ -267,7 +267,7 @@ export default {
     },
     
     handleVariantImageLoad(variant) {
-      this.$set(this.variantImagesLoaded, variant.id, true)
+      this.variantImagesLoaded[variant.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')
@@ -285,7 +285,7 @@ export default {
     },
     
     handleVariantImageError(variant) {
-      this.$set(this.variantImagesLoaded, variant.id, true)
+      this.variantImagesLoaded[variant.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')
@@ -303,7 +303,7 @@ export default {
     },
     
     handleRelatedImageLoad(product) {
-      this.$set(this.relatedImagesLoaded, product.id, true)
+      this.relatedImagesLoaded[product.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')
@@ -321,7 +321,7 @@ export default {
     },
     
     handleRelatedImageError(product) {
-      this.$set(this.relatedImagesLoaded, product.id, true)
+      this.relatedImagesLoaded[product.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')

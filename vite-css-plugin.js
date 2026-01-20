@@ -1,4 +1,3 @@
-// vite-css-plugin.js
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { transform } from 'lightningcss'
@@ -9,7 +8,6 @@ export default function viteCssPlugin() {
     
     transform(code, id) {
       if (id.endsWith('.css')) {
-        // Minify CSS dengan lightningcss
         const result = transform({
           filename: id,
           code: Buffer.from(code),
@@ -31,7 +29,6 @@ export default function viteCssPlugin() {
     },
     
     writeBundle() {
-      // Proses CSS di folder assets
       const cssFiles = [
         resolve(__dirname, 'assets/css/style.css'),
         resolve(__dirname, 'assets/css/product.css')
@@ -41,7 +38,6 @@ export default function viteCssPlugin() {
         if (existsSync(cssFile)) {
           const cssContent = readFileSync(cssFile, 'utf-8')
           
-          // Minify dengan lightningcss
           const result = transform({
             filename: cssFile,
             code: Buffer.from(cssContent),
@@ -49,7 +45,6 @@ export default function viteCssPlugin() {
             sourceMap: false
           })
           
-          // Simpan hasil minify
           writeFileSync(cssFile, result.code.toString())
         }
       })

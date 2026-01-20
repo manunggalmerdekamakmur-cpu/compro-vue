@@ -69,7 +69,9 @@
             <ol>
               <li><router-link to="/">Beranda</router-link></li>
               <li><router-link to="/#products">Produk</router-link></li>
-              <li v-if="breadcrumbParent"><router-link :to="breadcrumbParent.to">{{ breadcrumbParent.name }}</router-link></li>
+              <li v-if="breadcrumbParent">
+                <router-link :to="breadcrumbParent.to">{{ breadcrumbParent.name }}</router-link>
+              </li>
               <li class="current">{{ product.title || product.name }}</li>
             </ol>
           </nav>
@@ -140,10 +142,16 @@
 
             <div class="product-info">
               <div class="product-header">
-                <h1>{{ product.title || product.name }}</h1>
-                <div :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
-                  {{ product.badge }}
-                </div>
+  <h1>{{ product.title || product.name }}</h1>
+
+  <div
+    :class="[
+      'product-badge',
+      product.status === 'approved' ? 'badge-approved' : 'badge-coming'
+    ]"
+  >
+    {{ product.badge }}
+  </div>
                 <div v-if="product.certificate" class="certificate-badge">
                   <i class="fas fa-certificate"></i>
                   <span>Izin Edar No: {{ product.certificate }}</span>
@@ -203,17 +211,14 @@
             </div>
           </div>
 
-          <section v-if="relatedProducts.length" class="related-products">
+          <section class="related-products">
             <div class="section-title">
               <h2>Produk Lainnya</h2>
               <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
             </div>
-            <div class="related-products-grid">
-              <div 
-                v-for="related in relatedProducts" 
-                :key="related.id"
-                class="related-product-card related-product-skeleton"
-              >
+            
+            <div v-if="relatedLoading" class="related-products-grid">
+              <div v-for="n in 3" :key="n" class="related-product-card related-product-skeleton">
                 <div class="skeleton-img">
                   <div class="image-spinner"></div>
                 </div>
@@ -223,6 +228,9 @@
                   <div class="skeleton-text short"></div>
                 </div>
               </div>
+            </div>
+            
+            <div v-else class="related-products-grid">
               <router-link
                 v-for="related in relatedProducts"
                 :key="related.id"
@@ -308,6 +316,7 @@ export default {
       imageTransitioning: false,
       loading: false,
       relatedProducts: [],
+      relatedLoading: true,
       imagesLoaded: {},
       thumbnailsLoaded: {},
       relatedImagesLoaded: {}
@@ -326,18 +335,15 @@ export default {
         if (newVal && newVal.id) {
           this.currentImageIndex = 0
           this.updateDocumentTitle()
-          this.loadRelatedProductsDebounced()
+          this.loadRelatedProducts()
         }
       },
       immediate: true
     }
   },
   
-  async beforeMount() {
+  async mounted() {
     await this.loadProductData()
-  },
-  
-  mounted() {
     this.updateDocumentTitle()
     this.initializeLazyLoad()
   },
@@ -352,6 +358,21 @@ export default {
       ])
       
       this.loading = false
+    },
+    
+    async loadRelatedProducts() {
+      this.relatedLoading = true
+      
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      this.relatedProducts = getRelatedProducts(this.product.id, 3)
+      this.relatedLoading = false
+      
+      this.$nextTick(() => {
+        if (window.App && window.App.lazyLoader) {
+          window.App.lazyLoader.scan()
+        }
+      })
     },
     
     async preloadMainImage() {
@@ -398,14 +419,6 @@ export default {
         this.currentImageIndex = index
         this.imageTransitioning = false
       }
-    },
-    
-    loadRelatedProductsDebounced() {
-      if (this.relatedTimeout) clearTimeout(this.relatedTimeout)
-      
-      this.relatedTimeout = setTimeout(() => {
-        this.relatedProducts = getRelatedProducts(this.product.id, 3)
-      }, 200)
     },
     
     getRelatedLink(related) {
@@ -516,7 +529,7 @@ export default {
     },
     
     handleRelatedImageLoad(related) {
-      this.$set(this.relatedImagesLoaded, related.id, true)
+      this.relatedImagesLoaded[related.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')
@@ -534,7 +547,7 @@ export default {
     },
     
     handleRelatedImageError(related) {
-      this.$set(this.relatedImagesLoaded, related.id, true)
+      this.relatedImagesLoaded[related.id] = true
       const cards = this.$el.querySelectorAll('.related-product-card')
       cards.forEach(card => {
         const img = card.querySelector('img')

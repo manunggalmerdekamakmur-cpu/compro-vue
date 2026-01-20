@@ -2,9 +2,9 @@
   <ProductDetail
     :product="product"
     :product-stats="productStats"
-    :specs-title="'Spesifikasi Produk'"
-    :features-title="'Keunggulan'"
-    :benefits-title="'Manfaat'"
+    :specs-title="'Deskripsi POC PTORCA'"
+    :features-title="'Spesifikasi POC PTORCA'"
+    :benefits-title="'Manfaat POC PTORCA'"
     :breadcrumb-parent="{ name: 'Pupuk Organik Cair', to: '/#products' }"
   />
 </template>

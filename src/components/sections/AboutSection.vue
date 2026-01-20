@@ -13,7 +13,7 @@
           <p>Melalui inovasi berkelanjutan, perusahaan hadir sebagai mitra strategis petani dan pelaku agrobisnis dalam meningkatkan produktivitas dan mendukung kemajuan pertanian nasional secara berkelanjutan.</p>
         </div>
         <div class="about-image">
-          <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808498/menyemprot_tlcghj.webp" alt="Lahan Pertanian" loading="lazy" />
+          <img src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890938/menyemprot_tlcghj_20_mm1irt.webp" alt="Lahan Pertanian" loading="lazy" />
         </div>
       </div>
     </div>

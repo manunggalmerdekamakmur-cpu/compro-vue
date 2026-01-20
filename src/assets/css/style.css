@@ -874,6 +874,11 @@ header.scrolled .nav-link {
     max-width: 80%;
 }
 
+.product-header {
+    position: relative;
+    padding-right: 5rem; 
+}
+
 .badge-coming {
     background: var(--warning);
     color: var(--dark);
@@ -1564,7 +1569,6 @@ img.image-loading {
 }
 
 .product-img img.loaded,
-.related-product-img img.loaded,
 .modal-thumbnail img.loaded {
     opacity: 1;
 }

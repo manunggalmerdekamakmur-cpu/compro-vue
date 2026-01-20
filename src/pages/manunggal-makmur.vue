@@ -2,9 +2,9 @@
   <ProductDetail
     :product="product"
     :product-stats="productStats"
-    :specs-title="'Spesifikasi Produk'"
-    :features-title="'Keunggulan'"
-    :benefits-title="'Manfaat'"
+    :specs-title="'Deskripsi POR Manunggal Makmur'"
+    :features-title="'Spesifikasi POR Manunggal Makmur'"
+    :benefits-title="'Manfaat POR Manunggal Makmur'"
     :breadcrumb-parent="{ name: 'Pupuk Organik', to: '/#products' }"
   />
 </template>
