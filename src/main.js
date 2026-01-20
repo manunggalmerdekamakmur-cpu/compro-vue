@@ -112,30 +112,6 @@ const preloadImages = (urls) => {
   )
 }
 
-// Service Worker Registration
-const registerServiceWorker = async () => {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register('/service-worker.js', {
-        scope: '/'
-      })
-      
-      console.log('Service Worker registered with scope:', registration.scope)
-      
-      // Check for updates setiap jam
-      setInterval(() => {
-        registration.update()
-      }, 60 * 60 * 1000)
-      
-      return registration
-    } catch (error) {
-      console.error('Service Worker registration failed:', error)
-      return null
-    }
-  }
-  return null
-}
-
 const waitForCriticalCSS = () => {
   return new Promise((resolve) => {
     if (document.readyState === 'complete') return resolve()
@@ -218,12 +194,6 @@ const initApp = async () => {
     await router.isReady()
 
     app.mount('#app')
-
-    // REGISTER SERVICE WORKER SETELAH APP MOUNTED
-    // Gunakan import.meta.env.PROD untuk cek environment di Vite
-    if (import.meta.env.PROD) {
-      registerServiceWorker()
-    }
 
     setTimeout(() => {
       if (window.App && window.App.afterVueMount) {

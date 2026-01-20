@@ -21,28 +21,28 @@ export default defineConfig({
     minify: 'terser',
     cssMinify: true,
     
-    // Tambahkan manifest untuk cache busting
-    manifest: true,
-    
     rollupOptions: {
       output: {
-        // Tambahkan hash untuk semua file aset
-        entryFileNames: `assets/js/[name]-[hash].js`,
-        chunkFileNames: `assets/js/[name]-[hash].js`,
+        // Gunakan content hash untuk cache busting yang lebih baik
+        entryFileNames: `assets/js/[name].[hash:8].js`,
+        chunkFileNames: `assets/js/[name].[hash:8].js`,
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.')
-          const ext = info[info.length - 1]
+          const extType = assetInfo.name.split('.').pop()
           
           if (/\.(css)$/.test(assetInfo.name)) {
-            return `assets/css/[name]-[hash].[ext]`
+            return `assets/css/[name].[hash:8].[ext]`
           }
-          if (/\.(woff|woff2|eot|ttf|otf)$/.test(assetInfo.name)) {
-            return `assets/fonts/[name]-[hash].[ext]`
-          }
-          return `assets/[ext]/[name]-[hash].[ext]`
+          
+          return `assets/[ext]/[name].[hash:8].[ext]`
         }
       }
-    }
+    },
+    
+    // Generate manifest untuk versioning
+    manifest: true,
+    
+    // Tambahkan sourcemap untuk debugging
+    sourcemap: false
   },
   
   css: {
