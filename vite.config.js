@@ -23,26 +23,15 @@ export default defineConfig({
     
     rollupOptions: {
       output: {
-        // Gunakan content hash untuk cache busting yang lebih baik
-        entryFileNames: `assets/js/[name].[hash:8].js`,
-        chunkFileNames: `assets/js/[name].[hash:8].js`,
         assetFileNames: (assetInfo) => {
-          const extType = assetInfo.name.split('.').pop()
-          
-          if (/\.(css)$/.test(assetInfo.name)) {
-            return `assets/css/[name].[hash:8].[ext]`
+          const ext = assetInfo.name.split('.').pop()
+          if (['css'].includes(ext)) {
+            return `assets/css/[name]-[hash].${ext}`
           }
-          
-          return `assets/[ext]/[name].[hash:8].[ext]`
+          return `assets/[ext]/[name]-[hash].[ext]`
         }
       }
-    },
-    
-    // Generate manifest untuk versioning
-    manifest: true,
-    
-    // Tambahkan sourcemap untuk debugging
-    sourcemap: false
+    }
   },
   
   css: {

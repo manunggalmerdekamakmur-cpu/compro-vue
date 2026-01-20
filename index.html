@@ -8,20 +8,18 @@
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
 
-  <!-- Meta tags untuk cache control yang lebih agresif -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
-  
-  <!-- Preload hanya untuk aset kritis -->
+  <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 
 <body class="loading">
@@ -32,55 +30,26 @@
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
-  <!-- Script untuk clear cache dan force reload -->
-  <script>
-    // Version berdasarkan timestamp atau commit hash
-    const APP_VERSION = '1.0.1'; // GANTI INI SETIAP DEPLOY!
-    
-    // Unregister semua service worker yang ada
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) {
-          registration.unregister();
-        }
-      });
-    }
-    
-    // Clear semua cache
-    if ('caches' in window) {
-      caches.keys().then(function(cacheNames) {
-        cacheNames.forEach(function(cacheName) {
-          caches.delete(cacheName);
-        });
-      });
-    }
-    
-    // Force reload jika versi berubah
-    const savedVersion = localStorage.getItem('appVersion');
-    if (savedVersion !== APP_VERSION) {
-      // Clear semua storage
-      localStorage.clear();
-      sessionStorage.clear();
-      indexedDB.databases?.().then(dbs => {
-        dbs.forEach(db => indexedDB.deleteDatabase(db.name));
-      });
-      
-      // Set versi baru
-      localStorage.setItem('appVersion', APP_VERSION);
-      localStorage.setItem('lastDeploy', Date.now().toString());
-      
-      // Force hard reload untuk semua pengguna
-      window.location.reload();
-    }
-    
-    if (window.location.hostname.includes('vercel.app')) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 5 * 60 * 1000); // 5 menit
-    }
-  </script>
-
-  <!-- Vite akan otomatis mengganti ini dengan file yang benar -->
+  <!-- <script src="/src/main.js" type="module" defer></script> -->
   <script type="module" src="/src/main.js"></script>
+
+  
+  <script>
+    const lcpObserver = new PerformanceObserver((entryList) => {
+      const entries = entryList.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      console.log('LCP:', lastEntry.startTime);
+    });
+    lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+    const clsObserver = new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (!entry.hadRecentInput) {
+          console.log('CLS:', entry.value);
+        }
+      }
+    });
+    clsObserver.observe({ type: 'layout-shift', buffered: true });
+  </script>
 </body>
 </html>
