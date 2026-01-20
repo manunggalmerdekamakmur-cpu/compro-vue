@@ -7,9 +7,7 @@
       </div>
       
       <div class="feedback-container">
-        <!-- Feedback Cards dalam grid 2x2 -->
         <div class="feedback-cards">
-          <!-- Baris 1: Kolom 1 dan 2 -->
           <div class="feedback-card">
             <div class="feedback-header">
               <div class="customer-info">
@@ -62,7 +60,6 @@
             </div>
           </div>
           
-          <!-- Baris 2: Kolom 1 dan 2 -->
           <div class="feedback-card">
             <div class="feedback-header">
               <div class="customer-info">

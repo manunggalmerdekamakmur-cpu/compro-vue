@@ -1,6 +1,5 @@
 <template>
   <section id="media" class="section-bg">
-    <!-- Background full width container -->
     <div class="section-bg-inner">
       <div class="container">
         <h2 class="section-title">Launching Triobionik</h2>
@@ -30,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <div v-if="activeVideo" class="modal-overlay" @click.self="closePlayer">
       <div class="modal-content">
         <button class="modal-close" @click="closePlayer">✕</button>

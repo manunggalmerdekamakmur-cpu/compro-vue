@@ -8,93 +8,10 @@
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
 
-  <!-- Preconnect untuk CDN -->
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  
-  <!-- Critical CSS Inline -->
-  <style>
-    /* Critical CSS - minimal untuk above-the-fold */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { 
-      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-      overflow-x: hidden; 
-      background: #ffffff;
-    }
-    
-    /* Loading overlay */
-    #app-loading {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
-    }
-    
-    .css-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(26, 125, 62, 0.1);
-      border-radius: 50%;
-      border-top-color: #1a7d3e;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .loading-text {
-      color: #1a7d3e;
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-top: 1rem;
-    }
-    
-    /* Container untuk mencegah layout shift */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    
-    /* Skeleton loading untuk images */
-    .skeleton {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-    }
-    
-    @keyframes loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-  </style>
 
-  <!-- Non-critical CSS (load async) -->
-  <link rel="preload" href="/assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="/assets/css/product.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/product.css">
-  </noscript>
-
-  <!-- Font Awesome (async) -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
-  
-  <!-- Preload hanya gambar kritis untuk above-the-fold -->
   <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp" type="image/webp" fetchpriority="high">
 </head>
@@ -102,19 +19,14 @@
 <body class="loading">
   <div id="app"></div>
 
-  <!-- Loading overlay -->
   <div id="app-loading">
     <div class="css-spinner"></div>
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
-  <!-- Scripts - defer semua -->
-  <script src="/assets/js/app.js" defer></script>
   <script src="/src/main.js" type="module" defer></script>
   
-  <!-- Performance monitoring -->
   <script>
-    // Track LCP
     const lcpObserver = new PerformanceObserver((entryList) => {
       const entries = entryList.getEntries();
       const lastEntry = entries[entries.length - 1];
@@ -122,7 +34,6 @@
     });
     lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
-    // Track CLS
     const clsObserver = new PerformanceObserver((entryList) => {
       for (const entry of entryList.getEntries()) {
         if (!entry.hadRecentInput) {

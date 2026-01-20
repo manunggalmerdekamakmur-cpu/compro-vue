@@ -1,6 +1,10 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
+import './assets/css/style.css'
+import './assets/css/product.css'
+import './assets/js/app.js'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const routes = [
   { 

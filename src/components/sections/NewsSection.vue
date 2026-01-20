@@ -1,6 +1,5 @@
 <template>
   <section id="news" class="section-bg">
-    <!-- Background full width container -->
     <div class="section-bg-inner">
       <div class="container">
         <h2 class="section-title">Berita Terbaru</h2>
