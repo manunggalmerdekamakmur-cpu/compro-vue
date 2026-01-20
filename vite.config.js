@@ -21,8 +21,13 @@ export default defineConfig({
     minify: 'terser',
     cssMinify: true,
     
+    chunkSizeWarningLimit: 1600,
+    
     rollupOptions: {
       output: {
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        
         assetFileNames: (assetInfo) => {
           const ext = assetInfo.name.split('.').pop()
           if (['css'].includes(ext)) {
