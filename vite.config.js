@@ -21,17 +21,23 @@ export default defineConfig({
     minify: 'terser',
     cssMinify: true,
     
-    chunkSizeWarningLimit: 1600,
+    // Tambahkan manifest untuk cache busting
+    manifest: true,
     
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        
+        // Tambahkan hash untuk semua file aset
+        entryFileNames: `assets/js/[name]-[hash].js`,
+        chunkFileNames: `assets/js/[name]-[hash].js`,
         assetFileNames: (assetInfo) => {
-          const ext = assetInfo.name.split('.').pop()
-          if (['css'].includes(ext)) {
-            return `assets/css/[name]-[hash].${ext}`
+          const info = assetInfo.name.split('.')
+          const ext = info[info.length - 1]
+          
+          if (/\.(css)$/.test(assetInfo.name)) {
+            return `assets/css/[name]-[hash].[ext]`
+          }
+          if (/\.(woff|woff2|eot|ttf|otf)$/.test(assetInfo.name)) {
+            return `assets/fonts/[name]-[hash].[ext]`
           }
           return `assets/[ext]/[name]-[hash].[ext]`
         }
