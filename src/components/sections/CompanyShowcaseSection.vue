@@ -69,17 +69,17 @@ export default {
       counters: [
         {
           key: "Pupuk Hayati Cair Manunggal Lestari",
-          value: 125000,
+          value: 125865,
           unit: "Liter"
         },
         {
           key: "Pupuk Hayati Cair Manunggal Lestari Dekomposer",
-          value: 85000,
+          value: 85375,
           unit: "Liter"
         },
         {
           key: "Pupuk Hayati Padat Triobionik",
-          value: 2700,
+          value: 2794,
           unit: "Kg"
         },
         {
