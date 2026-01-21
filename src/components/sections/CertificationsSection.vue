@@ -1,5 +1,5 @@
 <template>
-  <section class="certifications section-bg" id="certifications">
+  <section class="certifications section-bg no-gap-section" id="certifications">
     <div class="container">
       <div class="section-title">
         <h2>Sertifikasi & Legalitas</h2>
