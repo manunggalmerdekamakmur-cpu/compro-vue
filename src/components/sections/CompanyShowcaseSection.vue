@@ -24,13 +24,28 @@
 
       <div class="counters-grid">
         <div v-for="(counter, index) in counters" :key="index" class="counter-card">
-          <p class="counter-label"><strong>{{ counter.key }}</strong></p>
-          <div class="counter-number">
-            <span :class="{ 'coming-soon': displayedCounts[index] === 'Coming Soon' }">
-              {{ formatNumber(displayedCounts[index]) }}
-            </span>
-          </div>
-          <div class="counter-unit">{{ counter.unit }}</div>
+          <template v-if="!hasAnimated">
+            <p class="counter-label skeleton-label" :style="{ width: counter.isComingSoon ? '60%' : '90%' }">
+              <strong>{{ counter.key }}</strong>
+            </p>
+            <div class="counter-number skeleton-number" :style="{ width: counter.isComingSoon ? '40%' : '70%' }">
+              <span :class="{ 'coming-soon': counter.isComingSoon }">
+                {{ counter.isComingSoon ? 'Coming Soon' : '0' }}
+              </span>
+            </div>
+            <div class="counter-unit skeleton-unit" :style="{ width: counter.unit ? '30%' : '0' }">
+              {{ counter.unit }}
+            </div>
+          </template>
+          <template v-else>
+            <p class="counter-label"><strong>{{ counter.key }}</strong></p>
+            <div class="counter-number">
+              <span :class="{ 'coming-soon': displayedCounts[index] === 'Coming Soon' }">
+                {{ formatNumber(displayedCounts[index]) }}
+              </span>
+            </div>
+            <div class="counter-unit">{{ counter.unit }}</div>
+          </template>
         </div>
       </div>
     </div>
@@ -70,30 +85,35 @@ export default {
         {
           key: "Pupuk Hayati Cair Manunggal Lestari",
           value: 125865,
-          unit: "Liter"
+          unit: "Liter",
+          isComingSoon: false
         },
         {
           key: "Pupuk Hayati Cair Manunggal Lestari Dekomposer",
           value: 85375,
-          unit: "Liter"
+          unit: "Liter",
+          isComingSoon: false
         },
         {
           key: "Pupuk Hayati Padat Triobionik",
           value: 2794,
-          unit: "Kg"
+          unit: "Kg",
+          isComingSoon: false
         },
         {
           key: "Pupuk Organik Remah Manunggal Makmur",
           value: "Coming Soon",
-          unit: ""
+          unit: "",
+          isComingSoon: true
         },
         {
           key: "Pupuk Organik Cair PTORCA",
           value: "Coming Soon",
-          unit: ""
+          unit: "",
+          isComingSoon: true
         }
       ],
-      displayedCounts: [0, 0, 0, 0, 0, 0],
+      displayedCounts: ["0", "0", "0", "Coming Soon", "Coming Soon"],
       hasAnimated: false
     }
   },

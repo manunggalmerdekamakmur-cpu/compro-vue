@@ -78,43 +78,48 @@
     
     observe(img) {
       if (!img || !img.dataset.src || this.loadedImages.has(img)) return
-      
+
+      if (img.src && !img.src.startsWith('data:') && img.src !== this.getPlaceholderSrc()) {
+        this.loadedImages.add(img)
+        return
+      }
+
       if (this.pendingImages.has(img)) return
-      
+
       this.pendingImages.set(img, true)
       img.classList.add('image-loading')
-      
+
       const parent = img.parentElement
       if (parent && !img.style.minHeight) {
         const height = parent.offsetHeight || 200
         img.style.minHeight = `${height}px`
       }
-      
+
       const placeholder = parent?.querySelector('.image-placeholder')
       if (placeholder) {
         placeholder.style.display = 'flex'
       }
-      
-      if (!img.src || img.src.startsWith('data:')) {
-        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect fill="%23f5f5f5" width="300" height="200"/%3E%3C/svg%3E'
-      }
-      
+
       const rect = img.getBoundingClientRect()
       const viewportHeight = window.innerHeight
-      
+
       if (rect.top < viewportHeight + 300) {
         requestAnimationFrame(() => this.loadImage(img))
       } else {
         this.observer.observe(img)
       }
     }
+
+    getPlaceholderSrc() {
+      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect fill="%23f5f5f5" width="300" height="200"/%3E%3C/svg%3E'
+    }
     
     loadImage(img) {
       if (!img.dataset.src || this.loadedImages.has(img)) return
-      
+
       const src = img.dataset.src
       const loader = new Image()
-      
+
       loader.onload = () => {
         requestAnimationFrame(() => {
           img.src = src
@@ -125,7 +130,7 @@
           this.loadedImages.add(img)
           this.pendingImages.delete(img)
           this.observer.unobserve(img)
-          
+
           const placeholder = img.parentElement?.querySelector('.image-placeholder')
           if (placeholder) {
             placeholder.style.opacity = '0'
@@ -135,20 +140,40 @@
           }
         })
       }
-      
+
       loader.onerror = () => {
-        img.classList.remove('image-loading')
-        img.classList.add('image-error')
-        img.style.minHeight = ''
-        this.pendingImages.delete(img)
-        this.observer.unobserve(img)
-        
-        const placeholder = img.parentElement?.querySelector('.image-placeholder')
-        if (placeholder) {
-          placeholder.innerHTML = '<div style="color:#999;font-size:14px;">⚠️ Gagal memuat</div>'
+        const cloudinaryFetch = `https://res.cloudinary.com/dz1zcobkz/image/fetch/w_300,h_200,c_fill,q_auto,f_auto/${encodeURIComponent(src)}`
+
+        const fallbackLoader = new Image()
+        fallbackLoader.onload = () => {
+          img.src = cloudinaryFetch
+          img.removeAttribute('data-src')
+          img.classList.remove('image-loading')
+          img.classList.add('image-loaded')
+          img.style.minHeight = ''
+          this.loadedImages.add(img)
+          this.pendingImages.delete(img)
+          this.observer.unobserve(img)
         }
+
+        fallbackLoader.onerror = () => {
+          img.src = this.getPlaceholderSrc()
+          img.removeAttribute('data-src')
+          img.classList.remove('image-loading')
+          img.classList.add('image-error')
+          img.style.minHeight = ''
+          this.pendingImages.delete(img)
+          this.observer.unobserve(img)
+
+          const placeholder = img.parentElement?.querySelector('.image-placeholder')
+          if (placeholder) {
+            placeholder.innerHTML = '<div style="color:#999;font-size:14px;padding:1rem;">Gambar tidak tersedia</div>'
+          }
+        }
+
+        fallbackLoader.src = cloudinaryFetch
       }
-      
+
       loader.src = src
     }
     
@@ -374,10 +399,24 @@
     }
     
     afterVueMount() {
+      requestAnimationFrame(() => {
+        document.querySelector('.loading-layer')?.remove()
+      })
+
+      requestAnimationFrame(() => {
+        document
+          .querySelectorAll('.skeleton-header, .skeleton-main')
+          .forEach(el => el.classList.remove(
+            el.classList.contains('skeleton-header')
+              ? 'skeleton-header'
+              : 'skeleton-main'
+          ))
+      })
+
       setTimeout(() => {
         this.scrollManager.restorePosition()
       }, 100)
-      
+
       this.setupVueLazyLoading()
     }
     

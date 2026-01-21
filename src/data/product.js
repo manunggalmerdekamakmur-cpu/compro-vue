@@ -80,7 +80,7 @@ export const productData = {
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808344/phc-manunggal-lestari-dekomposer_t3uwbi.webp',
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768980119/phc-manunggal-lestari-1lbiru_fppxfu_50_kbftls.webp'
     ],
-    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
+    brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768982019/manunggal-lestari-biru_norx4e.pdf',
     badge: 'Berizin',
     certificate: '03.03.2025.89',
     status: 'approved'
@@ -428,19 +428,26 @@ export const productData = {
   'manunggal-makmur': {
     id: 'manunggal-makmur',
     title: 'Pupuk Organik Remah Manunggal Makmur',
-    description: 'Pupuk organik remah untuk pertanian berkelanjutan.',
+    description: 'pupuk berbahan dasar material organik yang telah terdekomposisi dan berbentuk remah, berfungsi untuk memperbaiki kesuburan dan struktur tanah, meningkatkan daya serap unsur hara, serta mendukung pertumbuhan dan hasil tanaman secara berkelanjutan.',
     specs: [
-      'Kemasan: 5kg, 25kg, 40kg, 50kg',
-      'Bentuk: Remah/granul',
-      'Bahan: Organik 100%',
-      'pH: 6.5 - 7.5',
-      'Kandungan bahan organik: ≥ 40%'
+      'Nomor Pendaftaran : - ',
+      'Bentuk Formula : Padat (Remah)',
+      'Warna : Coklat kehitaman ',
+      'Ukuran Kemasan : 5kg, 10kg, 25, kg, 40kg dan 50kg ',
+      'No. Sertifikasi Organik : -',
+      'Nilai TKDN : - ',
+      'Aplikasi: Dibenamkan Dalam Tanah Atau Ditabur'
     ],
     features: [
-      'Menyuburkan tanah secara alami',
-      'Meningkatkan kandungan organik tanah',
-      'Ramah lingkungan dan berkelanjutan',
-      'Cocok untuk semua jenis tanaman'
+      '• C organik: 15,57 % ',
+      '• C/N: 14,03 ',
+      '• Fe total: 5002,37 ppm ',
+      '• Fe tersedia : 475 ppm ',
+      '• Zn: 3500,26 ppm ',
+      '• Total N: 1,11 % ',
+      '• K₂O: 3,17 % ',
+      '• P₂O₅: 0,70 % ',
+      '• pH: 5,9'
     ],
     benefits: [
       '1. Mempertahankan Kesuburan Tanah',
@@ -464,18 +471,29 @@ export const productData = {
   'ptorca': {
     id: 'ptorca',
     title: 'Pupuk Organik Cair PTORCA',
-    description: 'Pupuk organik cair untuk tanaman pangan dan hortikultura.',
+    description: 'pupuk berkualitas yang di formulasi dari hasil fermentasi dari bahan-bahan organik pilihan, mengandung C organik, Asam amino kompleks, unsur hara makro dan mikro esensial.',
     specs: [
-      'Kemasan: 500ml, 1L, 5L',
-      'Kandungan: Nutrisi organik lengkap',
-      'pH: 5.5 - 7.0',
-      'Kandungan bahan organik: ≥ 15%'
+      'Nomor Pendaftaran : - ',
+      'Bentuk Formula : Cair (Liquid) ',
+      'Warna : Coklat kehitaman ',
+      'Ukuran Kemasan : 250ml, 500ml, 1 liter, 2 liter, 5 liter, 10 liter, 20 liter',
+      'No. Sertifikasi Organik : -',
+      'Nilai TKDN : - ',
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     features: [
-      'Mudah diserap oleh tanaman',
-      'Mengandung nutrisi lengkap',
-      'Ramah lingkungan',
-      'Aplikasi praktis dan efisien'
+      '• C-Organik : 10,85 % ',
+      '• Nitrogen : 1,34 % ',
+      '• P2O5 : 0,05 % ',
+      '• K2O : 2,77 % ',
+      '• N-Organik : 0,77% ',
+      '• pH : 4,7 ',
+      '• Fe-Total : 780,33 ppm ',
+      '• Mn-Total : 427,26 ppm ',
+      '• Cu-Total : 396,32 ppm ',
+      '• Zn-Total : 331,29 ppm ',
+      '• B-Total : 175,32 ppm ',
+      '• Mo-Total : 7,29 ppm '
     ],
     benefits: [
       '1. Mampu menyuburkan Tanah, dalam waktu jangka panjang dan membangkitkan unsur hara tanah.',

@@ -14,11 +14,12 @@ const routes = [
       title: 'Beranda',
       layout: true,
       preloadImages: [
-        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890938/menyemprot_tlcghj_20_mm1irt.webp',
+        'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768890938/menyecut_20_mm1irt.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
         'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp'
-      ]
+      ],
+      priority: 'high'
     }
   },
   { 
@@ -26,7 +27,8 @@ const routes = [
     component: () => import('./pages/triobionik-list.vue'),
     meta: { 
       title: 'Triobionik',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -34,7 +36,8 @@ const routes = [
     component: () => import('./pages/triobionik-detail.vue'),
     meta: { 
       title: 'Detail Triobionik',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -42,7 +45,8 @@ const routes = [
     component: () => import('./pages/manunggal-lestari.vue'),
     meta: { 
       title: 'Manunggal Lestari',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -50,7 +54,8 @@ const routes = [
     component: () => import('./pages/manunggal-lestari-dekomposer.vue'),
     meta: { 
       title: 'Manunggal Lestari Dekomposer',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -58,7 +63,8 @@ const routes = [
     component: () => import('./pages/manunggal-makmur.vue'),
     meta: { 
       title: 'Manunggal Makmur',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -66,7 +72,8 @@ const routes = [
     component: () => import('./pages/ptorca.vue'),
     meta: { 
       title: 'PTORCA',
-      layout: true
+      layout: true,
+      priority: 'low'
     }
   },
   { 
@@ -79,25 +86,40 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (savedPosition) {
-          resolve(savedPosition)
-        } else if (to.hash) {
-          resolve({ 
-            el: to.hash, 
-            behavior: 'smooth', 
-            top: 80 
-          })
-        } else {
-          resolve({ top: 0, behavior: 'smooth' })
-        }
-      }, 100)
-    })
+    if (savedPosition) {
+      return savedPosition
+    }
+    if (to.hash) {
+      return { 
+        el: to.hash, 
+        behavior: 'smooth', 
+        top: 80 
+      }
+    }
+    return { top: 0, behavior: 'smooth' }
   }
 })
 
-const preloadImages = (urls) => {
+const preloadImages = (urls, priority = 'low') => {
+  if (priority === 'low') {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        Promise.all(
+          urls.map(url => {
+            if (!url) return Promise.resolve()
+            return new Promise(resolve => {
+              const img = new Image()
+              img.onload = resolve
+              img.onerror = resolve
+              img.src = url
+              setTimeout(resolve, 800)
+            })
+          })
+        ).then(resolve)
+      }, 500)
+    })
+  }
+  
   return Promise.all(
     urls.map(url => {
       return new Promise((resolve) => {
@@ -117,22 +139,77 @@ const waitForCriticalCSS = () => {
     if (document.readyState === 'complete') return resolve()
     
     const checkCSS = () => {
-      const stylesheets = Array.from(document.styleSheets)
-      const loaded = stylesheets.every(sheet => {
+      const criticalSheets = ['style.css', 'product.css']
+      const loaded = Array.from(document.styleSheets).every(sheet => {
         try {
-          return sheet.cssRules || sheet.rules
+          // Check if critical stylesheets are loaded
+          const href = sheet.href || ''
+          return criticalSheets.some(name => href.includes(name)) 
+            ? (sheet.cssRules || sheet.rules)
+            : true
         } catch {
-          return false
+          return true
         }
       })
-      if (loaded || stylesheets.length === 0) {
+      if (loaded) {
         resolve()
       } else {
-        setTimeout(checkCSS, 50)
+        setTimeout(checkCSS, 20)
       }
     }
     checkCSS()
   })
+}
+
+const hideLoadingScreen = () => {
+  const loadingEl = document.getElementById('app-loading')
+  if (loadingEl) {
+    loadingEl.style.opacity = '0'
+    loadingEl.style.pointerEvents = 'none'
+    loadingEl.style.transition = 'opacity 300ms ease-out'
+    setTimeout(() => {
+      loadingEl.style.display = 'none'
+    }, 300)
+  }
+  document.body.classList.remove('loading')
+  document.body.classList.add('loaded')
+}
+
+const initLazyLoader = () => {
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target
+          if (img.dataset.src) {
+            img.src = img.dataset.src
+            img.removeAttribute('data-src')
+            img.classList.add('image-loaded')
+          }
+          observer.unobserve(img)
+        }
+      })
+    }, {
+      rootMargin: '50px 0px',
+      threshold: 0.01
+    })
+
+    const lazyImages = document.querySelectorAll('img[data-src]')
+    lazyImages.forEach(img => imageObserver.observe(img))
+    
+    window.App = window.App || {}
+    window.App.lazyLoader = {
+      observe: (el) => {
+        if (el.tagName === 'IMG') {
+          imageObserver.observe(el)
+        }
+      },
+      scan: () => {
+        const newImages = document.querySelectorAll('img[data-src]')
+        newImages.forEach(img => imageObserver.observe(img))
+      }
+    }
+  }
 }
 
 router.beforeEach((to, from, next) => {
@@ -140,7 +217,7 @@ router.beforeEach((to, from, next) => {
   document.title = `${title} - PT. Manunggal Merdeka Makmur`
   
   const loadingEl = document.getElementById('app-loading')
-  if (loadingEl && from.name !== to.name) {
+  if (loadingEl && from.name !== null && to.name !== from.name) {
     loadingEl.style.display = 'flex'
     loadingEl.style.opacity = '1'
   }
@@ -149,11 +226,18 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(() => {
-  setTimeout(() => {
+  const schedule = window.requestIdleCallback || function(cb) {
+    return setTimeout(cb, 100)
+  }
+  
+  schedule(() => {
     if (window.App && window.App.lazyLoader) {
       window.App.lazyLoader.scan()
     }
-  }, 200)
+    
+    schedule(() => {
+    }, 500)
+  })
 })
 
 const initApp = async () => {
@@ -173,9 +257,10 @@ const initApp = async () => {
 
     const currentRoute = router.currentRoute.value
     if (currentRoute.meta?.preloadImages) {
+      const priority = currentRoute.meta.priority || 'low'
       await Promise.race([
-        preloadImages(currentRoute.meta.preloadImages),
-        new Promise(resolve => setTimeout(resolve, 1000))
+        preloadImages(currentRoute.meta.preloadImages, priority),
+        new Promise(resolve => setTimeout(resolve, 800))
       ])
     }
 
@@ -194,31 +279,23 @@ const initApp = async () => {
     await router.isReady()
 
     app.mount('#app')
+    
+    initLazyLoader()
 
     setTimeout(() => {
-      if (window.App && window.App.afterVueMount) {
-        window.App.afterVueMount()
-      }
-
-      document.body.classList.remove('loading')
-      if (loadingEl) {
-        loadingEl.style.opacity = '0'
-        loadingEl.style.pointerEvents = 'none'
-        setTimeout(() => {
-          loadingEl.style.display = 'none'
-        }, 500)
-      }
+      hideLoadingScreen()
       
       setTimeout(() => {
         if (window.App && window.App.lazyLoader) {
           window.App.lazyLoader.scan()
         }
-      }, 150)
-      
-    }, 300)
+      }, 100)
+    }, 100)
 
   } catch (error) {
     console.error('App initialization failed:', error)
+    setTimeout(hideLoadingScreen, 500)
+    
     if (loadingEl) {
       loadingEl.innerHTML = `
         <div style="text-align:center;padding:2rem;color:#666;">
@@ -243,3 +320,15 @@ if (document.readyState === 'loading') {
 } else {
   initApp()
 }
+
+if ('fonts' in document) {
+  document.fonts.ready.then(() => {
+    document.documentElement.classList.add('fonts-loaded')
+  })
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+  }
+})
+

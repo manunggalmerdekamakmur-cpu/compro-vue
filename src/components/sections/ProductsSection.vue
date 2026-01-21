@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      
+
       <div v-else class="products-grid">
         <router-link 
           v-for="product in visibleProducts" 
@@ -38,17 +38,15 @@
           class="product-card"
         >
           <div class="product-img">
-            <div class="image-placeholder">
-              <div class="image-spinner"></div>
-            </div>
             <img 
-              :src="getPlaceholder()" 
-              :data-src="getProductImage(product)" 
+              :src="getPlaceholder()"
+              :data-src="getProductImage(product)"
               :alt="product.title" 
               width="300"
               height="200"
               loading="lazy"
               decoding="async"
+              class="lazy-img"
             />
             <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
               {{ product.badge }}

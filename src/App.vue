@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Header v-if="showLayout" />
-    <div v-if="showLayout" class="header-spacer"></div>
+    <Header :class="{ hidden: !showLayout }" />
+    <div class="header-spacer" aria-hidden="true"></div>
     
       <main id="main-content" class="bg-gray-50 min-h-screen">
       <router-view v-slot="{ Component, route }">
-        <transition name="fade" mode="out-in" @before-enter="beforeEnter" @after-leave="afterLeave">
+        <transition name="fade" @before-enter="beforeEnter" @after-leave="afterLeave">
           <component :is="Component" :key="route.fullPath" />
         </transition>
       </router-view>
     </main>
     
-    <Footer v-if="showLayout" />
+    <Footer :class="{ hidden: !showLayout }" />
     
     <button
       v-if="showLayout"
@@ -94,14 +94,7 @@ export default {
       document.documentElement.style.setProperty('--vh', `${vh}px`)
     },
     
-    beforeEnter() {
-      document.body.style.minHeight = `${document.body.scrollHeight}px`
-    },
-    
     afterLeave() {
-      this.scrollTimer = setTimeout(() => {
-        document.body.style.minHeight = ''
-      }, 50)
     }
   }
 }

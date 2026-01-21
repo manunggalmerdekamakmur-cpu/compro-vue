@@ -82,20 +82,20 @@
         <div class="container">
           <div class="product-detail-container">
             <div class="product-images">
-              <div class="main-image-container" @click="openImageModal">
-                <div class="image-placeholder">
-                  <div class="image-spinner"></div>
-                </div>
-                <img 
-                  :src="getPlaceholder()" 
-                  :data-src="currentImage" 
-                  :alt="product.title || product.name" 
-                  class="main-image"
-                  :loading="currentImageIndex === 0 ? 'eager' : 'lazy'"
-                  @load="handleImageLoad"
-                  @error="handleImageError"
-                />
-              </div>
+<div class="main-image-container" @click="openImageModal">
+              <div class="image-placeholder" aria-hidden="true"></div>
+              <img
+                :src="currentImage"            
+                :alt="product.title || product.name"
+                class="main-image"
+                :loading="currentImageIndex === 0 ? 'eager' : 'lazy'"
+                fetchpriority="high"           
+                @load="handleImageLoad"
+                @error="handleImageError"
+                width="900" height="600"        
+                style="aspect-ratio: 3 / 2; width:100%; height:auto; max-height:500px; object-fit:contain; display:block; background:#f5f5f5;"
+              />
+            </div>
               
               <div v-if="product.images && product.images.length > 1" class="thumbnail-gallery">
                 <button 
