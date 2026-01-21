@@ -33,7 +33,7 @@ export const productData = {
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768891067/phc-manunggal-lestari-1l_jisg83_ch9ov2_20_kxkzer.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808171/phc-manunggal-lestari_p9nndd_mxooss.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768979949/phc-manunggal-lestari_p9nndd_mxooss_50_s55npw.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
     badge: 'Berizin',
@@ -78,7 +78,7 @@ export const productData = {
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808344/phc-manunggal-lestari-dekomposer_t3uwbi.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808269/phc-manunggal-lestari-1lbiru_sqexqm.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768980119/phc-manunggal-lestari-1lbiru_fppxfu_50_kbftls.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/manunggal-lestari_rqas2m.pdf',
     badge: 'Berizin',
@@ -487,7 +487,7 @@ export const productData = {
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808410/ptorca-1l_eacqbn_epxtld.webp',
-      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808441/ptorca-5l_mwmwae_urmlof.webp'
+      'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768980284/ptorca-5l_mwmwae_urmlof_50_ufpqmf.webp'
     ],
     brochure: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768803091/ptorca_izeoo5.pdf',
     badge: 'Coming Soon',
