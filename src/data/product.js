@@ -206,15 +206,16 @@ export const productData = {
     name: 'Triobionik Booster Dekomposer',
     title: 'Dekomposer Triobionik 100gr - Booster Dekomposer',
     description:
-      'Dekomposer / agen hayati mengandung beberapa mikroorganisme menguntungkan yang membantu menguraikan bahan organik, mempercepat pembuatan kompos, mengurangi bau pada septic tank, serta membantu mengurangi sedimentasi.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida. .',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
       'Bentuk Formula : Tepung (Powder)',
-      'Warna : Cokelat / Abu-abu',
-      'Ukuran Kemasan : 100 g',
+      'Warna : Hitam',
+      'Ukuran Kemasan : 25 g, 250 g, 500 g, 1000 g, 2.000 g, 5.000 g, 10.000 g, 25.000 g',
       'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
       'Berdasarkan standar SNI 6729:2016',
-      'Aplikasi : Larutkan 5 g (1 sdm) dalam 1 liter air bersih, aduk hingga merata. Inkubasi / diamkan minimal 24 jam untuk aktivasi sebelum aplikasi.'
+      'Nilai TKDN : 50,06% ', 
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     features: [
       '• Azotobacter sp. : 4,5 x 10⁷ CFU/g',
@@ -224,11 +225,10 @@ export const productData = {
       '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
     ],
     benefits: [
-      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan bahan organik dan mineral menjadi unsur unsur sederhana yang mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak',
-      '2. Mengandung bahan yang merangsang nafsu akan pada ikan, unggas dan hewan ternak',
-      '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
-      '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak serta manusia sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak maupun lingkungan Manusia',
-      '5. Dalam septik toilet mampu mengendalikan bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan organik dan mineral menjadi unsur-unsur sederhana ',
+      '2. Mampu mengurai jasad renik dan beberapa virus ',
+      '3. Mampu mengelola sisa-sisa makanan maupun kotoran ikan, unggas dan hewan ternak serta manusia sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak maupun lingkungan manusia.',
+      '4. Dalam septik toilet mampu mengendalikan bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892177/dekomposer_snpwhp_20_xktp7s.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892177/dekomposer_snpwhp_20_xktp7s.webp'],
@@ -250,26 +250,29 @@ export const productData = {
     name: 'Triobionik Booster Septic Tank',
     title: 'Dekomposer Triobionik 100gr - Dekomposer Septic Tank',
     description:
-      'Formulasi mikroba untuk pengelolaan septic tank: membantu menguraikan sisa makanan, kotoran, dan organik sehingga mengurangi bau dan memperkecil sedimentasi di jamban / septic tank.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida. ',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
       'Bentuk Formula : Tepung (Powder)',
-      'Warna : Abu-abu / Cokelat',
-      'Ukuran Kemasan : 100 g',
-      'Aplikasi : Larutkan 5 g dalam 1 liter air lalu aplikasikan ke septic tank sesuai petunjuk'
+      'Warna : Hitam',
+      'Ukuran Kemasan : 25 g, 250 g, 500 g, 1000 g, 2.000 g, 5.000 g, 10.000 g, 25.000 g',
+      'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 50,06%',
+      'Aplikasi : Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     features: [
       '• Azotobacter sp. : 4,5 x 10⁷ CFU/g',
       '• Bacillus subtilis : 2,3 x 10⁷ CFU/g',
       '• Pseudomonas fluorescens : 5,4 x 10⁷ CFU/g',
       '• Streptomyces sp. : 1,9 x 10⁶ CFU/g',
-      '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
+      '• Trichoderma sp. : 1,7 x 10⁶ CFU/g'
     ],
     benefits: [
-      '1. Mengendalikan bau tidak sedap pada jamban/septic tank.',
-      '2. Mengurangi akumulasi padatan dan sedimentasi.',
-      '3. Mengubah bahan organik menjadi gas dan unsur yang lebih aman.',
-      '4. Menjaga ekosistem mikroba alami agar tetap seimbang.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan organik dan mineral menjadi unsur-unsur sederhana.',
+      '2. Mampu mengurai jasad renik dan beberapa virus .',
+      '3. Mampu mengelola sisa-sisa makanan maupun kotoran ikan, unggas dan hewan ternak serta manusia sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak maupun lingkungan manusia.',
+      '4. Dalam septik toilet mampu mengendalikan bau tak sedap dan mampu merubah bahan organik menjadi gas sehingga mengurangi sedimentasi dalam jamban.'
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461388/dekomposer-septic-tank_v3nzfp.webp'],    
@@ -291,26 +294,29 @@ export const productData = {
     name: 'Triobionik Booster Probiotik Ikan',
     title: 'Triobionik 100gr - Booster Probiotik Ikan',
     description:
-      'Probiotik agen hayati untuk ikan dan udang: membantu memperbaiki kualitas air, memperlancar pencernaan ikan, menekan patogen, serta merangsang nafsu makan pada ikan budidaya.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
       'Bentuk Formula : Tepung (Powder)',
-      'Warna : Cokelat kehitaman (serbuk)',
-      'Ukuran Kemasan : 100 g',
-      'Aplikasi : Larutkan 5 g (1 sdm) dalam 1 liter air, diamkan/inkubasi minimal 24 jam lalu siramkan ke kolam atau campurkan ke pakan'
+      'Warna : Hitam ',
+      'Ukuran Kemasan : 25 g, 250 g, 500 g, 1000 g, 2.000 g, 5.000 g, 10.000 g, 25.000 g',
+      'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 50,06% ',
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     features: [
       '• Azotobacter sp. : 4,5 x 10⁷ CFU/g',
       '• Bacillus subtilis : 2,3 x 10⁷ CFU/g',
       '• Pseudomonas fluorescens : 5,4 x 10⁷ CFU/g',
       '• Streptomyces sp. : 1,9 x 10⁶ CFU/g',
-      '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
+      '• Trichoderma sp. : 1,7 x 10⁶ CFU/g'
     ],
     benefits: [
-      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan bahan organik dan mineral menjadi unsur unsur sederhana yang mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak.',
-      '2. Mengadung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
-      '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
-      '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan organik dan mineral menjadi unsur sederhana yang mudah diserap oleh sistem pencernaan ikan.',
+      '2. Mengandung bahan yang merangsang nafsu makan pada ikan.',
+      '3. Mampu mengurangi jasad renik dan beberapa virus yang mengganggu kesehatan ikan.',
+      '4. Mampu mengelola sisa makanan maupun kotoran ikan sehingga memperkecil dampak pada lingkungan hidup ikan.'
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892257/ikan_vclevn_20_yp2ntm.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892257/ikan_vclevn_20_yp2ntm.webp'],    
@@ -373,28 +379,29 @@ export const productData = {
     name: 'Triobionik Booster Probiotik Unggas',
     title: 'Triobionik 100gr - Booster Probiotik Unggas',
     description:
-      'Pupuk hayati padat yang diperkaya mikroba hayati & hormon pertumbuhan. Membantu memperbaiki struktur tanah, menyuplai unsur hara yang mudah diserap tanaman, merangsang penyerapan nutrisi, serta mendukung kesehatan akar dan hasil panen.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
-      'Bentuk Formula : Tepung (Powder) - padat',
-      'Warna : Hitam / Cokelat gelap',
-      'Ukuran Kemasan : 25 g, 100 g, 250 g (varian), 500 g, 1000 g',
+      'Bentuk Formula : Tepung (Powder)',
+      'Warna : Hitam',
+      'Ukuran Kemasan : 25 g, 250 g, 500 g, 1000 g, 2.000 g, 5.000 g, 10.000 g, 25.000 g',
       'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
-      'Aplikasi : Campurkan ke media tanam, larutkan dan semprotkan / siram sesuai dosis tanaman'
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 50,06%',
+      'Aplikasi: Semprot atau siram pada tanah sesuai jenis tanaman dan dosis yang dianjurkan'
     ],
     features: [
       '• Azotobacter sp. : 4,5 x 10⁷ CFU/g',
       '• Bacillus subtilis : 2,3 x 10⁷ CFU/g',
       '• Pseudomonas fluorescens : 5,4 x 10⁷ CFU/g',
       '• Streptomyces sp. : 1,9 x 10⁶ CFU/g',
-      '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
+      '• Trichoderma sp. : 1,7 x 10⁶ CFU/g'
     ],
     benefits: [
-      '1. Memperbaiki struktur tanah sehingga unsur hara lebih mudah diserap.',
-      '2. Membantu proses penyiapan unsur hara bagi tanaman hortikultura.',
-      '3. Menghasilkan hormon dan faktor pertumbuhan yang mendukung vegetatif dan generatif tanaman.',
-      '4. Mengurangi kebutuhan pupuk kimia dan meningkatkan produktivitas hasil panen.',
-      '5. Melindungi tanaman dari beberapa patogen tanah.'
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan organik dan mineral menjadi unsur-unsur sederhana yang mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak.',
+      '2. Mengandung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
+      '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
+      '4. Mampu mengelola sisa-sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892331/unggas_nnlx3d_20_tgjttd.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892331/unggas_nnlx3d_20_tgjttd.webp'],

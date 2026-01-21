@@ -8,10 +8,10 @@
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
 
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="version" content="1.0.4">
+  <meta name="version" content="1.0.5"> 
 
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -35,91 +35,122 @@
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
-  <script type="module" src="/src/main.js"></script>
-
-  
   <script>
     (function() {
-      const VERSION = '1.0.4'; 
+      const VERSION = '1.0.5';
       const TIMESTAMP = Date.now();
+      const BUILD_ID = `${VERSION}-${TIMESTAMP}`;
       
-      console.log('🔧 App Version:', VERSION, 'Build:', TIMESTAMP);
+      console.log('🔥 EXTREME CACHE BUSTING - Version:', VERSION, 'Build ID:', BUILD_ID);
       
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(regs => {
-          regs.forEach(reg => {
-            console.log('🗑️ Unregistering Service Worker:', reg.scope);
-            reg.unregister();
-          });
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          for (const registration of registrations) {
+            registration.unregister();
+          }
         });
       }
       
       if ('caches' in window) {
         caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            console.log('🗑️ Deleting cache:', cacheName);
-            caches.delete(cacheName);
+          cacheNames.forEach(cacheName => caches.delete(cacheName));
+        });
+      }
+      
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      if (window.indexedDB && indexedDB.databases) {
+        indexedDB.databases().then(dbs => {
+          dbs.forEach(db => {
+            if (db.name) indexedDB.deleteDatabase(db.name);
           });
         });
       }
       
-      const savedVersion = localStorage.getItem('app_version');
-      const currentUrl = new URL(window.location.href);
+      localStorage.setItem('app_version', VERSION);
+      localStorage.setItem('build_id', BUILD_ID);
+      localStorage.setItem('last_deploy', TIMESTAMP);
       
-      if (savedVersion !== VERSION) {
-        console.log('🔄 New version detected! Old:', savedVersion, 'New:', VERSION);
-        
-        localStorage.clear();
-        sessionStorage.clear();
-        
-        localStorage.setItem('app_version', VERSION);
-        localStorage.setItem('build_time', TIMESTAMP);
-        
-        if (!currentUrl.searchParams.has('v')) {
-          currentUrl.searchParams.set('v', VERSION);
-          currentUrl.searchParams.set('t', TIMESTAMP);
-          
-          if (!sessionStorage.getItem('redirected')) {
-            sessionStorage.setItem('redirected', 'true');
-            console.log('🔄 Redirecting to:', currentUrl.toString());
-            window.location.href = currentUrl.toString();
-            return;
-          }
-        }
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      
+      params.delete('v');
+      params.delete('t');
+      params.delete('cb');
+      
+      params.set('v', VERSION);
+      params.set('t', TIMESTAMP);
+      params.set('cb', BUILD_ID);
+      params.set('_', Date.now()); 
+      
+      url.search = params.toString();
+      
+      if (!sessionStorage.getItem('cache_bust_redirect')) {
+        sessionStorage.setItem('cache_bust_redirect', 'true');
+        console.log('🔄 FORCE REDIRECTING TO:', url.toString());
+        window.location.replace(url.toString());
+        return; 
       }
       
-      document.addEventListener('DOMContentLoaded', function() {
-        const params = `v=${VERSION}&t=${TIMESTAMP}`;
+      const rewriteResources = () => {
+        const cacheBust = `?v=${VERSION}&t=${TIMESTAMP}&cb=${BUILD_ID}&_=${Date.now()}`;
         
         document.querySelectorAll('script[src]').forEach(script => {
           const src = script.getAttribute('src');
-          if (src && !src.includes('?v=')) {
-            const newSrc = src + (src.includes('?') ? '&' : '?') + params;
-            script.setAttribute('src', newSrc);
+          if (src && src.includes('/src/')) {
+            const newSrc = src + cacheBust;
+            script.src = newSrc;
           }
         });
-      });
+      };
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', rewriteResources);
+      } else {
+        rewriteResources();
+      }
+      
+      setInterval(() => {
+        fetch('/?ping=' + Date.now(), {
+          method: 'HEAD',
+          cache: 'no-store',
+          headers: {
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-cache'
+          }
+        }).then(() => {
+          const storedVersion = localStorage.getItem('app_version');
+          if (storedVersion !== VERSION) {
+            console.log('🔄 UPDATE DETECTED, RELOADING...');
+            window.location.reload();
+          }
+        }).catch(() => {
+        });
+      }, 120000);
     })();
   </script>
 
   <script type="module" src="/src/main.js"></script>
 
   <script>
-    const lcpObserver = new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.startTime);
-    });
-    lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+    if (!window.location.search.includes('cb=')) {
+      const lcpObserver = new PerformanceObserver((entryList) => {
+        const entries = entryList.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        console.log('LCP:', lastEntry.startTime);
+      });
+      lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
-    const clsObserver = new PerformanceObserver((entryList) => {
-      for (const entry of entryList.getEntries()) {
-        if (!entry.hadRecentInput) {
-          console.log('CLS:', entry.value);
+      const clsObserver = new PerformanceObserver((entryList) => {
+        for (const entry of entryList.getEntries()) {
+          if (!entry.hadRecentInput) {
+            console.log('CLS:', entry.value);
+          }
         }
-      }
-    });
-    clsObserver.observe({ type: 'layout-shift', buffered: true });
+      });
+      clsObserver.observe({ type: 'layout-shift', buffered: true });
+    }
   </script>
 </body>
 </html>

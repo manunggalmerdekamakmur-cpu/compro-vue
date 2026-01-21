@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page no-section-gap">
     <section class="hero" id="home">
       <div class="container">
         <div class="hero-logo">
