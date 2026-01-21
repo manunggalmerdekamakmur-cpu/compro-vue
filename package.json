@@ -10,7 +10,8 @@
     "clean": "rm -rf dist node_modules/.vite",
     "build:prod": "npm run clean && NODE_ENV=production vite build",
     "update-version": "node update-version.js",
-    "analyze": "vite-bundle-analyzer"
+    "analyze": "vite-bundle-analyzer",
+    "build:clean": "rm -rf dist && rm -rf node_modules/.vite && npm run update-version && npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",

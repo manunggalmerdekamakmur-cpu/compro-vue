@@ -14,6 +14,19 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    emptyOutDir: true
+    emptyOutDir: true,
+    // Tambahkan hash untuk cache busting
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`
+      }
+    }
+  },
+
+  // Tambahkan define untuk version
+  define: {
+    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version || '1.0.0')
   }
 })
