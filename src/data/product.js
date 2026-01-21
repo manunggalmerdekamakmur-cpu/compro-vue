@@ -44,7 +44,7 @@ export const productData = {
   'phc-manunggal-lestari-dekomposer': {
     id: 'phc-manunggal-lestari-dekomposer',
     title: 'Pupuk Hayati Cair Manunggal Lestari Dekomposer',
-    description: 'Pupuk Hayati Cair unggulan untuk tanaman pangan dan hortikultura yang mengandung mikroorganisme menguntungkan untuk meningkatkan kesuburan tanah dan pertumbuhan tanaman.',
+    description: 'dekomposer hayati berbasis mikroorganisme yang berfungsi mempercepat penguraian bahan organik, memperbaiki sifat fisik, kimia, dan biologi tanah, meningkatkan struktur, aerasi, drainase, daya ikat air serta unsur hara, menyediakan nutrisi bagi mikroba tanah, dan mendukung peningkatan serta kestabilan produksi tanaman secara berkelanjutan.',
     specs: [
       'Nomor Pendaftaran : 03.02.2024.619',
       'Bentuk Formula : Cair (Liquid)',
@@ -65,13 +65,16 @@ export const productData = {
       '• Trichoderma sp. : 1,3 x 10⁵ cfu/ml'
     ],    
     benefits: [
-      '1. Memperbaiki struktur tanah sehingga tanah menjadi lebih subur.',
-      '2. Membantu proses penyiapan unsur hara yang mudah diserap oleh tanaman.',
-      '3. Menghasilkan beberapa hormon pertumbuhan dan kesehatan pada tanaman.',
-      '4. Merangsang sistem penyerapan unsur hara pada tanaman.',
-      '5. Melindungi tanaman dari serangan dari berbagai virus dan penyakit pada tanaman.',
-      '6. Mengurangi dosis pemupukan kimia pada lahan pertanian maupun perkebunan.',
-      '7. Menghasilkan kualitas hasil produksi pertanian maupun perkebunan.'
+      '1. Memperbaiki sifat fisik, kimia, dan biologi tanah.',
+      '2. Meningkatkan produksi tanaman dan menjaga kestabilan produksi.',
+      '3. Memfermentasi dan mendekomposisi bahan organik tanah dengan cepat (bokashi).',
+      '4. Dapat memperbaiki struktur tanah berlempung sehingga menjadi ringan.',
+      '5. Memperbesar daya ikat tanah berpasir sehingga tanah tidak berderai.',
+      '6. Menambah daya ikat air pada tanah.',
+      '7. Memperbaiki drainase dan tata udara dalam tanah.',
+      '8. Mempertinggi daya ikat tanah terhadap zat hara.',
+      '9. Membantu proses pelapukan bahan organik lainnya.',
+      '10. Memberi ketersediaan bahan makanan bagi mikroba tanah.'
     ],
     images: [
       'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768808344/phc-manunggal-lestari-dekomposer_t3uwbi.webp',
@@ -338,12 +341,15 @@ export const productData = {
     name: 'Triobionik Booster Probiotik Ternak',
     title: 'Triobionik 100gr - Booster Probiotik Ternak',
     description:
-      'Probiotik untuk ternak (sapi, kambing, domba, ayam, kelinci, dsb.) yang membantu pencernaan, mengurangi bau kotoran, meningkatkan kesehatan pencernaan, serta mengoptimalkan konversi pakan.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida. ',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
       'Bentuk Formula : Tepung (Powder)',
-      'Warna : Cokelat',
+      'Warna : Hitam',
       'Ukuran Kemasan : 100 g',
+      'No. Sertifikasi Organik : 537-LSPr-092-IDN-01-25',
+      'Berdasarkan standar SNI 6729:2016',
+      'Nilai TKDN : 50,06%',
       'Aplikasi : Campurkan larutan yang sudah diinkubasi ke pakan atau siram pada area kotoran/lingkungan ternak'
     ],
     features: [
@@ -354,10 +360,10 @@ export const productData = {
       '• Trichoderma sp. : 1,7 x 10⁵ CFU/g'
     ],
     benefits: [
-      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan bahan organik dan mineral menjadi unsur unsur sederhana yang',
-      '2. Mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak Mengadung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
+      '1. Mengandung beberapa mikroorganisme menguntungkan yang mampu membantu mengurai bahan organik dan mineral menjadi unsur-unsur sederhana yang mudah diserap oleh sistem pencernaan ikan, unggas dan hewan ternak.',
+      '2. Mengandung bahan yang merangsang nafsu makan pada ikan, unggas dan hewan ternak.',
       '3. Mampu mengurai jasad renik dan beberapa virus yang mengganggu kesehatan ikan, unggas dan hewan ternak.',
-      '4. Mampu mengelola sisa sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
+      '4. Mampu mengelola sisa-sisa makanan maupun kotoran ikan, unggas dan hewan ternak sehingga memperkecil dampak pada lingkungan hidup ikan, unggas dan hewan ternak.'
     ],
     image: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892401/ternak_itc7wc_20_hwqoum.webp',
     images: ['https://res.cloudinary.com/dz1zcobkz/image/upload/v1768892401/ternak_itc7wc_20_hwqoum.webp'],
@@ -379,7 +385,7 @@ export const productData = {
     name: 'Triobionik Booster Probiotik Unggas',
     title: 'Triobionik 100gr - Booster Probiotik Unggas',
     description:
-      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida.',
+      'Pupuk hayati padat mengandung  beberapa mikroorganisme baik yang berfungsi untuk memperbaiki tingkat kesuburan tanah, mengendalikan mikroorganisme patogen, menghilangkan/mengurai beberapa jenis virus, serta dapat mengendalikan laju perkembangan insektisida. ',
     specs: [
       'Nomor Pendaftaran : 03.03.2025.89',
       'Bentuk Formula : Tepung (Powder)',
