@@ -7,48 +7,45 @@
   <meta name="description" content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan.">
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
-  
-  <!-- HANYA INI YANG DIPERLUKAN -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+  <!-- Cache Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
   <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico">
   <link rel="prefetch" as="image" href="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 
 <body class="loading">
   <div id="app"></div>
-  
+
   <div id="app-loading">
     <div class="css-spinner"></div>
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
-  <!-- HANYA SCRIPT INI - NO CACHE BUSTING SCRIPT -->
-  <script type="module" src="/src/main.js"></script>
-
+  <!-- Simple script to unregister service workers -->
   <script>
-    const lcpObserver = new PerformanceObserver((entryList) => {
-      const entries = entryList.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      console.log('LCP:', lastEntry.startTime);
-    });
-    lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
-
-    const clsObserver = new PerformanceObserver((entryList) => {
-      for (const entry of entryList.getEntries()) {
-        if (!entry.hadRecentInput) {
-          console.log('CLS:', entry.value);
-        }
-      }
-    });
-    clsObserver.observe({ type: 'layout-shift', buffered: true });
+    // Only unregister service workers
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+      });
+    }
   </script>
+
+  <!-- Vite will replace this with hashed file -->
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
