@@ -3121,7 +3121,6 @@ footer {
     padding: 0 !important;
 }
 
-/* Override semua margin dan padding yang mungkin masih ada */
 .home-page.no-section-gap section > *:first-child {
     margin-top: 0 !important;
 }

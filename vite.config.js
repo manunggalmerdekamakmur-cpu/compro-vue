@@ -20,7 +20,22 @@ export default defineConfig({
     assetsDir: 'assets',
     minify: 'terser',
     cssMinify: true,
-    emptyOutDir: true
+    emptyOutDir: true,
+    
+    // Force new hash every build
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/js/[name]-[hash:8].js`,
+        chunkFileNames: `assets/js/[name]-[hash:8].js`,
+        assetFileNames: (assetInfo) => {
+          const ext = assetInfo.name.split('.').pop()
+          if (['css'].includes(ext)) {
+            return `assets/css/[name]-[hash:8].${ext}`
+          }
+          return `assets/[ext]/[name]-[hash:8].[ext]`
+        }
+      }
+    }
   },
   
   css: {
