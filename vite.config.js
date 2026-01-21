@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 
+// Generate version based on timestamp
+const version = Date.now().toString()
+
 export default defineConfig({
   plugins: [vue()],
   
@@ -22,17 +25,18 @@ export default defineConfig({
     cssMinify: true,
     emptyOutDir: true,
     
-    // Force new hash every build
+    // Add version to output
     rollupOptions: {
       output: {
-        entryFileNames: `assets/js/[name]-[hash:8].js`,
-        chunkFileNames: `assets/js/[name]-[hash:8].js`,
+        // File names dengan hash
+        entryFileNames: `assets/js/[name]-[hash].js`,
+        chunkFileNames: `assets/js/[name]-[hash].js`,
         assetFileNames: (assetInfo) => {
           const ext = assetInfo.name.split('.').pop()
           if (['css'].includes(ext)) {
-            return `assets/css/[name]-[hash:8].${ext}`
+            return `assets/css/[name]-[hash].${ext}`
           }
-          return `assets/[ext]/[name]-[hash:8].[ext]`
+          return `assets/[ext]/[name]-[hash].[ext]`
         }
       }
     }
@@ -40,5 +44,10 @@ export default defineConfig({
   
   css: {
     postcss: './postcss.config.js'
+  },
+  
+  // Define global version
+  define: {
+    '__APP_VERSION__': JSON.stringify(version)
   }
 })
