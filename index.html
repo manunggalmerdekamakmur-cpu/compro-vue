@@ -4,7 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>PT. Manunggal Merdeka Makmur</title>
-  <meta name="version" content="1.0.8" />
   <meta name="description" content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan.">
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
@@ -21,28 +20,6 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   />
-
-  <script>
-  (function () {
-    const version = document.querySelector('meta[name="version"]')?.content;
-    const stored = localStorage.getItem('app_version');
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations()
-        .then(regs => regs.forEach(r => r.unregister()));
-    }
-
-    if (stored !== version) {
-      localStorage.setItem('app_version', version);
-      if ('caches' in window) {
-        caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
-      }
-      const url = new URL(location.href);
-      url.searchParams.set('_v', version);
-      location.replace(url);
-    }
-  })();
-  </script>
 </head>
 
 <body class="loading">

@@ -1,11 +1,21 @@
 {
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html?v=20260121"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/index.html",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate, max-age=0"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     },
