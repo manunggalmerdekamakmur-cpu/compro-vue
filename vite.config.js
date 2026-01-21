@@ -20,24 +20,7 @@ export default defineConfig({
     assetsDir: 'assets',
     minify: 'terser',
     cssMinify: true,
-    emptyOutDir: true,
-    
-    // Generate manifest for cache busting
-    manifest: true,
-    
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: (assetInfo) => {
-          const ext = assetInfo.name.split('.').pop()
-          if (['css'].includes(ext)) {
-            return `assets/css/[name]-[hash].${ext}`
-          }
-          return `assets/[ext]/[name]-[hash].[ext]`
-        }
-      }
-    }
+    emptyOutDir: true
   },
   
   css: {

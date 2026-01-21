@@ -12,6 +12,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="version" content="1.0.8"> <!-- GANTI INI! -->
 
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -35,17 +36,35 @@
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
 
-  <!-- Simple script to unregister service workers -->
+  <!-- SIMPLE CACHE BUSTING - TANPA INFINITE LOOP -->
   <script>
-    // Only unregister service workers
+  (function () {
+    const version = document.querySelector('meta[name="version"]')?.content;
+    const stored = localStorage.getItem('app_version');
+
+    console.log('App version:', version);
+
+    // unregister service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => {
-        regs.forEach(reg => reg.unregister());
-      });
+      navigator.serviceWorker.getRegistrations()
+        .then(regs => regs.forEach(r => r.unregister()));
     }
+
+    if (stored !== version) {
+      console.log('New version detected → reload');
+      localStorage.setItem('app_version', version);
+
+      if ('caches' in window) {
+        caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+      }
+
+      const url = new URL(location.href);
+      url.searchParams.set('_v', version);
+      location.replace(url);
+    }
+  })();
   </script>
 
-  <!-- Vite will replace this with hashed file -->
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

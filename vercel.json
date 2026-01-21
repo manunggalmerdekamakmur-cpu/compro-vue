@@ -1,25 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "functions": {
-    "api/cache-bust.js": {
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api/cache-bust.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/api/cache-bust.js"
-    }
-  ],
   "headers": [
     {
-      "source": "/api/cache-bust.js",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
