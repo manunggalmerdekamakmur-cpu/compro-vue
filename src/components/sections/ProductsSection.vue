@@ -1,5 +1,5 @@
 <template>
-  <section class="products section-bg no-gap-section" id="products">
+  <section class="products section-bg" id="products">
     <div class="container">
       <div class="section-title">
         <h2>Produk Unggulan Kami</h2>

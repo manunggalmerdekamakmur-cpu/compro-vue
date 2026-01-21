@@ -3065,77 +3065,20 @@ footer {
     }
 }
 
-.home-page.no-section-gap {
-    overflow-x: hidden;
+.home-page.no-section-gap #products.section-bg {
+    padding-bottom: 0 !important; 
 }
 
-.home-page.no-section-gap > * {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.home-page.no-section-gap > section {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.home-page.no-section-gap section.section-bg {
-    padding: var(--space-xl) 0 !important;
-    position: relative;
-}
-
-.home-page.no-section-gap section.section-bg > .container {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    position: relative;
-}
-
-.home-page.no-section-gap section.section-bg + section.section-bg {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    border-top: none !important;
+.home-page.no-section-gap #certifications.section-bg {
+    padding-top: 0 !important; 
 }
 
 .home-page.no-section-gap #products.section-bg + #certifications.section-bg {
-    margin-top: -2px !important;
-    padding-top: 0 !important;
+    margin-top: -40px;
 }
 
-.home-page.no-section-gap .section-title {
-    margin-bottom: var(--space-lg) !important;
-}
-
-.home-page.no-section-gap .products-grid,
-.home-page.no-section-gap .certifications-grid {
-    margin-top: var(--space-md) !important;
-    margin-bottom: 0 !important;
-}
-
-.home-page.no-section-gap .hero {
-    padding: 100px 0 60px !important;
-    margin: 0 !important;
-}
-
-.home-page.no-section-gap section:last-of-type {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-.no-gap-section {
-    margin: 0 !important;
-    padding: var(--space-xl) 0 !important;
-}
-
-.no-gap-section + .no-gap-section {
-    padding-top: 0 !important;
-    margin-top: -1px !important;
-}
-
-.no-gap-section > .container {
-    padding-top: var(--space-xl) !important;
-    padding-bottom: var(--space-xl) !important;
-}
-
-#products.no-gap-section + #certifications.no-gap-section > .container {
-    padding-top: 0 !important;
+.home-page.no-section-gap #products.section-bg .container,
+.home-page.no-section-gap #certifications.section-bg .container {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
