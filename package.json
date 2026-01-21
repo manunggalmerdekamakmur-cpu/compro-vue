@@ -4,11 +4,12 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist node_modules/.vite",
     "build:prod": "npm run clean && NODE_ENV=production vite build",
+    "update-version": "node update-version.js",
     "analyze": "vite-bundle-analyzer"
   },
   "dependencies": {
