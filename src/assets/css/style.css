@@ -791,7 +791,7 @@ header.scrolled .nav-link {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
-    margin-top: var(--space-lg);
+    margin-top: 1rem;
     content-visibility: auto;
     contain-intrinsic-size: 1000px;
 }
@@ -931,7 +931,7 @@ header.scrolled .nav-link {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: var(--space-xl);
+    margin-bottom: 1rem;
     flex-wrap: wrap;
 }
 
@@ -1155,7 +1155,7 @@ header.scrolled .nav-link {
 }
 
 .achievements {
-    margin-top: 5rem;
+    margin-top: 2rem;
     padding-top: 3rem;
     border-top: 2px solid rgba(26, 125, 62, 0.1);
 }
@@ -2153,26 +2153,6 @@ footer {
       margin-top: 1rem;
     }
 
-.home-page > *:not(:first-child) {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-.home-page > *:not(:last-child) {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-.home-page section {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.home-page .container {
-    padding-top: 1rem !important; 
-    padding-bottom: 1rem !important;
-}
-
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
@@ -3086,6 +3066,9 @@ footer {
     }
 }
 
+.home-page.no-section-gap {
+    overflow: hidden;
+}
 
 .home-page.no-section-gap > section,
 .home-page.no-section-gap > div > section {
@@ -3117,6 +3100,14 @@ footer {
     margin-top: 1rem !important;
 }
 
+.home-page.no-section-gap .product-filter {
+    margin-bottom: 1rem !important;
+}
+
+.home-page.no-section-gap .achievements {
+    margin-top: 2rem !important;
+}
+
 .home-page.no-section-gap .hero {
     padding-top: 100px !important;
     padding-bottom: 0 !important;
@@ -3128,4 +3119,21 @@ footer {
 .home-page.no-section-gap .product-stats,
 .home-page.no-section-gap .contact {
     padding: 0 !important;
+}
+
+/* Override semua margin dan padding yang mungkin masih ada */
+.home-page.no-section-gap section > *:first-child {
+    margin-top: 0 !important;
+}
+
+.home-page.no-section-gap section > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+.home-page.no-section-gap .container > *:first-child {
+    margin-top: 0 !important;
+}
+
+.home-page.no-section-gap .container > *:last-child {
+    margin-bottom: 0 !important;
 }
