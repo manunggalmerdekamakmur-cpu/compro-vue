@@ -2,6 +2,13 @@
   "redirects": [
     {
       "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "v",
+          "missing": true
+        }
+      ],
       "destination": "/?v=20260121",
       "permanent": false
     }
