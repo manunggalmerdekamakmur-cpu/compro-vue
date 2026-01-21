@@ -4,29 +4,37 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
-
+  
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, './src')
     }
   },
-
+  
+  server: {
+    port: 3000
+  },
+  
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    emptyOutDir: true,
-    // Tambahkan hash untuk cache busting
+    minify: 'terser',
+    cssMinify: true,
+    
     rollupOptions: {
       output: {
-        entryFileNames: `assets/[name]-[hash].js`,
-        chunkFileNames: `assets/[name]-[hash].js`,
-        assetFileNames: `assets/[name]-[hash].[ext]`
+        assetFileNames: (assetInfo) => {
+          const ext = assetInfo.name.split('.').pop()
+          if (['css'].includes(ext)) {
+            return `assets/css/[name]-[hash].${ext}`
+          }
+          return `assets/[ext]/[name]-[hash].[ext]`
+        }
       }
     }
   },
-
-  // Tambahkan define untuk version
-  define: {
-    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version || '1.0.0')
+  
+  css: {
+    postcss: './postcss.config.js'
   }
 })

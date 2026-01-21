@@ -1,18 +1,12 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Tambahkan cache control headers via meta tags -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-
-  <title>PT. Manunggal Merdeka Makmur</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PT. Manunggal Merdeka Makmur – Produsen Pupuk Organik Berkualitas</title>
   <meta name="description" content="PT. Manunggal Merdeka Makmur adalah produsen pupuk organik dan agen hayati berkualitas tinggi untuk pertanian berkelanjutan.">
   <meta name="theme-color" content="#0b1f14">
   <meta name="robots" content="index, follow">
-  <meta name="version" content="1.0.0">
 
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -30,60 +24,31 @@
 
 <body class="loading">
   <div id="app"></div>
+
   <div id="app-loading">
     <div class="css-spinner"></div>
     <div class="loading-text">Memuat aplikasi...</div>
   </div>
+
+  <script type="module" src="/src/main.js"></script>
+
   
-  <script type="module">
-    // Cache busting solution for Vercel CDN
-    const VERSION = '1.0.0';
-    const VERSION_KEY = 'app_version';
-    const TIMESTAMP = Date.now();
-    
-    // Force refresh jika versi berbeda
-    const storedVersion = localStorage.getItem(VERSION_KEY);
-    if (storedVersion !== VERSION) {
-      console.log('New version detected, clearing caches...');
-      
-      // Clear semua cache storage
-      if ('caches' in window) {
-        caches.keys().then(function(names) {
-          for (let name of names) {
-            caches.delete(name);
-          }
-        });
+  <script>
+    const lcpObserver = new PerformanceObserver((entryList) => {
+      const entries = entryList.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      console.log('LCP:', lastEntry.startTime);
+    });
+    lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+    const clsObserver = new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (!entry.hadRecentInput) {
+          console.log('CLS:', entry.value);
+        }
       }
-      
-      // Clear localStorage dan sessionStorage
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Set versi baru
-      localStorage.setItem(VERSION_KEY, VERSION);
-      
-      // Force reload dengan parameter timestamp untuk bypass CDN cache
-      if (window.location.search.indexOf('v=') === -1) {
-        const url = new URL(window.location);
-        url.searchParams.set('v', VERSION + '_' + TIMESTAMP);
-        window.location.href = url.toString();
-      }
-    } else {
-      localStorage.setItem(VERSION_KEY, VERSION);
-    }
-    
-    // Load main.js dengan version parameter untuk bypass CDN cache
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = `/src/main.js?v=${VERSION}_${TIMESTAMP}`;
-    script.onerror = function() {
-      // Fallback jika path tidak ditemukan (production mode)
-      const fallbackScript = document.createElement('script');
-      fallbackScript.type = 'module';
-      fallbackScript.src = '/src/main.js';
-      document.body.appendChild(fallbackScript);
-    };
-    document.body.appendChild(script);
+    });
+    clsObserver.observe({ type: 'layout-shift', buffered: true });
   </script>
 </body>
 </html>

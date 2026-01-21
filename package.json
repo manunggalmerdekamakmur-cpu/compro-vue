@@ -4,14 +4,12 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist node_modules/.vite",
     "build:prod": "npm run clean && NODE_ENV=production vite build",
-    "update-version": "node update-version.js",
-    "analyze": "vite-bundle-analyzer",
-    "build:clean": "rm -rf dist && rm -rf node_modules/.vite && npm run update-version && npm run build"
+    "analyze": "vite-bundle-analyzer"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
