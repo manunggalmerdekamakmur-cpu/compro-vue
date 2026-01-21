@@ -1,16 +1,14 @@
 {
-  "headers": [
+  "redirects": [
     {
       "source": "/",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    },
+      "destination": "/?v=20260121",
+      "permanent": false
+    }
+  ],
+  "headers": [
     {
-      "source": "/index.html",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
