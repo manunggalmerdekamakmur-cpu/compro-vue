@@ -2,6 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import compression from 'vite-plugin-compression'
+import { VitePWA } from 'vite-plugin-pwa'
+
+// Cache-busting timestamp
+const CACHE_BUST = Date.now().toString().slice(-8)
 
 export default defineConfig({
   plugins: [
@@ -9,7 +13,51 @@ export default defineConfig({
     ...(process.env.NODE_ENV === 'production' ? [
       compression({ algorithm: 'gzip', ext: '.gz' }),
       compression({ algorithm: 'brotliCompress', ext: '.br' })
-    ] : [])
+    ] : []),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'vite.svg'],
+      manifest: {
+        name: 'PT. Manunggal Merdeka Makmur',
+        short_name: 'Manunggal',
+        description: 'Produsen Pupuk Organik Berkualitas',
+        theme_color: '#0b1f14',
+        background_color: '#ffffff',
+        display: 'standalone',
+        icons: [
+          {
+            src: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
+            sizes: '192x192',
+            type: 'image/webp'
+          }
+        ]
+      },
+      workbox: {
+        // Disable cache for faster updates
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        runtimeCaching: [
+          {
+            // Don't cache API requests
+            urlPattern: /^https:\/\/api\./i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      },
+      devOptions: {
+        enabled: false
+      }
+    })
   ],
   
   resolve: {
