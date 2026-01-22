@@ -21,67 +21,73 @@
           <p>Produsen Pupuk Organik dan Agen Hayati Berkualitas</p>
         </div>
       </div>
-      <nav role="navigation">
-        <div
+      <nav role="navigation" aria-label="Menu utama">
+        <button
           class="hamburger"
           @click="toggleMenu"
           :aria-expanded="menuOpen.toString()"
-          aria-label="Toggle menu"
+          aria-label="Buka menu navigasi"
         >
-          <i :class="menuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
-        </div>
-        <ul class="nav-menu" :class="{ active: menuOpen }">
-          <li>
+          <i :class="menuOpen ? 'fas fa-times' : 'fas fa-bars'" aria-hidden="true"></i>
+        </button>
+        <ul class="nav-menu" :class="{ active: menuOpen }" role="menubar">
+          <li role="none">
             <a
               href="/"
               class="nav-link"
               :class="{ active: isActive('/') }"
               @click="handleNavClick($event, '/')"
+              role="menuitem"
               >Beranda</a
             >
           </li>
-          <li>
+          <li role="none">
             <a
               href="#about"
               class="nav-link"
               :class="{ active: activeSection === 'about' }"
               @click="handleNavClick($event, '#about')"
+              role="menuitem"
               >Tentang Kami</a
             >
           </li>
-          <li>
+          <li role="none">
             <a
               href="#visi-misi"
               class="nav-link"
               :class="{ active: activeSection === 'visi-misi' }"
               @click="handleNavClick($event, '#visi-misi')"
+              role="menuitem"
               >Visi & Misi</a
             >
           </li>
-          <li>
+          <li role="none">
             <a
               href="#products"
               class="nav-link"
               :class="{ active: activeSection === 'products' }"
               @click="handleNavClick($event, '#products')"
+              role="menuitem"
               >Produk Kami</a
             >
           </li>
-          <li>
+          <li role="none">
             <a
               href="#certifications"
               class="nav-link"
               :class="{ active: activeSection === 'certifications' }"
               @click="handleNavClick($event, '#certifications')"
+              role="menuitem"
               >Sertifikasi</a
             >
           </li>
-          <li>
+          <li role="none">
             <a
               href="#contact"
               class="nav-link"
               :class="{ active: activeSection === 'contact' }"
               @click="handleNavClick($event, '#contact')"
+              role="menuitem"
               >Kontak</a
             >
           </li>
@@ -105,12 +111,12 @@ export default {
   },
   mounted() {
     this.handleScroll();
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
     window.addEventListener("resize", this.handleResize);
 
     this.initSections();
 
-    window.addEventListener("scroll", this.updateActiveSection);
+    window.addEventListener("scroll", this.updateActiveSection, { passive: true });
 
     setTimeout(() => {
       const logoTextH1 = this.$el.querySelector(".logo-text h1");
@@ -133,6 +139,7 @@ export default {
     handleResize() {
       if (window.innerWidth > 768 && this.menuOpen) {
         this.menuOpen = false;
+        document.body.style.overflow = "";
       }
     },
     toggleMenu() {
@@ -199,3 +206,4 @@ export default {
   },
 };
 </script>
+

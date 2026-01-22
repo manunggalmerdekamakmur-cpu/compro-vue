@@ -117,7 +117,6 @@ export default {
   color: var(--primary, #2c5aa0);
 }
 
-/* ===== NEWS GRID ===== */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -253,7 +252,6 @@ export default {
   box-shadow: 0 5px 15px rgba(44, 90, 160, 0.2);
 }
 
-/* ===== MOBILE ≤ 768px ===== */
 @media (max-width: 768px) {
   .container {
     padding: 2rem 15px;
@@ -301,14 +299,12 @@ export default {
   }
 }
 
-/* ===== TABLET 769px - 1024px ===== */
 @media (min-width: 769px) and (max-width: 1024px) {
   .news-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
   .news-card {
     background: rgba(30, 30, 30, 0.95);

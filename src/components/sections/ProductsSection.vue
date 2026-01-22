@@ -1,54 +1,45 @@
 <template>
-  <section class="products section-bg" id="products">
+  <section class="products section-bg" id="products" style="padding: var(--space-xl) 0;">
     <div class="container">
       <div class="section-title">
         <h2>Produk Unggulan Kami</h2>
         <p>Produk pupuk hayati dan organik berkualitas untuk mendukung pertanian berkelanjutan</p>
       </div>
       
-      <div class="product-filter">
+      <div class="product-filter" role="group" aria-label="Filter produk">
         <button 
           v-for="filter in filters" 
           :key="filter.value"
           :class="['filter-btn', { active: activeFilter === filter.value }]"
           @click="setFilter(filter.value)"
+          :aria-pressed="activeFilter === filter.value"
         >
-          <i :class="filter.icon"></i> {{ filter.label }}
+          <i :class="filter.icon" aria-hidden="true"></i> {{ filter.label }}
         </button>
       </div>
       
-      <div v-if="isLoading" class="products-grid">
-        <div v-for="n in 4" :key="`skeleton-${n}`" class="product-card product-skeleton">
-          <div class="skeleton-img">
-            <div class="image-spinner"></div>
-          </div>
-          <div class="skeleton-content">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-text"></div>
-            <div class="skeleton-text short"></div>
-          </div>
-        </div>
-      </div>
-
-      <div v-else class="products-grid">
+      <div class="products-grid" role="list">
         <router-link 
           v-for="product in visibleProducts" 
           :key="product.id" 
           :to="getProductLink(product)" 
           class="product-card"
+          role="listitem"
         >
           <div class="product-img">
+            <div v-if="!imageLoaded[product.id]" class="image-loading" aria-hidden="true">
+              <div class="skeleton-img"></div>
+            </div>
             <img 
-              :src="getPlaceholder()"
-              :data-src="getProductImage(product)"
+              :src="getProductImage(product)"
               :alt="product.title" 
-              width="300"
-              height="200"
+              :class="{ 'image-loaded': imageLoaded[product.id] }"
               loading="lazy"
               decoding="async"
-              class="lazy-img"
+              @load="onImageLoad(product.id)"
+              @error="onImageError(product.id)"
             />
-            <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']">
+            <span :class="['product-badge', product.status === 'approved' ? 'badge-approved' : 'badge-coming']" aria-label="Status produk">
               {{ product.badge }}
             </span>
           </div>
@@ -72,7 +63,7 @@ export default {
     return {
       products: [],
       activeFilter: 'all',
-      isLoading: true,
+      imageLoaded: {},
       filters: [
         { value: 'all', label: 'Semua Produk', icon: 'fas fa-boxes' },
         { value: 'approved', label: 'Berizin', icon: 'fas fa-certificate' },
@@ -89,74 +80,23 @@ export default {
   },
   
   async beforeMount() {
-    await this.loadProducts()
-  },
-  
-  mounted() {
-    this.initializeLazyLoad()
-  },
-  
-  beforeUnmount() {
-    this.products = []
+    this.products = getAllProducts()
+    this.products.forEach(p => {
+      this.imageLoaded[p.id] = false
+    })
   },
   
   methods: {
-    async loadProducts() {
-      try {
-        this.products = getAllProducts()
-        await this.preloadFirstImages()
-        this.isLoading = false
-      } catch (error) {
-        console.error('Error loading products:', error)
-        this.isLoading = false
-      }
-    },
-    
-    async preloadFirstImages() {
-      const firstProducts = this.products.slice(0, 2)
-      const promises = firstProducts.map(product => {
-        const imgSrc = this.getProductImage(product)
-        if (!imgSrc) return Promise.resolve()
-        
-        return new Promise((resolve) => {
-          const img = new Image()
-          img.onload = resolve
-          img.onerror = resolve
-          img.src = imgSrc
-          setTimeout(resolve, 1000)
-        })
-      })
-      
-      await Promise.race([
-        Promise.all(promises),
-        new Promise(resolve => setTimeout(resolve, 800))
-      ])
-    },
-    
-    initializeLazyLoad() {
-      this.$nextTick(() => {
-        setTimeout(() => {
-          if (window.App && window.App.lazyLoader) {
-            window.App.lazyLoader.scan()
-            
-            const images = this.$el.querySelectorAll('img[data-src]')
-            images.forEach(img => {
-              const rect = img.getBoundingClientRect()
-              if (rect.top < window.innerHeight + 300) {
-                window.App.lazyLoader.loadImage(img)
-              }
-            })
-          }
-        }, 100)
-      })
-    },
-    
     setFilter(value) {
       this.activeFilter = value
     },
     
-    getPlaceholder() {
-      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect fill="%23f5f5f5" width="300" height="200"/%3E%3C/svg%3E'
+    onImageLoad(productId) {
+      this.imageLoaded[productId] = true
+    },
+    
+    onImageError(productId) {
+      this.imageLoaded[productId] = true
     },
     
     getProductImage(product) {
@@ -181,3 +121,4 @@ export default {
   }
 }
 </script>
+

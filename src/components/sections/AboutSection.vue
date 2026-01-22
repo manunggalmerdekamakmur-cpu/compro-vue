@@ -1,5 +1,5 @@
 <template>
-  <section class="about section-bg" id="about">
+  <section class="about section-bg" id="about" style="padding: var(--space-xl) 0;">
     <div class="container">
       <div class="section-title">
         <h2>Tentang Perusahaan</h2>

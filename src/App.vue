@@ -5,7 +5,7 @@
     
       <main id="main-content" class="bg-gray-50 min-h-screen">
       <router-view v-slot="{ Component, route }">
-        <transition name="fade" @before-enter="beforeEnter" @after-leave="afterLeave">
+        <transition name="fade" @after-leave="afterLeave">
           <component :is="Component" :key="route.fullPath" />
         </transition>
       </router-view>

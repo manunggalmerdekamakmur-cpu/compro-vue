@@ -171,7 +171,6 @@ export default {
   margin: 0;
 }
 
-/* ===== MODAL ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -233,7 +232,6 @@ export default {
   padding: 0 1rem;
 }
 
-/* ===== MOBILE ≤ 768px ===== */
 @media (max-width: 768px) {
   .container {
     padding: 2rem 15px;

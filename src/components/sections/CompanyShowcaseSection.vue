@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="container full-width achievements">
+    <div class="container full-width achievements" style="margin-top: var(--space-xl); padding-top: var(--space-xl);">
       <div class="section-title">
         <h2>Pencapaian Kami di Tahun 2025</h2>
       </div>

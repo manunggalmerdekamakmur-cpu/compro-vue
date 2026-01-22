@@ -1,5 +1,5 @@
 <template>
-  <section class="visi-misi section-bg" id="visi-misi">
+  <section class="visi-misi section-bg" id="visi-misi" style="padding: var(--space-xl) 0;">
     <div class="container">
       <div class="section-title">
         <h2>Visi & Misi Perusahaan</h2>

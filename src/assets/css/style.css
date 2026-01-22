@@ -10,7 +10,7 @@
 }
 
 :root {
-    --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp');
+    --bg-hero-image: url('https://res.cloudinary.com/dz1zcobkz/image/upload/c_scale,w_1920/v1768807981/visi-misi-bg_w1tk8e_drwylj.webp');
     --primary: #1a7d3e;
     --primary-dark: #0d5527;
     --primary-light: #2ecc71;
@@ -26,31 +26,25 @@
     --warning: #ffc107;
     --danger: #dc3545;
     --info: #17a2b8;
-    
     --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
     --gradient-light: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
-    
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
     --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.25);
-    
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-full: 50px;
-    
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 2rem;
     --space-lg: 3rem;
     --space-xl: 5rem;
-    
     --container-max: 1200px;
 }
 
@@ -58,6 +52,7 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     font-size: 16px;
+    text-rendering: optimizeSpeed;
 }
 
 body {
@@ -117,7 +112,6 @@ p {
 }
 
 .container {
-    /* max-width: var(--container-max); */
     max-width: 1200px;
     margin: auto;
     padding: 0 1rem;
@@ -540,16 +534,17 @@ header.scrolled .nav-link {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--bg-hero-image);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
     color: var(--white);
     text-align: center;
     overflow: hidden;
     padding: 100px 0 60px;
     content-visibility: auto;
     contain-intrinsic-size: 700px;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), var(--bg-hero-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: 1;
 }
 
 .hero::before {
@@ -562,6 +557,18 @@ header.scrolled .nav-link {
     background: radial-gradient(circle at 20% 80%, rgba(26, 125, 62, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.1) 0%, transparent 50%);
     pointer-events: none;
+    z-index: -1;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2); 
+    z-index: -1;
 }
 
 .hero-logo {
@@ -635,12 +642,15 @@ header.scrolled .nav-link {
 .section-bg {
     position: relative;
     padding: 0;
-    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.7)), var(--bg-hero-image);
+    color: var(--dark);
+    z-index: 1;
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
+    overflow: hidden;
+    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3)), var(--bg-hero-image);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    color: var(--dark);
-    z-index: 1;
 }
 
 .section-bg::before {
@@ -650,7 +660,18 @@ header.scrolled .nav-link {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.2);
+    z-index: -1;
+}
+
+.section-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.4);
     z-index: -1;
 }
 
@@ -832,11 +853,41 @@ header.scrolled .nav-link {
     max-width: 100%;
     max-height: 160px;
     object-fit: contain;
-    transition: transform var(--transition-normal);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-img img.image-loaded {
+    opacity: 1;
 }
 
 .product-card:hover .product-img img {
     transform: scale(1.1);
+}
+
+.image-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(248, 255, 249, 0.9);
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .product-overlay {
@@ -1155,8 +1206,8 @@ header.scrolled .nav-link {
 }
 
 .achievements {
-    margin-top: 5rem;
-    padding-top: 3rem;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
     border-top: 2px solid rgba(26, 125, 62, 0.1);
 }
 
@@ -2153,24 +2204,24 @@ footer {
       margin-top: 1rem;
     }
 
-.home-page > *:not(:first-child) {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+.home-page > *:not(.hero) {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
 }
 
-.home-page > *:not(:last-child) {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+.section-gap {
+    height: var(--space-lg);
 }
 
-.home-page section {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.home-page .container {
-    padding-top: 1rem !important; 
-    padding-bottom: 1rem !important;
+@media (max-width: 768px) {
+    .home-page > *:not(.hero) {
+        padding-top: var(--space-md);
+        padding-bottom: var(--space-md);
+    }
+    
+    .section-gap {
+        height: var(--space-md);
+    }
 }
 
 @keyframes pulse {
@@ -2309,7 +2360,6 @@ footer {
     
     .hero {
         padding: 100px 0 0;
-        background-attachment: fixed;
     }
     
     .about-content,
@@ -2320,13 +2370,6 @@ footer {
     .footer-content {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
-    }
-
-    .hero,
-    .section-bg {
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
     }
 
     .products-grid {
@@ -2364,14 +2407,10 @@ footer {
         min-height: 100svh;
         height: auto;
         padding: 120px 1rem 60px;
-        background-attachment: fixed !important;
-        background-size: cover;
-        background-position: center;
     }
 
     .section-bg {
         padding: 0;
-        background-attachment: fixed !important; 
     }
 
     .contact-grid {
@@ -2490,8 +2529,8 @@ footer {
     }
 
     .company-showcase .achievements {
-        margin-top: 3rem;
-        padding-top: 2.5rem;
+        margin-top: var(--space-md);
+        padding-top: var(--space-md);
         border-top: 2px solid rgba(26, 125, 62, 0.1);
     }
 
@@ -2611,15 +2650,6 @@ footer {
         padding: var(--space-sm) var(--space-lg);
     }
     
-    .hero {
-        min-height: 100svh;
-        height: auto;
-        padding: 120px 1rem 60px;
-        background-attachment: scroll;
-        background-size: cover;
-        background-position: center;
-    }
-    
     .hero-logo {
         flex-direction: row;
         gap: 0.5rem;
@@ -2657,11 +2687,6 @@ footer {
     .hero-buttons .btn {
         width: 100%;
         padding: 1rem 1.5rem;
-    }
-    
-    .section-bg {
-        padding: 0;
-        background-attachment: scroll;
     }
     
     .section-title {
@@ -2954,8 +2979,8 @@ footer {
     }
 
     .company-showcase .achievements {
-        margin-top: 2.5rem;
-        padding-top: 2rem;
+        margin-top: var(--space-md);
+        padding-top: var(--space-md);
     }
 
     .company-showcase .achievements .section-title h2 {

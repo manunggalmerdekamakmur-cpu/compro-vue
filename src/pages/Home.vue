@@ -8,16 +8,16 @@
             width="85" 
             height="85" 
             alt="Logo STIESIA" 
-            loading="eager"
             fetchpriority="high"
+            loading="eager"
           />
           <img 
             src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" 
             width="85" 
             height="85" 
             alt="Logo PT. Manunggal Merdeka Makmur" 
-            loading="eager"
             fetchpriority="high"
+            loading="eager"
           />
         </div>
         <h1>PT. Manunggal Merdeka Makmur</h1>
@@ -38,24 +38,34 @@
     <VisionMission />
     <ProductStats />
     <ProductsSection />
-    <CertificationsSection />
-    <PrinciplesSection />
-    <CompanyShowcaseSection />
-    <CustomerFeedbackSection />
+    <LazyCertificationsSection />
+    <LazyPrinciplesSection />
+    <LazyCompanyShowcaseSection />
+    <LazyCustomerFeedbackSection />
     <ContactSection />
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import AboutSection from '@/components/sections/AboutSection.vue'
 import VisionMission from '@/components/sections/VisionMission.vue'
 import ProductStats from '@/components/sections/ProductStats.vue'
 import ProductsSection from '@/components/sections/ProductsSection.vue'
-import CertificationsSection from '@/components/sections/CertificationsSection.vue'
-import PrinciplesSection from '@/components/sections/PrinciplesSection.vue'
-import CompanyShowcaseSection from '@/components/sections/CompanyShowcaseSection.vue'
-import CustomerFeedbackSection from '@/components/sections/CustomerFeedbackSection.vue'
 import ContactSection from '@/components/sections/ContactSection.vue'
+
+const LazyCertificationsSection = defineAsyncComponent(() => 
+  import('@/components/sections/CertificationsSection.vue'), { loading: () => null }
+)
+const LazyPrinciplesSection = defineAsyncComponent(() => 
+  import('@/components/sections/PrinciplesSection.vue'), { loading: () => null }
+)
+const LazyCompanyShowcaseSection = defineAsyncComponent(() => 
+  import('@/components/sections/CompanyShowcaseSection.vue'), { loading: () => null }
+)
+const LazyCustomerFeedbackSection = defineAsyncComponent(() => 
+  import('@/components/sections/CustomerFeedbackSection.vue'), { loading: () => null }
+)
 
 export default {
   name: 'Home',
@@ -65,11 +75,11 @@ export default {
     VisionMission,
     ProductStats,
     ProductsSection,
-    CertificationsSection,
-    PrinciplesSection,
-    CompanyShowcaseSection,
-    CustomerFeedbackSection,
-    ContactSection
+    ContactSection,
+    LazyCertificationsSection,
+    LazyPrinciplesSection,
+    LazyCompanyShowcaseSection,
+    LazyCustomerFeedbackSection
   },
   
   mounted() {
@@ -97,3 +107,4 @@ export default {
   }
 }
 </script>
+
