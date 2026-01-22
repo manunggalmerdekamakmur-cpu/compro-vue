@@ -5,21 +5,13 @@
         <h2 class="section-title">Launching Triobionik</h2>
 
         <div class="video-grid">
-          <article
-            v-for="video in videos"
-            :key="video.id"
-            class="video-card"
-          >
+          <article v-for="video in videos" :key="video.id" class="video-card">
             <button
               class="thumb-btn"
               @click="openPlayer(video)"
               :aria-label="`Putar video: ${video.title}`"
             >
-              <img
-                :src="video.thumbnail"
-                :alt="video.title"
-                loading="lazy"
-              />
+              <img :src="video.thumbnail" :alt="video.title" loading="lazy" />
               <span class="play-overlay">▶</span>
             </button>
 
@@ -37,7 +29,14 @@
           <iframe
             :src="youtubeEmbedUrl(activeVideo.id)"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
             allowfullscreen
           ></iframe>
         </div>
@@ -50,36 +49,36 @@
 
 <script>
 export default {
-  name: 'VideoSection',
+  name: "VideoSection",
   data() {
     return {
       videos: [
         {
-          id: 'bcWJ0Z-dFXI',
-          title: 'Video Kegiatan Perusahaan',
-          thumbnail: 'https://img.youtube.com/vi/bcWJ0Z-dFXI/hqdefault.jpg'
-        }
+          id: "bcWJ0Z-dFXI",
+          title: "Video Kegiatan Perusahaan",
+          thumbnail: "https://img.youtube.com/vi/bcWJ0Z-dFXI/hqdefault.jpg",
+        },
       ],
-      activeVideo: null
-    }
+      activeVideo: null,
+    };
   },
   methods: {
     openPlayer(video) {
-      this.activeVideo = video
-      document.body.style.overflow = 'hidden'
+      this.activeVideo = video;
+      document.body.style.overflow = "hidden";
     },
     closePlayer() {
-      this.activeVideo = null
-      document.body.style.overflow = ''
+      this.activeVideo = null;
+      document.body.style.overflow = "";
     },
     youtubeEmbedUrl(id) {
-      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`
-    }
+      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    },
   },
   beforeUnmount() {
-    document.body.style.overflow = ''
-  }
-}
+    document.body.style.overflow = "";
+  },
+};
 </script>
 
 <style scoped>
@@ -121,7 +120,7 @@ export default {
 .video-card {
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   background: rgba(255, 255, 255, 0.95);
 }
 
@@ -174,7 +173,7 @@ export default {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.7);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,7 +208,7 @@ export default {
 }
 
 .modal-close:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .iframe-wrapper {
@@ -227,7 +226,7 @@ export default {
 
 .modal-title {
   text-align: center;
-  margin-top: .75rem;
+  margin-top: 0.75rem;
   font-weight: 600;
   padding: 0 1rem;
 }
@@ -252,8 +251,8 @@ export default {
   }
 
   .video-title {
-    font-size: .95rem;
-    padding: .75rem;
+    font-size: 0.95rem;
+    padding: 0.75rem;
   }
 
   .play-overlay {
@@ -262,11 +261,11 @@ export default {
 
   .modal-content {
     width: 95%;
-    padding: .75rem;
+    padding: 0.75rem;
   }
 
   .modal-title {
-    font-size: .95rem;
+    font-size: 0.95rem;
   }
 }
 </style>

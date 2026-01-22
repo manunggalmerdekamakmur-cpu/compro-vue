@@ -1,121 +1,119 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
-import compression from 'vite-plugin-compression'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
+import compression from "vite-plugin-compression";
+import { VitePWA } from "vite-plugin-pwa";
 
-// Cache-busting timestamp
-const CACHE_BUST = Date.now().toString().slice(-8)
+const CACHE_BUST = Date.now().toString().slice(-8);
 
 export default defineConfig({
   plugins: [
     vue(),
-    ...(process.env.NODE_ENV === 'production' ? [
-      compression({ algorithm: 'gzip', ext: '.gz' }),
-      compression({ algorithm: 'brotliCompress', ext: '.br' })
-    ] : []),
+    ...(process.env.NODE_ENV === "production"
+      ? [
+          compression({ algorithm: "gzip", ext: ".gz" }),
+          compression({ algorithm: "brotliCompress", ext: ".br" }),
+        ]
+      : []),
     VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'vite.svg'],
+      registerType: "autoUpdate",
+      includeAssets: ["favicon.ico", "vite.svg"],
       manifest: {
-        name: 'PT. Manunggal Merdeka Makmur',
-        short_name: 'Manunggal',
-        description: 'Produsen Pupuk Organik Berkualitas',
-        theme_color: '#0b1f14',
-        background_color: '#ffffff',
-        display: 'standalone',
+        name: "PT. Manunggal Merdeka Makmur",
+        short_name: "Manunggal",
+        description: "Produsen Pupuk Organik Berkualitas",
+        theme_color: "#0b1f14",
+        background_color: "#ffffff",
+        display: "standalone",
         icons: [
           {
-            src: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp',
-            sizes: '192x192',
-            type: 'image/webp'
-          }
-        ]
+            src: "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp",
+            sizes: "192x192",
+            type: "image/webp",
+          },
+        ],
       },
       workbox: {
-        // Disable cache for faster updates
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         runtimeCaching: [
           {
-            // Don't cache API requests
             urlPattern: /^https:\/\/api\./i,
-            handler: 'NetworkFirst',
+            handler: "NetworkFirst",
             options: {
-              cacheName: 'api-cache',
+              cacheName: "api-cache",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60
+                maxAgeSeconds: 60,
               },
               cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
       devOptions: {
-        enabled: false
-      }
-    })
+        enabled: false,
+      },
+    }),
   ],
-  
+
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
-    }
+      "@": resolve(__dirname, "./src"),
+    },
   },
-  
+
   server: {
-    port: 3000
+    port: 3000,
   },
-  
+
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    minify: 'terser',
+    outDir: "dist",
+    assetsDir: "assets",
+    minify: "terser",
     cssMinify: true,
     chunkSizeWarningLimit: 1000,
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug']
+        pure_funcs: ["console.log", "console.info", "console.debug"],
       },
       format: {
-        comments: false
-      }
+        comments: false,
+      },
     },
-    
+
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          const ext = assetInfo.name.split('.').pop()
-          if (['css'].includes(ext)) {
-            return `assets/css/[name]-[hash].${ext}`
+          const ext = assetInfo.name.split(".").pop();
+          if (["css"].includes(ext)) {
+            return `assets/css/[name]-[hash].${ext}`;
           }
-          if (['js'].includes(ext)) {
-            return `assets/js/[name]-[hash].${ext}`
+          if (["js"].includes(ext)) {
+            return `assets/js/[name]-[hash].${ext}`;
           }
-          return `assets/[ext]/[name]-[hash].[ext]`
+          return `assets/[ext]/[name]-[hash].[ext]`;
         },
         manualChunks: {
-          'vendor': ['vue', 'vue-router'],
-          'icons': ['@fortawesome/fontawesome-free']
+          vendor: ["vue", "vue-router"],
+          icons: ["@fortawesome/fontawesome-free"],
         },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js'
-      }
-    }
+        chunkFileNames: "assets/js/[name]-[hash].js",
+        entryFileNames: "assets/js/[name]-[hash].js",
+      },
+    },
   },
-  
-  css: {
-    postcss: './postcss.config.js'
-  },
-  
-  optimizeDeps: {
-    include: ['vue', 'vue-router'],
-    exclude: ['@fortawesome/fontawesome-free']
-  }
-})
 
+  css: {
+    postcss: "./postcss.config.js",
+  },
+
+  optimizeDeps: {
+    include: ["vue", "vue-router"],
+    exclude: ["@fortawesome/fontawesome-free"],
+  },
+});

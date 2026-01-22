@@ -7,12 +7,12 @@
           <div class="skeleton-breadcrumb-item"></div>
           <div class="skeleton-breadcrumb-item short"></div>
         </div>
-        
+
         <div class="skeleton-header">
           <div class="skeleton-title"></div>
           <div class="skeleton-subtitle"></div>
         </div>
-        
+
         <div class="skeleton-variants-grid">
           <div v-for="n in 6" :key="n" class="skeleton-variant-card">
             <div class="skeleton-variant-img">
@@ -25,13 +25,13 @@
             </div>
           </div>
         </div>
-        
+
         <div class="skeleton-related-section">
           <div class="skeleton-section-title">
             <div class="skeleton-title"></div>
             <div class="skeleton-subtitle"></div>
           </div>
-          
+
           <div class="skeleton-related-grid">
             <div v-for="n in 3" :key="n" class="skeleton-related-card">
               <div class="skeleton-img"></div>
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    
+
     <template v-else>
       <section class="breadcrumb" aria-label="Breadcrumb">
         <div class="container">
@@ -63,7 +63,10 @@
         <div class="container">
           <div class="section-title">
             <h1>Produk Triobionik</h1>
-            <p>Berbagai varian pupuk hayati berkualitas untuk pertanian dan perkebunan</p>
+            <p>
+              Berbagai varian pupuk hayati berkualitas untuk pertanian dan
+              perkebunan
+            </p>
           </div>
 
           <div class="related-products-grid">
@@ -86,7 +89,11 @@
                   @load="handleImageLoad(variant.id)"
                   @error="handleImageError(variant.id)"
                 />
-                <span v-if="variant.badge" class="product-badge badge-approved">{{ variant.badge }}</span>
+                <span
+                  v-if="variant.badge"
+                  class="product-badge badge-approved"
+                  >{{ variant.badge }}</span
+                >
               </div>
               <div class="related-product-info">
                 <h4>{{ variant.name }}</h4>
@@ -101,7 +108,10 @@
           <section class="related-products" aria-label="Produk Lainnya">
             <div class="section-title">
               <h2>Produk Lainnya</h2>
-              <p>Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka Makmur</p>
+              <p>
+                Telusuri produk berkualitas lainnya dari PT. Manunggal Merdeka
+                Makmur
+              </p>
             </div>
             <div class="related-products-grid">
               <router-link
@@ -141,61 +151,61 @@
 </template>
 
 <script>
-import { getTriobionikVariants, getApprovedProducts } from '@/data/product.js'
+import { getTriobionikVariants, getApprovedProducts } from "@/data/product.js";
 
 export default {
-  name: 'TriobionikList',
-  
+  name: "TriobionikList",
+
   data() {
     return {
       variants: [],
       relatedProducts: [],
       loading: true,
-      imageLoaded: {}
-    }
+      imageLoaded: {},
+    };
   },
-  
+
   async beforeMount() {
-    this.loading = true
-    this.variants = getTriobionikVariants()
-    this.relatedProducts = getApprovedProducts().slice(0, 3)
-    this.variants.forEach(v => this.imageLoaded[v.id] = false)
-    this.relatedProducts.forEach(p => this.imageLoaded[p.id] = false)
+    this.loading = true;
+    this.variants = getTriobionikVariants();
+    this.relatedProducts = getApprovedProducts().slice(0, 3);
+    this.variants.forEach((v) => (this.imageLoaded[v.id] = false));
+    this.relatedProducts.forEach((p) => (this.imageLoaded[p.id] = false));
     this.$nextTick(() => {
-      this.loading = false
-    })
+      this.loading = false;
+    });
   },
-  
+
   mounted() {
-    document.title = 'Triobionik - PT. Manunggal Merdeka Makmur'
+    document.title = "Triobionik - PT. Manunggal Merdeka Makmur";
   },
-  
+
   methods: {
     handleImageLoad(id) {
-      this.imageLoaded[id] = true
+      this.imageLoaded[id] = true;
     },
-    
+
     handleImageError(id) {
-      this.imageLoaded[id] = true
+      this.imageLoaded[id] = true;
     },
-    
+
     getProductLink(product) {
       const routes = {
-        'phc-manunggal-lestari': '/manunggal-lestari',
-        'phc-manunggal-lestari-dekomposer': '/manunggal-lestari-dekomposer',
-        'php-triobionik': '/triobionik',
-        'manunggal-makmur': '/manunggal-makmur',
-        'ptorca': '/ptorca'
-      }
-      return routes[product.id] || '/'
+        "phc-manunggal-lestari": "/manunggal-lestari",
+        "phc-manunggal-lestari-dekomposer": "/manunggal-lestari-dekomposer",
+        "php-triobionik": "/triobionik",
+        "manunggal-makmur": "/manunggal-makmur",
+        ptorca: "/ptorca",
+      };
+      return routes[product.id] || "/";
     },
-    
+
     truncateDescription(desc) {
-      if (!desc) return ''
-      return desc.length > 100 ? desc.substring(0, 100) + '...' : desc
-    }
-  }
-}
+      if (!desc) return "";
+      return desc.length > 100 ? desc.substring(0, 100) + "..." : desc;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -304,8 +314,12 @@ export default {
 }
 
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .breadcrumb {
@@ -341,7 +355,7 @@ export default {
 }
 
 .breadcrumb li:not(:last-child)::after {
-  content: '/';
+  content: "/";
   margin-left: 0.5rem;
   color: #adb5bd;
 }
@@ -485,7 +499,7 @@ export default {
   .related-products-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .related-product-card:hover {
     transform: translateY(-4px);
   }
@@ -495,4 +509,3 @@ export default {
   }
 }
 </style>
-

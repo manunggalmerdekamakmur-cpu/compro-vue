@@ -3,32 +3,39 @@
     <section class="hero" id="home">
       <div class="container">
         <div class="hero-logo">
-          <img 
-            src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp" 
-            width="85" 
-            height="85" 
-            alt="Logo STIESIA" 
+          <img
+            src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/logo-stiesia_raywzt.webp"
+            width="85"
+            height="85"
+            alt="Logo STIESIA"
             fetchpriority="high"
             loading="eager"
           />
-          <img 
-            src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp" 
-            width="85" 
-            height="85" 
-            alt="Logo PT. Manunggal Merdeka Makmur" 
+          <img
+            src="https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461076/logo_xipkza.webp"
+            width="85"
+            height="85"
+            alt="Logo PT. Manunggal Merdeka Makmur"
             fetchpriority="high"
             loading="eager"
           />
         </div>
         <h1>PT. Manunggal Merdeka Makmur</h1>
-        <p>Produsen berbagai produk pendukung sektor Pertanian, Perkebunan, Perikanan, dan Peternakan dengan komitmen menghasilkan produk berkualitas tinggi untuk kemajuan agrobisnis Indonesia.</p>
+        <p>
+          Produsen berbagai produk pendukung sektor Pertanian, Perkebunan,
+          Perikanan, dan Peternakan dengan komitmen menghasilkan produk
+          berkualitas tinggi untuk kemajuan agrobisnis Indonesia.
+        </p>
         <div class="hero-buttons">
           <a href="#products" class="btn btn-primary">
             <i class="fas fa-seedling"></i> Lihat Produk Kami
           </a>
-          <a href="https://wa.me/6285199265858"
+          <a
+            href="https://wa.me/6285199265858"
             target="_blank"
-            rel="noopener" class="btn btn-secondary">
+            rel="noopener"
+            class="btn btn-secondary"
+          >
             <i class="fas fa-phone-alt"></i> Hubungi Kami
           </a>
         </div>
@@ -47,29 +54,33 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-import AboutSection from '@/components/sections/AboutSection.vue'
-import VisionMission from '@/components/sections/VisionMission.vue'
-import ProductStats from '@/components/sections/ProductStats.vue'
-import ProductsSection from '@/components/sections/ProductsSection.vue'
-import ContactSection from '@/components/sections/ContactSection.vue'
+import { defineAsyncComponent } from "vue";
+import AboutSection from "@/components/sections/AboutSection.vue";
+import VisionMission from "@/components/sections/VisionMission.vue";
+import ProductStats from "@/components/sections/ProductStats.vue";
+import ProductsSection from "@/components/sections/ProductsSection.vue";
+import ContactSection from "@/components/sections/ContactSection.vue";
 
-const LazyCertificationsSection = defineAsyncComponent(() => 
-  import('@/components/sections/CertificationsSection.vue'), { loading: () => null }
-)
-const LazyPrinciplesSection = defineAsyncComponent(() => 
-  import('@/components/sections/PrinciplesSection.vue'), { loading: () => null }
-)
-const LazyCompanyShowcaseSection = defineAsyncComponent(() => 
-  import('@/components/sections/CompanyShowcaseSection.vue'), { loading: () => null }
-)
-const LazyCustomerFeedbackSection = defineAsyncComponent(() => 
-  import('@/components/sections/CustomerFeedbackSection.vue'), { loading: () => null }
-)
+const LazyCertificationsSection = defineAsyncComponent(
+  () => import("@/components/sections/CertificationsSection.vue"),
+  { loading: () => null },
+);
+const LazyPrinciplesSection = defineAsyncComponent(
+  () => import("@/components/sections/PrinciplesSection.vue"),
+  { loading: () => null },
+);
+const LazyCompanyShowcaseSection = defineAsyncComponent(
+  () => import("@/components/sections/CompanyShowcaseSection.vue"),
+  { loading: () => null },
+);
+const LazyCustomerFeedbackSection = defineAsyncComponent(
+  () => import("@/components/sections/CustomerFeedbackSection.vue"),
+  { loading: () => null },
+);
 
 export default {
-  name: 'Home',
-  
+  name: "Home",
+
   components: {
     AboutSection,
     VisionMission,
@@ -79,32 +90,31 @@ export default {
     LazyCertificationsSection,
     LazyPrinciplesSection,
     LazyCompanyShowcaseSection,
-    LazyCustomerFeedbackSection
+    LazyCustomerFeedbackSection,
   },
-  
+
   mounted() {
-    this.updateDocumentTitle()
-    this.handleHashNavigation()
+    this.updateDocumentTitle();
+    this.handleHashNavigation();
   },
-  
+
   methods: {
     updateDocumentTitle() {
-      document.title = 'Beranda - PT. Manunggal Merdeka Makmur'
+      document.title = "Beranda - PT. Manunggal Merdeka Makmur";
     },
-    
+
     handleHashNavigation() {
       if (this.$route.hash) {
         this.$nextTick(() => {
-          const element = document.querySelector(this.$route.hash)
+          const element = document.querySelector(this.$route.hash);
           if (element) {
-            const headerHeight = 80
-            const top = element.offsetTop - headerHeight
-            window.scrollTo({ top, behavior: 'smooth' })
+            const headerHeight = 80;
+            const top = element.offsetTop - headerHeight;
+            window.scrollTo({ top, behavior: "smooth" });
           }
-        })
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
-

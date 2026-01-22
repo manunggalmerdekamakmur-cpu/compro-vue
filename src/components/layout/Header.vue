@@ -28,7 +28,10 @@
           :aria-expanded="menuOpen.toString()"
           aria-label="Buka menu navigasi"
         >
-          <i :class="menuOpen ? 'fas fa-times' : 'fas fa-bars'" aria-hidden="true"></i>
+          <i
+            :class="menuOpen ? 'fas fa-times' : 'fas fa-bars'"
+            aria-hidden="true"
+          ></i>
         </button>
         <ul class="nav-menu" :class="{ active: menuOpen }" role="menubar">
           <li role="none">
@@ -116,7 +119,9 @@ export default {
 
     this.initSections();
 
-    window.addEventListener("scroll", this.updateActiveSection, { passive: true });
+    window.addEventListener("scroll", this.updateActiveSection, {
+      passive: true,
+    });
 
     setTimeout(() => {
       const logoTextH1 = this.$el.querySelector(".logo-text h1");
@@ -206,4 +211,3 @@ export default {
   },
 };
 </script>
-

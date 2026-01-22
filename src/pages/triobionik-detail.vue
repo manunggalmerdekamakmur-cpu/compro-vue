@@ -10,46 +10,54 @@
 </template>
 
 <script>
-import { getTriobionikVariantById } from '@/data/product.js'
-import ProductDetail from '@/components/product/ProductDetail.vue'
+import { getTriobionikVariantById } from "@/data/product.js";
+import ProductDetail from "@/components/product/ProductDetail.vue";
 
 export default {
-  name: 'TriobionikDetail',
+  name: "TriobionikDetail",
   components: { ProductDetail },
-  
+
   data() {
     return {
       product: {},
       productStats: [
-        { icon: 'fas fa-certificate', title: 'Berizin', value: 'Terdaftar' },
-        { icon: 'fas fa-flask', title: 'Teruji', value: 'Laboratorium Terakreditasi' },
-        { icon: 'fas fa-leaf', title: 'Organik', value: '100% Ramah Lingkungan' }
-      ]
-    }
+        { icon: "fas fa-certificate", title: "Berizin", value: "Terdaftar" },
+        {
+          icon: "fas fa-flask",
+          title: "Teruji",
+          value: "Laboratorium Terakreditasi",
+        },
+        {
+          icon: "fas fa-leaf",
+          title: "Organik",
+          value: "100% Ramah Lingkungan",
+        },
+      ],
+    };
   },
-  
+
   watch: {
-    '$route.params.id': {
+    "$route.params.id": {
       handler(newId) {
         if (newId) {
-          this.loadProduct(newId)
+          this.loadProduct(newId);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
-  
+
   beforeMount() {
-    const id = this.$route.params.id
+    const id = this.$route.params.id;
     if (id) {
-      this.loadProduct(id)
+      this.loadProduct(id);
     }
   },
-  
+
   methods: {
     loadProduct(id) {
-      this.product = getTriobionikVariantById(id) || {}
-    }
-  }
-}
+      this.product = getTriobionikVariantById(id) || {};
+    },
+  },
+};
 </script>

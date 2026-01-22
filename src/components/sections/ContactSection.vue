@@ -1,5 +1,5 @@
 <template>
-  <section class="contact section-bg" id="contact"> 
+  <section class="contact section-bg" id="contact">
     <div class="container">
       <div class="section-header">
         <div class="header-decoration">
@@ -36,11 +36,11 @@
           <h3 class="card-title">Email</h3>
           <p class="card-content">manunggalmerdekamakmur@gmail.com</p>
           <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=manunggalmerdekamakmur@gmail.com"
-              target="_blank"
-              rel="noopener"
-              class="card-action"
-            >
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=manunggalmerdekamakmur@gmail.com"
+            target="_blank"
+            rel="noopener"
+            class="card-action"
+          >
             Kirim Email
           </a>
         </div>

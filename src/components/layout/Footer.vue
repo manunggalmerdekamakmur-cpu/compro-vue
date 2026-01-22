@@ -18,10 +18,13 @@
           </div>
 
           <p class="brand-desc">
-            Produsen berbagai produk pendukung sektor Pertanian, Perkebunan, Perikanan, dan Peternakan dengan komitmen menghasilkan produk berkualitas tinggi untuk kemajuan agrobisnis Indonesia.
+            Produsen berbagai produk pendukung sektor Pertanian, Perkebunan,
+            Perikanan, dan Peternakan dengan komitmen menghasilkan produk
+            berkualitas tinggi untuk kemajuan agrobisnis Indonesia.
           </p>
           <p class="brand-desc">
-            Bersama kami, mari kita wujudkan keberhasilan dan kesuksesan usaha Agrobisnis di Indonesia.
+            Bersama kami, mari kita wujudkan keberhasilan dan kesuksesan usaha
+            Agrobisnis di Indonesia.
           </p>
         </div>
 
@@ -61,7 +64,8 @@
 
       <div class="footer-bottom">
         <p>
-          © {{ currentYear }} Sekolah Tinggi Ilmu Ekonomi Indonesia Surabaya & PT. Manunggal Merdeka Makmur.
+          © {{ currentYear }} Sekolah Tinggi Ilmu Ekonomi Indonesia Surabaya &
+          PT. Manunggal Merdeka Makmur.
           <span>All rights reserved.</span>
         </p>
       </div>

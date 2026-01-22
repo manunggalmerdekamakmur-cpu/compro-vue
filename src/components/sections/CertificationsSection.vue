@@ -1,5 +1,9 @@
 <template>
-  <section class="certifications section-bg" id="certifications" style="padding: var(--space-xl) 0;">
+  <section
+    class="certifications section-bg"
+    id="certifications"
+    style="padding: var(--space-xl) 0"
+  >
     <div class="container">
       <div class="section-title">
         <h2>Sertifikasi & Legalitas</h2>

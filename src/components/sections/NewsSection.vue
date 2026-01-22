@@ -21,7 +21,7 @@
 
             <div class="news-content">
               <h3 class="news-title">{{ article.title }}</h3>
-              
+
               <div class="news-meta">
                 <span class="news-date">
                   <i class="far fa-calendar"></i> {{ article.date }}
@@ -34,8 +34,8 @@
               <p class="news-excerpt">{{ article.excerpt }}</p>
 
               <div class="news-highlights">
-                <span 
-                  v-for="highlight in article.highlights" 
+                <span
+                  v-for="highlight in article.highlights"
                   :key="highlight"
                   class="highlight-tag"
                 >
@@ -43,9 +43,9 @@
                 </span>
               </div>
 
-              <a 
-                :href="article.url" 
-                target="_blank" 
+              <a
+                :href="article.url"
+                target="_blank"
                 rel="noopener noreferrer"
                 class="news-link"
               >
@@ -61,29 +61,31 @@
 
 <script>
 export default {
-  name: 'NewsSection',
+  name: "NewsSection",
   data() {
     return {
       articles: [
         {
           id: 1,
-          title: 'PT Manunggal Merdeka Makmur Meluncurkan Produk Pupuk Terbaru',
-          date: '17 Februari 2025',
-          source: 'Harian Forum',
-          category: 'Produk',
-          thumbnail: 'https://res.cloudinary.com/dz1zcobkz/image/upload/v1768788752/Screenshot-2026-01-17-165137_jzl390.webp',
-          excerpt: 'PT Manunggal Merdeka Makmur dengan bangga mengumumkan peluncuran produk pupuk terbaru yang inovatif. Acara peluncuran berlangsung meriah dengan dihadiri oleh berbagai stakeholder industri pertanian.',
-          url: 'https://harianforum.com/pt-manunggal-merdeka-makmur-meluncurkan-produk-pupuk-terbaru-acara-berlangsung-meriah/',
+          title: "PT Manunggal Merdeka Makmur Meluncurkan Produk Pupuk Terbaru",
+          date: "17 Februari 2025",
+          source: "Harian Forum",
+          category: "Produk",
+          thumbnail:
+            "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768788752/Screenshot-2026-01-17-165137_jzl390.webp",
+          excerpt:
+            "PT Manunggal Merdeka Makmur dengan bangga mengumumkan peluncuran produk pupuk terbaru yang inovatif. Acara peluncuran berlangsung meriah dengan dihadiri oleh berbagai stakeholder industri pertanian.",
+          url: "https://harianforum.com/pt-manunggal-merdeka-makmur-meluncurkan-produk-pupuk-terbaru-acara-berlangsung-meriah/",
           highlights: [
-            'Produk ramah lingkungan',
-            'Efektivitas terbukti',
-            'Meningkatkan produktivitas 40%'
-          ]
-        }
-      ]
-    }
-  }
-}
+            "Produk ramah lingkungan",
+            "Efektivitas terbukti",
+            "Meningkatkan produktivitas 40%",
+          ],
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -126,9 +128,11 @@ export default {
 .news-card {
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   background: rgba(255, 255, 255, 0.95);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -136,7 +140,7 @@ export default {
 
 .news-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0,0,0,.12);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
 .news-thumbnail {
@@ -309,15 +313,15 @@ export default {
   .news-card {
     background: rgba(30, 30, 30, 0.95);
   }
-  
+
   .news-title {
     color: var(--primary-light, #4a8fff);
   }
-  
+
   .news-excerpt {
     color: #ccc;
   }
-  
+
   .news-meta {
     color: #aaa;
   }

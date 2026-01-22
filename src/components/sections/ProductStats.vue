@@ -29,6 +29,6 @@
 
 <script>
 export default {
-  name: "ProductStats"
+  name: "ProductStats",
 };
 </script>
