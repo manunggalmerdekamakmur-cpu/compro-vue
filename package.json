@@ -1,7 +1,7 @@
 {
   "name": "manunggal",
   "private": true,
-  "version": "2.0.16",
+  "version": "2.0.18",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -12,7 +12,8 @@
     "analyze": "vite-bundle-analyzer",
     "generate-sitemap": "node generate-sitemap.js",
     "build:with-seo": "npm run build && npm run generate-sitemap",
-    "deploy": "npm run build:with-seo && bash deploy.sh"
+    "deploy": "npm run build:with-seo && bash deploy.sh",
+    "seo-audit": "npm run generate-sitemap && node scripts/submit-to-google.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",

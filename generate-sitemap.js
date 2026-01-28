@@ -1,4 +1,4 @@
-import { writeFileSync, existsSync } from "fs";
+import { writeFileSync, existsSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -10,18 +10,42 @@ const BUILD_DIR = "dist";
 const TODAY = new Date().toISOString().split("T")[0];
 
 const pages = [
+  { url: "/", lastmod: TODAY, changefreq: "daily", priority: "1.0" },
+  { url: "/Beranda", lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
   {
-    url: "/",
+    url: "/Tentang Kami",
     lastmod: TODAY,
-    changefreq: "daily",
-    priority: "1.0",
+    changefreq: "monthly",
+    priority: "0.9",
   },
+  {
+    url: "/Visi & Misi",
+    lastmod: TODAY,
+    changefreq: "weekly",
+    priority: "0.9",
+  },
+  {
+    url: "/Produk Kami",
+    lastmod: TODAY,
+    changefreq: "yearly",
+    priority: "0.7",
+  },
+  {
+    url: "/Sertifikasi",
+    lastmod: TODAY,
+    changefreq: "monthly",
+    priority: "0.6",
+  },
+  { url: "/Kontak", lastmod: TODAY, changefreq: "weekly", priority: "0.8" },
 ];
 
 function generateSitemap() {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+  xml += '        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n';
   xml +=
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">\n';
+    '        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9\n';
+  xml += '        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">\n';
 
   pages.forEach((page) => {
     xml += "  <url>\n";
@@ -36,10 +60,29 @@ function generateSitemap() {
   return xml;
 }
 
+function generateSitemapIndex() {
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+  xml += "  <sitemap>\n";
+  xml += `    <loc>${SITE_URL}/sitemap.xml</loc>\n`;
+  xml += `    <lastmod>${TODAY}</lastmod>\n`;
+  xml += "  </sitemap>\n";
+
+  xml += "  <sitemap>\n";
+  xml += `    <loc>${SITE_URL}/sitemap-pages.xml</loc>\n`;
+  xml += `    <lastmod>${TODAY}</lastmod>\n`;
+  xml += "  </sitemap>\n";
+
+  xml += "</sitemapindex>";
+  return xml;
+}
+
 function main() {
-  console.log("🚀 Generating sitemap.xml...");
+  console.log("🚀 Generating enhanced sitemaps...");
 
   const sitemap = generateSitemap();
+  const sitemapIndex = generateSitemapIndex();
   const distPath = join(__dirname, BUILD_DIR);
 
   if (!existsSync(distPath)) {
@@ -49,10 +92,14 @@ function main() {
 
   writeFileSync(join(distPath, "sitemap.xml"), sitemap, "utf8");
 
-  console.log("✅ sitemap.xml berhasil dibuat!");
-  console.log(`📍 Sitemap berisi ${pages.length} URL:`);
-  pages.forEach((page) => {
-    console.log(`   - ${SITE_URL}${page.url}`);
+  writeFileSync(join(distPath, "sitemap-index.xml"), sitemapIndex, "utf8");
+
+  writeFileSync(join(distPath, "sitemap-pages.xml"), sitemap, "utf8");
+
+  console.log("✅ Sitemaps berhasil dibuat!");
+  console.log(`📍 ${pages.length} URL telah dimasukkan:`);
+  pages.forEach((page, index) => {
+    console.log(`   ${index + 1}. ${SITE_URL}${page.url}`);
   });
 }
 

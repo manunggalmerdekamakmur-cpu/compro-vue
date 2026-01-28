@@ -1,4 +1,3 @@
-// scripts/update-favicon.js
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -10,17 +9,19 @@ function updateIndexHtml() {
   const indexPath = join(__dirname, "../dist/index.html");
   let html = readFileSync(indexPath, "utf8");
 
-  // URL favicon dari Cloudinary
   const CLOUDINARY_FAVICON =
     "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico";
-  const CLOUDINARY_LOGO =
-    "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico"; // Ganti dengan logo asli jika ada
 
-  // Data perusahaan
+  const CLOUDINARY_LOGO_PNG =
+    "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico";
+
+  const FALLBACK_LOGO =
+    "https://res.cloudinary.com/dz1zcobkz/image/upload/w_512,h_512/v1768461077/favicon_cqc5pw.ico";
+
   const company = {
     name: "PT. Manunggal Merdeka Makmur",
     url: "https://manunggalmerdekamakmur.com",
-    logo: CLOUDINARY_LOGO,
+    logo: CLOUDINARY_LOGO_PNG || FALLBACK_LOGO,
     favicon: CLOUDINARY_FAVICON,
     description:
       "Perusahaan kontraktor dan developer properti terpercaya dengan pengalaman lebih dari 20 tahun di Indonesia.",
@@ -29,23 +30,21 @@ function updateIndexHtml() {
     address: "Jl. Contoh No. 123, Jakarta, Indonesia",
   };
 
-  // Favicon & Logo Tags
   const faviconTags = `
-    <!-- Favicon dari Cloudinary -->
-    <link rel="icon" type="image/x-icon" href="${company.favicon}">
-    <link rel="shortcut icon" href="${company.favicon}">
-    <link rel="apple-touch-icon" href="${company.favicon}">
+    <!-- Primary Favicon -->
+    <link rel="icon" href="${company.favicon}" type="image/x-icon">
+    <link rel="shortcut icon" href="${company.favicon}" type="image/x-icon">
     
-    <!-- Untuk Google Search Results -->
-    <link rel="icon" type="image/png" href="${company.favicon}" sizes="32x32">
-    <link rel="icon" type="image/png" href="${company.favicon}" sizes="16x16">
+    <!-- Multiple sizes for different devices -->
+    <link rel="icon" type="image/png" sizes="32x32" href="${company.favicon}">
+    <link rel="icon" type="image/png" sizes="16x16" href="${company.favicon}">
+    <link rel="apple-touch-icon" sizes="180x180" href="${company.favicon}">
+    <link rel="mask-icon" href="${company.favicon}" color="#ffffff">
     
-    <!-- Untuk Apple devices -->
-    <link rel="apple-touch-icon-precomposed" href="${company.favicon}">
-    <meta name="msapplication-TileImage" content="${company.favicon}">
+    <!-- Preload for performance -->
+    <link rel="preload" href="${company.favicon}" as="image" type="image/x-icon">
   `;
 
-  // Structured Data dengan Logo untuk Google
   const structuredData = `
     <script type="application/ld+json">
     {
@@ -53,28 +52,46 @@ function updateIndexHtml() {
       "@type": "Organization",
       "@id": "${company.url}/#organization",
       "name": "${company.name}",
+      "legalName": "${company.name}",
       "url": "${company.url}",
       "logo": "${company.logo}",
       "image": "${company.logo}",
       "description": "${company.description}",
+      "foundingDate": "2000",
+      "founders": [],
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "minValue": 50,
+        "maxValue": 200
+      },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "${company.address}",
         "addressLocality": "Jakarta",
         "addressRegion": "DKI Jakarta",
+        "postalCode": "12345",
         "addressCountry": "ID"
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "${company.phone}",
-        "email": "${company.email}",
-        "contactType": "Customer Service",
-        "availableLanguage": ["Indonesian", "English"]
-      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "${company.phone}",
+          "contactType": "customer service",
+          "areaServed": "ID",
+          "availableLanguage": ["Indonesian"]
+        },
+        {
+          "@type": "ContactPoint",
+          "email": "${company.email}",
+          "contactType": "customer support",
+          "areaServed": "ID"
+        }
+      ],
       "sameAs": [
         "https://facebook.com/manunggalmerdekamakmur",
         "https://instagram.com/manunggalmerdekamakmur",
-        "https://linkedin.com/company/manunggalmerdekamakmur"
+        "https://linkedin.com/company/manunggalmerdekamakmur",
+        "https://twitter.com/manunggalmerdekamakmur"
       ]
     }
     </script>
@@ -85,88 +102,139 @@ function updateIndexHtml() {
       "@type": "WebSite",
       "@id": "${company.url}/#website",
       "url": "${company.url}",
-      "name": "${company.name}",
+      "name": "${company.name} - Kontraktor & Developer Properti",
       "description": "${company.description}",
       "publisher": {
         "@type": "Organization",
         "@id": "${company.url}/#organization"
       },
+      "inLanguage": "id-ID",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "${company.url}/search?q={search_term_string}",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "${company.url}/search?q={search_term_string}"
+        },
         "query-input": "required name=search_term_string"
       }
     }
     </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "${company.url}/#localbusiness",
+      "name": "${company.name}",
+      "image": "${company.logo}",
+      "description": "${company.description}",
+      "url": "${company.url}",
+      "telephone": "${company.phone}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "${company.address}",
+        "addressLocality": "Jakarta",
+        "addressRegion": "DKI Jakarta",
+        "postalCode": "12345",
+        "addressCountry": "ID"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-6.2088",
+        "longitude": "106.8456"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "17:00"
+      },
+      "priceRange": "$$"
+    }
+    </script>
   `;
 
-  // Cari dan hapus favicon tags yang ada
+  const metaTags = `
+    <!-- Essential Meta Tags -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <!-- Open Graph Tags untuk Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="${company.name}">
+    <meta property="og:description" content="${company.description}">
+    <meta property="og:url" content="${company.url}">
+    <meta property="og:image" content="${company.logo}">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:site_name" content="${company.name}">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${company.name}">
+    <meta name="twitter:description" content="${company.description}">
+    <meta name="twitter:image" content="${company.logo}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="${company.url}">
+  `;
+
   const faviconRegex =
     /<link[^>]*rel=(["'])(icon|shortcut icon|apple-touch-icon)[^>]*>/gi;
   html = html.replace(faviconRegex, "");
 
-  // Hapus script structured data yang ada
   const scriptRegex =
     /<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi;
   html = html.replace(scriptRegex, "");
 
-  // Tambahkan favicon dan structured data baru setelah <head>
+  const metaRegex = /<meta[^>]*(og:|twitter:|robots|googlebot|bingbot)[^>]*>/gi;
+  html = html.replace(metaRegex, "");
+
   if (html.includes("<head>")) {
-    html = html.replace("<head>", `<head>${faviconTags}${structuredData}`);
+    html = html.replace(
+      "<head>",
+      `<head>${metaTags}${faviconTags}${structuredData}`,
+    );
   }
 
   writeFileSync(indexPath, html, "utf8");
-  console.log("✅ Favicon and Structured Data updated with Cloudinary links");
+  console.log("✅ SEO tags, favicon, and structured data updated");
 
-  // Buat file robots.txt yang lebih komprehensif
-  const robotsTxt = `# Robots.txt for ${company.name}
-User-agent: *
+  const robotsTxt = `User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /private/
-Disallow: /cgi-bin/
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-Disallow: /search/
-Disallow: /?s=
+Disallow: /api/
+Disallow: /search?*
 
-Crawl-delay: 10
-
-# Sitemaps
 Sitemap: ${company.url}/sitemap.xml
+Sitemap: ${company.url}/sitemap-pages.xml
 
-# Google Adsbot
+# Google-specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
 User-agent: AdsBot-Google
 Allow: /
 
-# Bingbot
+# Bing
 User-agent: bingbot
 Allow: /
+Crawl-delay: 2
 
 # Yandex
 User-agent: Yandex
 Allow: /
-Crawl-delay: 5
-
-# Baidu
-User-agent: Baiduspider
-Allow: /
-Crawl-delay: 10
-
-# DuckDuckGo
-User-agent: DuckDuckBot
-Allow: /
-
-# Slack
-User-agent: Slackbot
-Allow: /
-Disallow: /private/
-
-# Facebook
-User-agent: facebookexternalhit
-Allow: /
-Crawl-delay: 5
-`;
+Crawl-delay: 3`;
 
   const distPath = join(__dirname, "../dist");
   writeFileSync(join(distPath, "robots.txt"), robotsTxt, "utf8");
