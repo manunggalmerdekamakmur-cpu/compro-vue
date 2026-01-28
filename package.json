@@ -1,11 +1,11 @@
 {
   "name": "manunggal",
   "private": true,
-  "version": "2.0.23",
+  "version": "2.0.25",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "node scripts/update-version.js && vite build && node scripts/update-html-seo.js && node scripts/update-favicon.js",
+    "build": "node scripts/update-version.js && vite build && node scripts/update-html-seo.js",
     "preview": "vite preview",
     "clean": "rm -rf dist node_modules/.vite",
     "build:prod": "npm run clean && NODE_ENV=production vite build",
