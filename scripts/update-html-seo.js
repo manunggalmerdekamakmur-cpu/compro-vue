@@ -61,12 +61,17 @@ function updateIndexHtml() {
 
   // 6. Tambahkan favicon tags BARU yang lengkap
   const faviconTags = `
-    <!-- Favicon untuk Google Search -->
-    <link rel="icon" type="image/x-icon" href="${company.favicon}">
+    <!-- Favicon untuk Google Search Results & Browser -->
+    <link rel="icon" type="image/x-icon" href="${company.favicon}" sizes="16x16">
+    <link rel="icon" type="image/x-icon" href="${company.favicon}" sizes="32x32">
     <link rel="shortcut icon" href="${company.favicon}" type="image/x-icon">
+    <link rel="icon" type="image/webp" sizes="16x16" href="${company.logo192}">
+    <link rel="icon" type="image/webp" sizes="32x32" href="${company.logo192}">
+    <link rel="icon" type="image/webp" sizes="180x180" href="${company.logo192}">
     <link rel="icon" type="image/webp" sizes="192x192" href="${company.logo192}">
     <link rel="icon" type="image/webp" sizes="512x512" href="${company.logo}">
-    <link rel="apple-touch-icon" href="${company.logo192}">
+    <link rel="apple-touch-icon" sizes="180x180" href="${company.logo192}">
+    <link rel="apple-touch-icon" sizes="192x192" href="${company.logo192}">
   `;
 
   // 7. Structured data Organization yang bersih

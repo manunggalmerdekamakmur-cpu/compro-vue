@@ -138,7 +138,22 @@ ls -la "$LOCAL_BUILD_DIR/"
 echo -e "\nBuild size: $(du -sh "$LOCAL_BUILD_DIR" | cut -f1)"
 check_success "Build verified"
 
-# Step 8.5: Generate and include SEO files
+# Step 8.5: Copy favicon to root for browser/Google discovery
+print_step "Copying favicon to root for Google Search"
+# Download favicon.ico to dist root (browser/Google looks for /favicon.ico)
+cd "$LOCAL_BUILD_DIR"
+if command -v curl &> /dev/null; then
+    curl -s -o favicon.ico "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico"
+    if [ -f "favicon.ico" ]; then
+        print_success "favicon.ico copied to dist root"
+    else
+        print_info "Could not download favicon.ico"
+    fi
+fi
+cd ..
+check_success "Favicon copied to root"
+
+# Step 8.6: Generate and include SEO files
 print_step "Generating SEO files (sitemap.xml, robots.txt)"
 if [ -f "generate-sitemap.js" ]; then
     node generate-sitemap.js
