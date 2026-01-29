@@ -19,8 +19,7 @@ function updateIndexHtml() {
     logo: "https://res.cloudinary.com/dz1zcobkz/image/upload/c_scale,w_512,h_512,c_fill/v1768461076/logo_xipkza.webp",
     logo192:
       "https://res.cloudinary.com/dz1zcobkz/image/upload/c_scale,w_192,h_192,c_fill/v1768461076/logo_xipkza.webp",
-    favicon:
-      "https://res.cloudinary.com/dz1zcobkz/image/upload/v1768461077/favicon_cqc5pw.ico",
+    favicon: "/favicon.ico",
     telephone: "+62-851-9926-5858",
     address: {
       street: "Desa Pandantoyo RT. 001/RW. 004, Kecamatan Kertosono",
